@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.education.plugin
+package ru.otus.otuskotlin.simpleoffice.plugin
 
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Plugin
