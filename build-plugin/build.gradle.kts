@@ -6,11 +6,11 @@ gradlePlugin {
     plugins {
         register("build-jvm") {
             id = "build-jvm"
-            implementationClass = "ru.otus.otuskotlin.simpleoffice.plugin.BuildPluginJvm"
+            implementationClass = "ru.otus.otuskotlin.smartoffice.plugin.BuildPluginJvm"
         }
         register("build-kmp") {
             id = "build-kmp"
-            implementationClass = "ru.otus.otuskotlin.simpleoffice.plugin.BuildPluginMultiplatform"
+            implementationClass = "ru.otus.otuskotlin.smartoffice.plugin.BuildPluginMultiplatform"
         }
     }
 }
