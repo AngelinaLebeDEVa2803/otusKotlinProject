@@ -7,8 +7,10 @@ SmartOffice - это Desk-Sharing система для поиска и резе
 ## Визуальная схема фронтенда
 Список бронирований сотрудника:
 ![Макет фронта](imgs/SmartOffice.bookings.png)
+
 Бронирование переговорок и просмотр помещений на этаже:
 ![Макет фронта](imgs/SmartOffice.main.png)
+
 Поиск места:
 ![Макет фронта](imgs/SmartOffice.places.png)
 
