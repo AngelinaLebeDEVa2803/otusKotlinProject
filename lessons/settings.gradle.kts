@@ -8,7 +8,6 @@ pluginManagement {
 plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
-rootProject.name = "otusKotlinProject"
+rootProject.name = "lessons"
 
-includeBuild("lessons")
-includeBuild("simple-office-be")
+include("m1l1-first")
