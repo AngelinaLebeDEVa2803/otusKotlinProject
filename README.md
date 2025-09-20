@@ -9,3 +9,6 @@ SmartOffice - это Desk-Sharing система для поиска и резе
 ![Макет фронта](imgs/SmartOffice.main.png)
 Поиск места:
 ![Макет фронта](imgs/SmartOffice.places.png)
+Личные бронирования:
+![Макет фронта](imgs/SmartOffice.bookings.png)
+
