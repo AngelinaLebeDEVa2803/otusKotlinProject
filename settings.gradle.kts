@@ -11,4 +11,4 @@ plugins {
 rootProject.name = "otusKotlinProject"
 
 includeBuild("lessons")
-includeBuild("simple-office-be")
+includeBuild("smart-office-be")
