@@ -22,7 +22,7 @@ SmartOffice - это Desk-Sharing система для поиска и резе
     2. [Заинтересанты](./docs/01-biz/02-stakeholders.md)
     3. [Пользовательские истории](./docs/01-biz/03-bizreq.md)
 2. Аналитика:
-    1. [Функциональные требования](./docs/02-analysis/01-functional-requiremens.md)
+    1. [Функциональные требования](./docs/02-analysis/01-functional-requirements.md)
     2. [Нефункциональные требования](./docs/02-analysis/02-nonfunctional-requirements.md)
 3. DevOps
 4. Архитектура
