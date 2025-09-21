@@ -27,4 +27,5 @@ SmartOffice - это Desk-Sharing система для поиска и резе
 3. DevOps
 4. Архитектура
 5. Тесты
+   1. [Тестовые кейсы] (./docs/05-testing/01-test-list.md)
 
