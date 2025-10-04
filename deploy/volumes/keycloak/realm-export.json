@@ -1,7 +1,7 @@
 {
   "id": "otus-smartoffice",
   "realm": "otus-smartoffice",
-  "displayName": "Otus smartoffice",
+  "displayName": "otus smartoffice",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
