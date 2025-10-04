@@ -1,8 +1,8 @@
 #!/bin/bash
 
 KCHOST=http://localhost:8080
-REALM=otus-marketplace
-CLIENT_ID=otus-marketplace-service
+REALM=otus-smartoffice
+CLIENT_ID=otus-smartoffice-service
 UNAME=otus-test
 PASSWORD=otus
 
