@@ -1,6 +1,5 @@
 # API Desk-Sharing приложения SmartOffice
 
-Подумать про здание/филиал!!!
 
 ### 1. Сущности
 
@@ -11,6 +10,8 @@
 | `id` | string | Уникальный идентификатор места | `"ws_floor2_a205"` |
 | `name` | string | Человекочитаемое название места | `"А-205"` |
 | `type` | string | Тип: `"desk"`, `"meeting_room"`, `"phone_booth"` | `"desk"` |
+| `filialId` | string | ID филиала, на котором находится место | `"001"` |
+| `buildingId` | string | ID здания, на котором находится место | `"B1234"` |
 | `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
 | `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
 | `attributes` | string[] | Список атрибутов места | `["monitor", "window", "power_outlet"]` |
