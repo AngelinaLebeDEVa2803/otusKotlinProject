@@ -42,7 +42,6 @@
 | `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
 | `roomMap` | file | Изображение/карта помещения (опционально) | `cab_picture.png` |
 
-
 **Рабочее место (Workspace)**
 
 | Поле | Тип | Бизнес-описание | Пример значения |
@@ -120,35 +119,36 @@
 
 5.  **`DELETE /api/v1/floors/{id}`** - Удаление этажа из базы
     *   *Бизнес-правило:* Все привязанные к этому этажу рабочие места и бронирования удалятся каскадно
-  
 
-| `id` | string | Уникальный идентификатор места | `"ws_floor2_a205"` |
-| `name` | string | Человекочитаемое название места | `"А-205"` |
-| `type` | string | Тип: `"desk"`, `"meeting_room"` | `"desk"` |
-| `filialId` | string | ID филиала, на котором находится место | `"001"` |
-| `buildingId` | string | ID здания, на котором находится место | `"B1234"` |
-| `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
-| `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
-| `attributes` | string[] | Список атрибутов места | `["monitor", "window", "power_outlet"]` |
-| `capacity` | integer | Вместимость для переговорных, для рабочего места = 1 | `5` |
-| `status` | string | Текущий статус: `"active"`, `"inactive"`, `"under_maintenance"` | `"active"` |
+Помещения:
+1.  **`POST /api/v1/rooms`** - Внесение нового помещения в базу
+    *   *Ограничения:* floorId, filialId и buildingId должны существовать. roomId должен быть уникальным.
+    *   *Тело запроса:* `{ roomId: "room_418", name: "Кабинет 418", type: "coworking", floorId: "floor_2", name: "Этаж 2", buildingId: "B1234", filialId: "001", coordinates: { "x": 150, "y": 320 } }`
 
+2.  **`GET /api/v1/rooms/{id}`** - Получение информации о помещении
+
+3.  **`GET /api/v1/rooms`** - Получение списка всех помещений в заданном филиале, здании и этаже
+    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2`
+
+4.  **`PATCH /api/v1/rooms/{id}`** - Обновление информации о помещении
+
+5.  **`DELETE /api/v1/rooms/{id}`** - Удаление помещения из базы
+    *   *Бизнес-правило:* Все привязанные к этому помещению рабочие места и бронирования удалятся каскадно
 
 Рабочие места:
-1.  **`POST /api/v1/workspaces`** - Внесение нового этажа в базу
-    *   *Ограничения:* filialId, buildingId и floorId должны существовать. id должен быть уникальным.
-    *   *Тело запроса:* `{ id: "ws_floor2_a205", name: "А-205", type: ""    floorId: "floor_2", name: "Этаж 2", buildingId: "B1234", filialId: "001" }`
+1.  **`POST /api/v1/workspaces`** - Внесение нового рабочего места в базу
+    *   *Ограничения:* filialId, buildingId, floorId и roomId должны существовать. Тип помещения у заданного roomId должен быть type = "coworking"
+    *   *Тело запроса:* `{ workspaceId: "ws_floor2_a205", name: "А-205", roomId: "room_418", floorId: "floor_2", buildingId: "B1234", filialId: "001", coordinates: { "x": 1, "y": 3 }, attributes: ["monitor", "window", "power_outlet"] }`
 
-2.  **`GET /api/v1/workspaces/{id}`** - Получение информации об этаже
+2.  **`GET /api/v1/workspaces/{id}`** - Получение информации о рабочем месте
 
-3.  **`GET /api/v1/workspaces`** - Получение списка всех этажей в заданном филиале и здании
-    *   *Параметры:* `?filialId=001&buildingId=B1234`
+3.  **`GET /api/v1/workspaces`** - Получение списка всех мест в заданном филиале, здании, этаже, помещении
+    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2&roomId=room_418`
 
-4.  **`PATCH /api/v1/workspaces/{id}`** - Обновление информации об этаже
+4.  **`PATCH /api/v1/workspaces/{id}`** - Обновление информации о рабочем месте
 
-5.  **`DELETE /api/v1/workspaces/{id}`** - Удаление этажа из базы
-    *   *Бизнес-правило:* Все привязанные к этому этажу рабочие места и бронирования удалятся каскадно
-
+5.  **`DELETE /api/v1/workspaces/{id}`** - Удаление места из базы
+    *   *Бизнес-правило:* Все привязанные к этому месту бронирования удалятся каскадно
 
 
 **Управление бронированиями**
