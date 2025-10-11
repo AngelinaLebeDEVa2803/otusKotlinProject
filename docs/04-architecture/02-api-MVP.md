@@ -21,8 +21,6 @@
 | `name` | string | Человекочитаемое обозначение помещения | `"Кабинет 418"` |
 | `type` | string | Тип: `"coworking"`, `"meeting_room"`, `"coffee_point"` | `"meeting_room"` |
 | `capacity` | integer | Вместимость для переговорок | `5` |
-| `filialId` | string | ID филиала, к которому принадлежит помещение | `"001"` |
-| `buildingId` | string | Id здания, к которому принадлежит помещение | `"B1234"` |
 | `floorId` | string | ID этажа, к которому принадлежит помещение | `"floor_2"` |
 | `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
 | `roomMap` | file | Изображение/карта помещения (опционально) | `cab_picture.png` |
@@ -33,8 +31,6 @@
 | :--- | :--- | :--- | :--- |
 | `workspaceId` | string | Уникальный идентификатор места | `"ws_floor2_a205"` |
 | `name` | string | Человекочитаемое название места | `"А-205"` |
-| `filialId` | string | ID филиала, в котором находится место | `"001"` |
-| `buildingId` | string | ID здания, в котором находится место | `"B1234"` |
 | `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
 | `roomId` | string | ID помещения, в котором находится место | `"room_418"` |
 | `coordinates` | object | Координаты на карте помещения (`x`, `y`) | `{ "x": 1, "y": 3 }` |
@@ -46,8 +42,6 @@
 | :--- | :--- | :--- | :--- |
 | `bookingId` | string | Уникальный идентификатор брони | `"book_abc123"` |
 | `userId` | string | ID пользователя, создавшего бронь | `"user_789"` |
-| `filialId` | string | ID филиала, в котором находится место | `"001"` |
-| `buildingId` | string | ID здания, в котором находится место | `"B1234"` |
 | `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
 | `roomId` | string | ID помещения, в котором находится место | `"room_418"` |
 | `bookingType` | string | Тип брони (рабочее место или переговорка: `"workspace"`, `"meeting_room"`) | `"workspace"` |
@@ -61,47 +55,17 @@
 
 **Управление сущностями офиса. Сервис EditOffice - для администраторов офиса**
 
-Филиалы:
 
-1.  **`POST /api/v1/filials`** - Внесение нового филиала в базу
-    *   *Ограничения:* filialId должен быть уникальным.
-    *   *Тело запроса:* `{ filialId: "001", name: "Центральный офис" }`
-
-2.  **`GET /api/v1/filials/{filialId}`** - Получение информации о филиале
-
-3.  **`GET /api/v1/filials`** - Получение списка всех филиалов
-
-4.  **`PATCH /api/v1/filials/{filialId}`** - Обновление информации о филиале
-
-5.  **`DELETE /api/v1/filials/{filialId}`** - Удаление филиала из базы
-    *   *Бизнес-правило:* Все привязанные к этому филиалу здания, этажи, рабочие места и бронирования удалятся каскадно
-
-Здания:
-
-6.  **`POST /api/v1/buildings`** - Внесение нового филиала в базу
-    *   *Ограничения:* filialId должен существовать. buildingId должен быть уникальным.
-    *   *Тело запроса:* `{ buildingId: "B1234", address: "Ромашковая 7", filialId: "001" }`
-
-7.  **`GET /api/v1/buildings/{buildingId}`** - Получение информации о здании
-
-8.  **`GET /api/v1/buildings`** - Получение списка всех зданий в заданном филиале
-    *   *Параметры:* `?filialId=001`
-
-9.  **`PATCH /api/v1/buildings/{buildingId}`** - Обновление информации о здании
-
-10. **`DELETE /api/v1/buildings/{buildingId}`** - Удаление здания из базы
-    *   *Бизнес-правило:* Все привязанные к этому зданию этажи, рабочие места и бронирования удалятся каскадно
 
 Этажи:
 
 11. **`POST /api/v1/floors`** - Внесение нового этажа в базу
-    *   *Ограничения:* filialId и buildingId должны существовать. floorId должен быть уникальным.
-    *   *Тело запроса:* `{ floorId: "floor_2", name: "Этаж 2", buildingId: "B1234", filialId: "001" }`
+    *   *Ограничения:* floorId должен быть уникальным.
+    *   *Тело запроса:* `{ floorId: "floor_2", name: "Этаж 2" }`
 
 12. **`GET /api/v1/floors/{floorId}`** - Получение информации об этаже
 
 13. **`GET /api/v1/floors`** - Получение списка всех этажей в заданном филиале и здании
-    *   *Параметры:* `?filialId=001&buildingId=B1234`
 
 14. **`PATCH /api/v1/floors/{floorId}`** - Обновление информации об этаже
 
@@ -111,13 +75,13 @@
 Помещения:
 
 16. **`POST /api/v1/rooms`** - Внесение нового помещения в базу
-    *   *Ограничения:* floorId, filialId и buildingId должны существовать. roomId должен быть уникальным.
-    *   *Тело запроса:* `{ roomId: "room_418", name: "Кабинет 418", type: "coworking", floorId: "floor_2", name: "Этаж 2", buildingId: "B1234", filialId: "001", coordinates: { "x": 150, "y": 320 } }`
+    *   *Ограничения:* floorId, должны существовать. roomId должен быть уникальным.
+    *   *Тело запроса:* `{ roomId: "room_418", name: "Кабинет 418", type: "coworking", floorId: "floor_2", name: "Этаж 2", coordinates: { "x": 150, "y": 320 } }`
 
 17. **`GET /api/v1/rooms/{roomId}`** - Получение информации о помещении
 
 18. **`GET /api/v1/rooms`** - Получение списка всех помещений в заданном филиале, здании и этаже
-    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2`
+    *   *Параметры:* `?floorId=floor_2`
 
 19. **`PATCH /api/v1/rooms/{roomId}`** - Обновление информации о помещении
 
@@ -127,13 +91,13 @@
 Рабочие места:
 
 21. **`POST /api/v1/workspaces`** - Внесение нового рабочего места в базу
-    *   *Ограничения:* filialId, buildingId, floorId и roomId должны существовать. Тип помещения у заданного roomId должен быть type = "coworking"
-    *   *Тело запроса:* `{ workspaceId: "ws_floor2_a205", name: "А-205", roomId: "room_418", floorId: "floor_2", buildingId: "B1234", filialId: "001", coordinates: { "x": 1, "y": 3 }, attributes: ["monitor", "window", "power_outlet"] }`
+    *   *Ограничения:* floorId и roomId должны существовать. Тип помещения у заданного roomId должен быть type = "coworking"
+    *   *Тело запроса:* `{ workspaceId: "ws_floor2_a205", name: "А-205", roomId: "room_418", floorId: "floor_2", coordinates: { "x": 1, "y": 3 }, attributes: ["monitor", "window", "power_outlet"] }`
 
 22. **`GET /api/v1/workspaces/{workspaceId}`** - Получение информации о рабочем месте
 
 23. **`GET /api/v1/workspaces`** - Получение списка всех мест в заданном филиале, здании, этаже, помещении
-    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2&roomId=room_418`
+    *   *Параметры:* `?floorId=floor_2&roomId=room_418`
 
 24. **`PATCH /api/v1/workspaces/{workspaceId}`** - Обновление информации о рабочем месте
 
@@ -145,7 +109,7 @@
 26. **`POST /api/v1/bookings`** - Создание нового бронирования
     *   *Бизнес-правило:* Пользователь не может забронировать уже занятое место на выбранный промежуток времени. У заданного объекта roomId должен быть тип coworking для брони рабочего места и в параметре workspaceId передан существующий идентификатор места. Для брони переговорки у roomId должен быть тип meeting_room.
     *   *Ограничения:* Максимум 3 активных брони на пользователя вперед.
-    *   *Тело запроса:* `{ userId: "123", filialId: "001", buildingId: "B1234", floorId: "floor_2", roomId: "room_418", bookingType: "workspace", workspaceId: "ws_floor2_a205", startTime: "2024-09-20T09:00:00Z", endTime: "2024-09-20T18:00:00Z" }`
+    *   *Тело запроса:* `{ userId: "123", floorId: "floor_2", roomId: "room_418", bookingType: "workspace", workspaceId: "ws_floor2_a205", startTime: "2024-09-20T09:00:00Z", endTime: "2024-09-20T18:00:00Z" }`
 
 27. **`GET /api/v1/bookings/{bookingId}`** - Получение информации о бронировании
 
@@ -160,19 +124,12 @@
     *   *Бизнес-правило:* Отмена возможна в любое время до начала брони.
 
 **Поиск и доступность**
-
-31. **`GET /api/v1/rooms/availability`** - Поиск свободных переговорок и отображение броней
-    *   *Бизнес-логика:* Возвращает список помещений на этаже и их статус (для переговорок - сводобен или занят и кем занят) на указанный промежуток времени.
-    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2&startTime=2024-09-20T09:00:00Z&endTime=2024-09-20T18:00:00Z&capacityFrom=5`
-    *   *Фильтры:* По филиалу, зданию, этажу, дате/времени, вместимости переговорных.
       
 32. **`GET /api/v1/workspaces/availability`** - Поиск свободных мест и отображение броней
     *   *Бизнес-логика:* Возвращает список мест и их статус (сводобен или занят и кем занят) на указанный промежуток времени.
-    *   *Параметры:* `?filialId=001&buildingId=B1234&floorId=floor_2&roomId=room_418&startTime=2024-09-20T09:00:00Z&endTime=2024-09-20T18:00:00Z&attributes=monitor`
+    *   *Параметры:* `?floorId=floor_2&roomId=room_418&startTime=2024-09-20T09:00:00Z&endTime=2024-09-20T18:00:00Z&attributes=monitor`
     *   *Фильтры:* По филиалу, зданию, этажу, кабинету, дате/времени, атрибутам места.
 
-33. **`GET /api/v1/rooms/{roomId}/availability`** - Проверка доступности конкретного помещения (для переговорок)
-    *   *Возвращает:* `{ "type": "coffee_point", "available": null }` или `{ "type": "meeting_room", "available": false, "userId": "1234", "nextAvailable": "2024-09-20T18:00:00Z" }`
 
 34. **`GET /api/v1/workspaces/{workspaceId}/availability`** - Проверка доступности конкретного рабочего места
     *   *Возвращает:* `{ "available": true }` или `{ "available": false, "userId": "1234", "nextAvailable": "2024-09-20T18:00:00Z" }`
