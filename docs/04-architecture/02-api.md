@@ -91,13 +91,13 @@
 
 Этажи:
 1.  **`POST /api/v1/floors`** - Внесение нового этажа в базу
-    *   *Ограничения:* filialId и buildingId должен существовать. floorId должен быть уникальным.
+    *   *Ограничения:* filialId и buildingId должны существовать. floorId должен быть уникальным.
     *   *Тело запроса:* `{ floorId: "floor_2", name: "Этаж 2", buildingId: "B1234", filialId: "001" }`
 
 2.  **`GET /api/v1/floors/{id}`** - Получение информации об этаже
 
 3.  **`GET /api/v1/floors`** - Получение списка всех этажей в заданном филиале и здании
-   *   *Параметры:* `?filialId=001&buildingId=B1234`
+    *   *Параметры:* `?filialId=001&buildingId=B1234`
 
 4.  **`PATCH /api/v1/floors/{id}`** - Обновление информации об этаже
 
