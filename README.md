@@ -29,8 +29,9 @@ SmartOffice - это Desk-Sharing система для поиска и резе
    2. [Развертывание и сеть](./docs/03-devops)
 5. Архитектура
     1. [ADR](./docs/04-architecture/01-adrs.md)
-    2. [Описание API](./docs/04-architecture/02-api.md)
-    3. [Компонентная схема](./docs/04-architecture/03-arch.md)
+    2. [Описание API, расширенный вариант](./docs/04-architecture/02-api.md)
+    3. [Описание API для MVP в рамках учебного курса](02-api-MVP.md)
+    4. [Компонентная схема](./docs/04-architecture/03-arch.md)
 6. Тесты
    1. [Тестовые кейсы](./docs/05-testing/01-test-list.md)
 
