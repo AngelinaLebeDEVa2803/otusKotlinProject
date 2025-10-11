@@ -40,7 +40,7 @@
 | `buildingId` | string | Id здания, к которому принадлежит помещение | `"B1234"` |
 | `floorId` | string | ID этажа, к которому принадлежит помещение | `"floor_2"` |
 | `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
-| `RoomMap` | file | Изображение/карта помещения (опционально) | `cab_picture.png` |
+| `roomMap` | file | Изображение/карта помещения (опционально) | `cab_picture.png` |
 
 
 **Рабочее место (Workspace)**
@@ -62,8 +62,12 @@
 | :--- | :--- | :--- | :--- |
 | `bookingId` | string | Уникальный идентификатор брони | `"book_abc123"` |
 | `userId` | string | ID пользователя, создавшего бронь | `"user_789"` |
-| `placeType` | string | Тип брони (рабочее место или переговорка: `"workspace"`, `"meeting_room"`) | `"workspace"` |
-| `placeId` | string | ID забронированного места или переговорной | `"ws_floor2_a205"` |
+| `filialId` | string | ID филиала, в котором находится место | `"001"` |
+| `buildingId` | string | ID здания, в котором находится место | `"B1234"` |
+| `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
+| `roomId` | string | ID помещения, в котором находится место | `"room_418"` |
+| `bookingType` | string | Тип брони (рабочее место или переговорка: `"workspace"`, `"meeting_room"`) | `"workspace"` |
+| `workspaceId` | string | ID забронированного места (при bookingType = `"workspace"`) | `"ws_floor2_a205"` |
 | `startTime` | ISO 8601 | Дата и время начала брони | `"2024-09-20T09:00:00Z"` |
 | `endTime` | ISO 8601 | Дата и время окончания брони | `"2024-09-20T17:00:00Z"` |
 | `status` | string | Статус: `"active"`, `"cancelled"`, `"completed"` | `"active"` |
