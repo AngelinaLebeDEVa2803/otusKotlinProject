@@ -28,29 +28,42 @@
 | `buildingId` | string | Id здания, к которому принадлежит этаж | `"B1234"` |
 | `floorMap` | file | Изображение/карта этажа (опционально) | `first_floor_picture.png` |
 
+**Помещение (Room)**
+
+| Поле | Тип | Бизнес-описание | Пример значения |
+| :--- | :--- | :--- | :--- |
+| `roomId` | string | ID помещения | `"room_418"` |
+| `name` | string | Человекочитаемое обозначение помещения | `"Кабинет 418"` |
+| `type` | string | Тип: `"coworking"`, `"meeting_room"`, `"coffee_point"` | `"meeting_room"` |
+| `capacity` | integer | Вместимость для переговорок | `5` |
+| `filialId` | string | ID филиала, к которому принадлежит помещение | `"001"` |
+| `buildingId` | string | Id здания, к которому принадлежит помещение | `"B1234"` |
+| `floorId` | string | ID этажа, к которому принадлежит помещение | `"floor_2"` |
+| `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
+| `RoomMap` | file | Изображение/карта помещения (опционально) | `cab_picture.png` |
+
 
 **Рабочее место (Workspace)**
 
 | Поле | Тип | Бизнес-описание | Пример значения |
 | :--- | :--- | :--- | :--- |
-| `id` | string | Уникальный идентификатор места | `"ws_floor2_a205"` |
+| `workspaceId` | string | Уникальный идентификатор места | `"ws_floor2_a205"` |
 | `name` | string | Человекочитаемое название места | `"А-205"` |
-| `type` | string | Тип: `"desk"`, `"meeting_room"` | `"desk"` |
-| `filialId` | string | ID филиала, на котором находится место | `"001"` |
-| `buildingId` | string | ID здания, на котором находится место | `"B1234"` |
+| `filialId` | string | ID филиала, в котором находится место | `"001"` |
+| `buildingId` | string | ID здания, в котором находится место | `"B1234"` |
 | `floorId` | string | ID этажа, на котором находится место | `"floor_2"` |
-| `coordinates` | object | Координаты на карте этажа (`x`, `y`) | `{ "x": 150, "y": 320 }` |
+| `roomId` | string | ID помещения, в котором находится место | `"room_418"` |
+| `coordinates` | object | Координаты на карте помещения (`x`, `y`) | `{ "x": 1, "y": 3 }` |
 | `attributes` | string[] | Список атрибутов места | `["monitor", "window", "power_outlet"]` |
-| `capacity` | integer | Вместимость для переговорных, для рабочего места = 1 | `5` |
-| `status` | string | Текущий статус: `"active"`, `"inactive"`, `"under_maintenance"` | `"active"` |
 
 **Бронирование (Booking)**
 
 | Поле | Тип | Бизнес-описание | Пример значения |
 | :--- | :--- | :--- | :--- |
-| `id` | string | Уникальный идентификатор брони | `"book_abc123"` |
+| `bookingId` | string | Уникальный идентификатор брони | `"book_abc123"` |
 | `userId` | string | ID пользователя, создавшего бронь | `"user_789"` |
-| `workspaceId` | string | ID забронированного места | `"ws_floor2_a205"` |
+| `placeType` | string | Тип брони (рабочее место или переговорка: `"workspace"`, `"meeting_room"`) | `"workspace"` |
+| `placeId` | string | ID забронированного места или переговорной | `"ws_floor2_a205"` |
 | `startTime` | ISO 8601 | Дата и время начала брони | `"2024-09-20T09:00:00Z"` |
 | `endTime` | ISO 8601 | Дата и время окончания брони | `"2024-09-20T17:00:00Z"` |
 | `status` | string | Статус: `"active"`, `"cancelled"`, `"completed"` | `"active"` |
