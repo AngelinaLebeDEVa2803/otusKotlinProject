@@ -316,7 +316,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Error'
-
       discriminator:
         propertyName: responseType
         mapping:
@@ -335,8 +334,6 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
-            userId:
-              $ref: '#/components/schemas/UserId'
 
     BookingResponseSingle:
       allOf:
