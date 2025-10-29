@@ -411,10 +411,16 @@ components:
         - success
         - notFound
         - badId
-        - badTitle
-        - badDescription
+        - badUserId
+        - badFloorId
+        - badRoomId
+        - badWorkspaceId
+        - badStartTime
+        - badEndTime
+        - badStatus
         - cannotDelete
-        - badSearchString        
+        - cannotUpdate
+        - cannotCreate
 
     BookingDebug:
       type: object
