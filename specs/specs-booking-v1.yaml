@@ -52,19 +52,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingReadResponse'
+  /booking/update:
+    post:
+      tags:
+        - booking
+      summary: Update booking
+      operationId: bookingUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingUpdateResponse'
 
-  /ad/update:
+  /booking/delete:
     post:
       tags:
-        - ad
-      summary: Update ad
-      operationId: adUpdate
+        - booking
+      summary: Delete booking
+      operationId: bookingDelete
       requestBody:
         description: Request body
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdUpdateRequest'
+              $ref: '#/components/schemas/BookingDeleteRequest'
         required: true
       responses:
         200:
@@ -72,19 +92,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdUpdateResponse'
-  /ad/delete:
+                $ref: '#/components/schemas/BookingDeleteResponse'
+  /booking/all:
     post:
       tags:
-        - ad
-      summary: Delete ad
-      operationId: adDelete
+        - booking
+      summary: Show all personal bookings
+      operationId: bookingAll
       requestBody:
         description: Request body
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdDeleteRequest'
+              $ref: '#/components/schemas/BookingAllRequest'
         required: true
       responses:
         200:
@@ -92,27 +112,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdDeleteResponse'
-  /ad/search:
-    post:
-      tags:
-        - ad
-      summary: Search ad
-      operationId: adSearch
-      requestBody:
-        description: Request body
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdSearchRequest'
-        required: true
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdSearchResponse'
+                $ref: '#/components/schemas/BookingAllResponse'
 
 
 components:
@@ -177,9 +177,9 @@ components:
         mapping:
           create: '#/components/schemas/BookingCreateRequest'
           read:   '#/components/schemas/BookingReadRequest'
-          update: '#/components/schemas/AdUpdateRequest'
-          delete: '#/components/schemas/AdDeleteRequest'
-          search: '#/components/schemas/AdSearchRequest'
+          update: '#/components/schemas/BookingUpdateRequest'
+          delete: '#/components/schemas/BookingDeleteRequest'
+          all: '#/components/schemas/BookingAllRequest'
 
     # 1. create
 
@@ -213,11 +213,79 @@ components:
           properties:
             booking:
               $ref: '#/components/schemas/BookingReadObject'
-
     
+    # 3. update
+
+    BookingUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseAd'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
+
+    BookingUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingUpdateObject'
+
+    # 4. delete
+
+    BookingDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/AdLock'
+
+    BookingDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingDeleteObject'
+
+    # 5. all
+
+    BookingAllFilter: # дату и юзера прикрутить
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        searchString:
+          type: string
+          description: Поисковая строка, которая будет искаться в объявлениях
+        ownerId:
+          $ref: '#/components/schemas/UserId'
+        adType:
+          $ref: '#/components/schemas/DealSide'
+
+    BookingAllRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            bookingFilter:
+              $ref: '#/components/schemas/BookingAllFilter'
 
 
     # RESPONSE SCHEMAS ======================
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error    
 
     Error:
       type: object
@@ -230,12 +298,6 @@ components:
           type: string
         message:
           type: string
-
-    ResponseResult:
-      type: string
-      enum:
-        - success
-        - error
 
     IResponse:
       type: object
@@ -257,81 +319,21 @@ components:
         mapping:
           create: '#/components/schemas/BookingCreateResponse'
           read:   '#/components/schemas/BookingReadResponse'
-          update: '#/components/schemas/AdUpdateResponse'
-          delete: '#/components/schemas/AdDeleteResponse'
-          search: '#/components/schemas/AdSearchResponse'
-          init: '#/components/schemas/AdInitResponse'
+          update: '#/components/schemas/BookingUpdateResponse'
+          delete: '#/components/schemas/BookingDeleteResponse'
+          all: '#/components/schemas/BookingAllResponse'
+          init: '#/components/schemas/BookingInitResponse'
 
-
-
-
-
-    AdInitResponse:
-      allOf:
-        - $ref: '#/components/schemas/IResponse'
-
-
-
-
-
-    AdUpdateObject:
-      allOf:
-        - $ref: '#/components/schemas/BaseAd'
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/BookingId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
-
-    AdUpdateRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            ad:
-              $ref: '#/components/schemas/AdUpdateObject'
-
-    AdDeleteObject:
-      allOf:
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/BookingId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
-
-    AdDeleteRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            ad:
-              $ref: '#/components/schemas/AdDeleteObject'
-
-    AdSearchFilter:
-      type: object
-      description: Набор фильтров для поиска
-      properties:
-        searchString:
-          type: string
-          description: Поисковая строка, которая будет искаться в объявлениях
-        ownerId:
-          $ref: '#/components/schemas/UserId'
-        adType:
-          $ref: '#/components/schemas/DealSide'
-
-    AdSearchRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            adFilter:
-              $ref: '#/components/schemas/AdSearchFilter'
-
+    AdPermissions:
+      type: string
+      description: Доступы для клиента для операций над объявлением
+      enum:
+        - read
+        - update
+        - delete
+        - makeVisiblePublic
+        - makeVisibleOwn
+        - makeVisibleGroup
 
     AdResponseObject:
       allOf:
@@ -351,59 +353,64 @@ components:
               items:
                 $ref: '#/components/schemas/AdPermissions'
 
-    AdPermissions:
-      type: string
-      description: Доступы для клиента для операций над объявлением
-      enum:
-        - read
-        - update
-        - delete
-        - makeVisiblePublic
-        - makeVisibleOwn
-        - makeVisibleGroup
-
-    AdResponseSingle:
+    BookingResponseSingle:
       allOf:
         - type: object
-          description: Ответ с одним объектом объявления
+          description: Ответ с одним объектом бронирования
           properties:
             ad:
               $ref: '#/components/schemas/AdResponseObject'
 
-    AdResponseMulti:
+    BookingResponseMulti:
       allOf:
         - type: object
-          description: Список найденных объектов
+          description: Список найденных броней
           properties:
             ads:
               type: array
               items:
                 $ref: '#/components/schemas/AdResponseObject'
+    
+    # 0. init
+
+    BookingInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    # 1. create
 
     BookingCreateResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/BookingResponseSingle'
+
+    # 2. read
 
     BookingReadResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/BookingResponseSingle'
 
-    AdUpdateResponse:
+    # 3. update
+
+    BookingUpdateResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/BookingResponseSingle'
 
-    AdDeleteResponse:
+    # 4. delete
+
+    BookingDeleteResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
+        - $ref: '#/components/schemas/BookingResponseSingle'
 
-    AdSearchResponse:
+    # 5. all
+
+    BookingAllResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseMulti'
+        - $ref: '#/components/schemas/BookingResponseMulti'
 
 
     # STUBS ======================
