@@ -120,47 +120,52 @@ components:
 
     # GENERAL ======================
 
-    UserId:
-      type: string
-      description: Идентификатор пользователя
-
     BookingId:
       type: string
       description: Идентификатор бронирования
 
-    AdLock:
+    UserId:
       type: string
-      description: Версия оптимистичной блокировки  
+      description: Идентификатор пользователя
 
-    DealSide:
+    StartTime:
       type: string
-      description: 'Сторона сделки: спрос или предложение'
-      enum:
-        - demand
-        - supply
+      description: Время начала бронирования
+      format: date-time
+      example: '2023-01-15T09:00:00Z'
 
-    AdVisibility:
+    EndTime:
       type: string
-      description: 'Тип видимости объявления. Возможные значения: видит только владелец, только зарегистрированный в системе пользователь, видимо всем'
-      enum:
-        - ownerOnly
-        - registeredOnly
-        - public      
+      description: Время окончания бронирования
+      format: date-time
+      example: '2023-01-15T18:00:00Z' 
 
-    BaseAd:
+    BaseBooking:
       type: object
       description: Объект описывает свойства, одинаковые для create и update
       properties:
-        title:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        floorId:
           type: string
-          description: Заголовок объявления
-        description:
+          description: Идентификатор этажа, на котором находится место
+        roomId:
           type: string
-          description: Описание объявления
-        adType:
-          $ref: '#/components/schemas/DealSide'
-        visibility:
-          $ref: '#/components/schemas/AdVisibility'      
+          description: Идентификатор помещения, на котором находится место
+        workspaceId:
+          type: string
+          description: Идентификатор места
+        startTime:
+          $ref: '#/components/schemas/StartTime'
+        endTime:
+          $ref: '#/components/schemas/EndTime'
+        status:
+          type: string
+          enum:
+            - active
+            - cancelled
+            - completed
+
 
     # REQUESTS SCHEMAS ======================
 
@@ -185,7 +190,7 @@ components:
 
     BookingCreateObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseBooking'
 
     BookingCreateRequest:
       allOf:
@@ -218,13 +223,11 @@ components:
 
     BookingUpdateObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseBooking'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
 
     BookingUpdateRequest:
       allOf:
@@ -243,8 +246,6 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
 
     BookingDeleteRequest:
       allOf:
@@ -257,17 +258,17 @@ components:
 
     # 5. all
 
-    BookingAllFilter: # дату и юзера прикрутить
+    BookingAllFilter:
       type: object
       description: Набор фильтров для поиска
       properties:
-        searchString:
-          type: string
-          description: Поисковая строка, которая будет искаться в объявлениях
-        ownerId:
+        userId:
           $ref: '#/components/schemas/UserId'
-        adType:
-          $ref: '#/components/schemas/DealSide'
+        startTime:
+          $ref: '#/components/schemas/StartTime'
+        endTime:
+          $ref: '#/components/schemas/EndTime'    
+
 
     BookingAllRequest:
       allOf:
@@ -335,18 +336,16 @@ components:
         - makeVisibleOwn
         - makeVisibleGroup
 
-    AdResponseObject:
+    BookingResponseObject:
       allOf:
-        - $ref: '#/components/schemas/BaseAd'
+        - $ref: '#/components/schemas/BaseBooking'
         - type: object
           description: Объект, который возвращается в ответе бэкенда
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
-            ownerId:
+            userId:
               $ref: '#/components/schemas/UserId'
-            lock:
-              $ref: '#/components/schemas/AdLock'
             permissions:
               type: array
               uniqueItems: true
@@ -358,18 +357,18 @@ components:
         - type: object
           description: Ответ с одним объектом бронирования
           properties:
-            ad:
-              $ref: '#/components/schemas/AdResponseObject'
+            booking:
+              $ref: '#/components/schemas/BookingResponseObject'
 
     BookingResponseMulti:
       allOf:
         - type: object
           description: Список найденных броней
           properties:
-            ads:
+            bookings:
               type: array
               items:
-                $ref: '#/components/schemas/AdResponseObject'
+                $ref: '#/components/schemas/BookingResponseObject'
     
     # 0. init
 
@@ -414,6 +413,7 @@ components:
 
 
     # STUBS ======================
+
     BookingRequestDebugMode:
       type: string
       enum:
@@ -430,7 +430,6 @@ components:
         - badId
         - badTitle
         - badDescription
-        - badVisibility
         - cannotDelete
         - badSearchString        
 
@@ -447,6 +446,3 @@ components:
       properties:
         debug:
           $ref: '#/components/schemas/BookingDebug'
-
-
-
