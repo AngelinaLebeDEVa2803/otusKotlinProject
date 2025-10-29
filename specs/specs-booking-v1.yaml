@@ -417,6 +417,7 @@ components:
         - badWorkspaceId
         - badStartTime
         - badEndTime
+        - badTimeRange
         - badStatus
         - cannotDelete
         - cannotUpdate
