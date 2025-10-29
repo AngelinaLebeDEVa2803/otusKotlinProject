@@ -31,20 +31,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookingCreateResponse'
-                
-  /ad/read:
+                $ref: '#/components/schemas/BookingCreateResponse'                
+  /booking/read:
     post:
       tags:
-        - ad
-      summary: Read ad
-      operationId: adRead
+        - booking
+      summary: Read booking by id
+      operationId: bookingRead
       requestBody:
         description: Request body
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AdReadRequest'
+              $ref: '#/components/schemas/BookingReadRequest'
         required: true
       responses:
         200:
@@ -52,7 +51,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdReadResponse'
+                $ref: '#/components/schemas/BookingReadResponse'
+
   /ad/update:
     post:
       tags:
@@ -113,29 +113,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdSearchResponse'
-  /ad/offers:
-    post:
-      tags:
-        - ad
-      summary: Search offers
-      operationId: adOffers
-      requestBody:
-        description: Request body
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AdOffersRequest'
-        required: true
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AdOffersResponse'
+
 
 components:
   schemas:
+
+    # GENERAL ======================
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+
+    BookingId:
+      type: string
+      description: Идентификатор бронирования
+
+    AdLock:
+      type: string
+      description: Версия оптимистичной блокировки  
+
+    DealSide:
+      type: string
+      description: 'Сторона сделки: спрос или предложение'
+      enum:
+        - demand
+        - supply
+
+    AdVisibility:
+      type: string
+      description: 'Тип видимости объявления. Возможные значения: видит только владелец, только зарегистрированный в системе пользователь, видимо всем'
+      enum:
+        - ownerOnly
+        - registeredOnly
+        - public      
+
+    BaseAd:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        title:
+          type: string
+          description: Заголовок объявления
+        description:
+          type: string
+          description: Описание объявления
+        adType:
+          $ref: '#/components/schemas/DealSide'
+        visibility:
+          $ref: '#/components/schemas/AdVisibility'      
+
+    # REQUESTS SCHEMAS ======================
 
     IRequest:
       type: object
@@ -143,17 +170,54 @@ components:
       properties:
         requestType:
           type: string
-          description: Поле-дескриминатор для вычисления типа запроса
+          description: Поле-дискриминатор для вычисления типа запроса
           example: create
       discriminator:
         propertyName: requestType
         mapping:
           create: '#/components/schemas/BookingCreateRequest'
-          read:   '#/components/schemas/AdReadRequest'
+          read:   '#/components/schemas/BookingReadRequest'
           update: '#/components/schemas/AdUpdateRequest'
           delete: '#/components/schemas/AdDeleteRequest'
           search: '#/components/schemas/AdSearchRequest'
-          offers: '#/components/schemas/AdOffersRequest'
+
+    # 1. create
+
+    BookingCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseAd'
+
+    BookingCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingCreateObject'
+
+    # 2. read
+
+    BookingReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+
+    BookingReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingReadObject'
+
+    
+
+
+    # RESPONSE SCHEMAS ======================
 
     Error:
       type: object
@@ -179,7 +243,7 @@ components:
       properties:
         responseType:
           type: string
-          description: Поле-дескриминатор для вычисления типа запроса
+          description: Поле-дискриминатор для вычисления типа запроса
           example: create
         result:
           $ref: '#/components/schemas/ResponseResult'
@@ -192,86 +256,23 @@ components:
         propertyName: responseType
         mapping:
           create: '#/components/schemas/BookingCreateResponse'
-          read:   '#/components/schemas/AdReadResponse'
+          read:   '#/components/schemas/BookingReadResponse'
           update: '#/components/schemas/AdUpdateResponse'
           delete: '#/components/schemas/AdDeleteResponse'
           search: '#/components/schemas/AdSearchResponse'
-          offers: '#/components/schemas/AdOffersResponse'
           init: '#/components/schemas/AdInitResponse'
 
 
-    UserId:
-      type: string
-      description: Идентификатор пользователя
-    AdId:
-      type: string
-      description: Идентификатор объявления
-    AdLock:
-      type: string
-      description: Версия оптимистичной блокировки
 
-    BaseAd:
-      type: object
-      description: Объект описывает свойства, одинаковые для create и update
-      properties:
-        title:
-          type: string
-          description: Заголовок объявления
-        description:
-          type: string
-          description: Описание объявления
-        adType:
-          $ref: '#/components/schemas/DealSide'
-        visibility:
-          $ref: '#/components/schemas/AdVisibility'
 
-    DealSide:
-      type: string
-      description: 'Сторона сделки: спрос или предложение'
-      enum:
-        - demand
-        - supply
-
-    AdVisibility:
-      type: string
-      description: 'Тип видимости объявления. Возможные значения: видит только владелец, только зарегистрированный в системе пользователь, видимо всем'
-      enum:
-        - ownerOnly
-        - registeredOnly
-        - public
 
     AdInitResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
 
-    AdCreateObject:
-      allOf:
-        - $ref: '#/components/schemas/BaseAd'
 
-    BookingCreateRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            ad:
-              $ref: '#/components/schemas/AdCreateObject'
 
-    AdReadObject:
-      allOf:
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/AdId'
 
-    AdReadRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            ad:
-              $ref: '#/components/schemas/AdReadObject'
 
     AdUpdateObject:
       allOf:
@@ -279,7 +280,7 @@ components:
         - type: object
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
+              $ref: '#/components/schemas/BookingId'
             lock:
               $ref: '#/components/schemas/AdLock'
 
@@ -297,7 +298,7 @@ components:
         - type: object
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
+              $ref: '#/components/schemas/BookingId'
             lock:
               $ref: '#/components/schemas/AdLock'
 
@@ -331,17 +332,6 @@ components:
             adFilter:
               $ref: '#/components/schemas/AdSearchFilter'
 
-    AdOffersObject:
-      $ref: '#/components/schemas/AdReadObject'
-
-    AdOffersRequest:
-      allOf:
-        - $ref: '#/components/schemas/IRequest'
-        - $ref: '#/components/schemas/BookingRequestDebug'
-        - type: object
-          properties:
-            ad:
-              $ref: '#/components/schemas/AdOffersObject'
 
     AdResponseObject:
       allOf:
@@ -350,7 +340,7 @@ components:
           description: Объект, который возвращается в ответе бэкенда
           properties:
             id:
-              $ref: '#/components/schemas/AdId'
+              $ref: '#/components/schemas/BookingId'
             ownerId:
               $ref: '#/components/schemas/UserId'
             lock:
@@ -395,7 +385,7 @@ components:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AdResponseSingle'
 
-    AdReadResponse:
+    BookingReadResponse:
       allOf:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AdResponseSingle'
@@ -415,11 +405,6 @@ components:
         - $ref: '#/components/schemas/IResponse'
         - $ref: '#/components/schemas/AdResponseMulti'
 
-    AdOffersResponse:
-      allOf:
-        - $ref: '#/components/schemas/IResponse'
-        - $ref: '#/components/schemas/AdResponseSingle'
-        - $ref: '#/components/schemas/AdResponseMulti'
 
     # STUBS ======================
     BookingRequestDebugMode:
