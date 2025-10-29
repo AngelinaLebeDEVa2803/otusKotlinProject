@@ -31,7 +31,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookingCreateResponse'                
+                $ref: '#/components/schemas/BookingCreateResponse'   
+
   /booking/read:
     post:
       tags:
@@ -52,6 +53,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingReadResponse'
+
   /booking/update:
     post:
       tags:
@@ -93,6 +95,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingDeleteResponse'
+
   /booking/all:
     post:
       tags:
@@ -113,7 +116,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookingAllResponse'
-
 
 components:
   schemas:
@@ -325,17 +327,6 @@ components:
           all: '#/components/schemas/BookingAllResponse'
           init: '#/components/schemas/BookingInitResponse'
 
-    AdPermissions:
-      type: string
-      description: Доступы для клиента для операций над объявлением
-      enum:
-        - read
-        - update
-        - delete
-        - makeVisiblePublic
-        - makeVisibleOwn
-        - makeVisibleGroup
-
     BookingResponseObject:
       allOf:
         - $ref: '#/components/schemas/BaseBooking'
@@ -346,11 +337,6 @@ components:
               $ref: '#/components/schemas/BookingId'
             userId:
               $ref: '#/components/schemas/UserId'
-            permissions:
-              type: array
-              uniqueItems: true
-              items:
-                $ref: '#/components/schemas/AdPermissions'
 
     BookingResponseSingle:
       allOf:
