@@ -12,3 +12,5 @@ rootProject.name = "otusKotlinProject"
 
 includeBuild("lessons")
 includeBuild("smart-office-be")
+//include("smart-office-be:smart-office-api-v1-jackson")
+//findProject(":smart-office-be:smart-office-api-v1-jackson")?.name = "smart-office-api-v1-jackson"
