@@ -142,6 +142,13 @@ components:
       format: date-time
       example: '2023-01-15T18:00:00Z' 
 
+    BookingStatus:
+      type: string
+      enum:
+        - active
+        - cancelled
+        - completed
+
     BaseBooking:
       type: object
       description: Объект описывает свойства, одинаковые для create и update
@@ -162,11 +169,7 @@ components:
         endTime:
           $ref: '#/components/schemas/EndTime'
         status:
-          type: string
-          enum:
-            - active
-            - cancelled
-            - completed
+          $ref: '#/components/schemas/BookingStatus'
 
 
     # REQUESTS SCHEMAS ======================
@@ -269,7 +272,9 @@ components:
         startTime:
           $ref: '#/components/schemas/StartTime'
         endTime:
-          $ref: '#/components/schemas/EndTime'    
+          $ref: '#/components/schemas/EndTime'
+        status:
+          $ref: '#/components/schemas/BookingStatus'
 
 
     BookingAllRequest:
