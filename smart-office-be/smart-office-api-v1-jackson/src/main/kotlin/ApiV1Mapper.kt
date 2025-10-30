@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.smartoffice.api.v1.models.IResponse
 
 val apiV1Mapper = JsonMapper.builder().run {
 //    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-    enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
+    enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)  //позволяет дес-ть JSON в конкретные реализации интерфейсов
 //    setSerializationInclusion(JsonInclude.Include.NON_NULL)
     build()
 }
