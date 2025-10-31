@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.smartoffice.common.stubs
+package ru.otus.otuskotlin.smartoffice.common
 
 enum class OfficeStubs {
     NONE,

@@ -1,8 +1,6 @@
-package ru.otus.otuskotlin.marketplace.common
+package ru.otus.otuskotlin.smartoffice.common
 
 import kotlinx.datetime.Instant
-import ru.otus.otuskotlin.smartoffice.common.models.*
-import ru.otus.otuskotlin.smartoffice.common.stubs.OfficeStubs
 
 data class OfficeContext(
     var command: OfficeCommand = OfficeCommand.NONE,
@@ -15,7 +13,7 @@ data class OfficeContext(
     var requestId: OfficeRequestId = OfficeRequestId.NONE,
     var timeStart: Instant = Instant.NONE,
     //var adRequest: MkplAd = MkplAd(),
-    //var adFilterRequest: MkplAdFilter = MkplAdFilter(),
+    var bookingFilterRequest: OfficeBookingFilter = OfficeBookingFilter(),
 
     //var adResponse: MkplAd = MkplAd(),
     //var adsResponse: MutableList<MkplAd> = mutableListOf(),

@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.common
+package ru.otus.otuskotlin.smartoffice.common
 
 import kotlinx.datetime.Instant
 

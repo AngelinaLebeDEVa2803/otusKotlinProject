@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.smartoffice.common.models
+package ru.otus.otuskotlin.smartoffice.common
 
 import kotlin.jvm.JvmInline
 
