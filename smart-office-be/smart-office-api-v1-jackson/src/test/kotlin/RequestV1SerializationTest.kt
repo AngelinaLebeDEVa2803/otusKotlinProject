@@ -34,21 +34,21 @@ class RequestV1SerializationTest {
         assertContains(json, Regex("\"requestType\":\\s*\"create\""))
     }
 
-//    @Test
-//    fun deserialize() {
-//        val json = apiV1Mapper.writeValueAsString(request)
-//        val obj = apiV1Mapper.readValue(json, IRequest::class.java) as AdCreateRequest
-//
-//        assertEquals(request, obj)
-//    }
+    @Test
+    fun deserialize() {
+        val json = apiV1Mapper.writeValueAsString(request)
+        val obj = apiV1Mapper.readValue(json, IRequest::class.java) as BookingCreateRequest
 
-//    @Test
-//    fun deserializeNaked() {
-//        val jsonString = """
-//            {"ad": null}
-//        """.trimIndent()
-//        val obj = apiV1Mapper.readValue(jsonString, AdCreateRequest::class.java)
-//
-//        assertEquals(null, obj.ad)
-//    }
+        assertEquals(request, obj)
+    }
+
+    @Test
+    fun deserializeNaked() {
+        val jsonString = """
+            {"booking": null}
+        """.trimIndent()
+        val obj = apiV1Mapper.readValue(jsonString, BookingCreateRequest::class.java)
+
+        assertEquals(null, obj.booking)
+    }
 }
