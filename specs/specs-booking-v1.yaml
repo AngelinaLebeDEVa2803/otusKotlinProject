@@ -149,6 +149,10 @@ components:
         - cancelled
         - completed
 
+    BookingLock:
+      type: string
+      description: Версия оптимистичной блокировки, для работы с БД
+
     BaseBooking:
       type: object
       description: Объект описывает свойства, одинаковые для create и update
@@ -233,6 +237,8 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
 
     BookingUpdateRequest:
       allOf:
@@ -251,6 +257,8 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
 
     BookingDeleteRequest:
       allOf:
@@ -331,6 +339,14 @@ components:
           all: '#/components/schemas/BookingAllResponse'
           init: '#/components/schemas/BookingInitResponse'
 
+    BookingPermissions:
+      type: string
+      description: Доступы для клиента для операций над бронью
+      enum:
+        - read
+        - update  # для админа и создателя брони
+        - delete  # для создателя брони
+
     BookingResponseObject:
       allOf:
         - $ref: '#/components/schemas/BaseBooking'
@@ -339,6 +355,13 @@ components:
           properties:
             id:
               $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/BookingPermissions'
 
     BookingResponseSingle:
       allOf:
