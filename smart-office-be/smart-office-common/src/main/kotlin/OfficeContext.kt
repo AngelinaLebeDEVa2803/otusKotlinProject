@@ -12,10 +12,10 @@ data class OfficeContext(
 
     var requestId: OfficeRequestId = OfficeRequestId.NONE,
     var timeStart: Instant = Instant.NONE,
-    //var adRequest: MkplAd = MkplAd(),
+    var bookingRequest: OfficeBooking = OfficeBooking(),
     var bookingFilterRequest: OfficeBookingFilter = OfficeBookingFilter(),
 
-    //var adResponse: MkplAd = MkplAd(),
-    //var adsResponse: MutableList<MkplAd> = mutableListOf(),
+    var bookingResponse: OfficeBooking = OfficeBooking(),
+    var bookingsResponse: MutableList<OfficeBooking> = mutableListOf(),
 
     )
