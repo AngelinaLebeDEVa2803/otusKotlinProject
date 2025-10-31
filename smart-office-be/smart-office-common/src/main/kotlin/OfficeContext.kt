@@ -1,6 +1,8 @@
 package ru.otus.otuskotlin.smartoffice.common
 
 import kotlinx.datetime.Instant
+import ru.otus.otuskotlin.smartoffice.common.stubs.*
+import ru.otus.otuskotlin.smartoffice.common.models.*
 
 data class OfficeContext(
     var command: OfficeCommand = OfficeCommand.NONE,

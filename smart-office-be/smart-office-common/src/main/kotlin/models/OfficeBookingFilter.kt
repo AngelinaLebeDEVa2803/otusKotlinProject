@@ -1,6 +1,7 @@
-package ru.otus.otuskotlin.smartoffice.common
+package ru.otus.otuskotlin.smartoffice.common.models
 
 import kotlinx.datetime.Instant
+import ru.otus.otuskotlin.smartoffice.common.NONE
 
 
 data class OfficeBookingFilter (
