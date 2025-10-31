@@ -13,7 +13,7 @@ data class OfficeContext(
     var stubCase: OfficeStubs = OfficeStubs.NONE,
 
     var requestId: OfficeRequestId = OfficeRequestId.NONE,
-    var timeStart: Instant = Instant.NONE,
+    var ctxTimeStart: Instant = Instant.NONE,
     var bookingRequest: OfficeBooking = OfficeBooking(),
     var bookingFilterRequest: OfficeBookingFilter = OfficeBookingFilter(),
 
