@@ -27,3 +27,4 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include("smart-office-api-v1-jackson")
 include("smart-office-common")
+include("smart-office-api-v1-mappers")
