@@ -26,7 +26,7 @@ class MapperTest {
                 mode = BookingRequestDebugMode.STUB,
                 stub = BookingRequestDebugStubs.SUCCESS,
             ),
-            booking = MkplAdStub.get().toTransportCreateAd() // отдельный модуль или тут
+            booking = MkplAdStub.get().toTransportCreateBooking() // отдельный модуль или тут
         )
 
 
@@ -40,31 +40,31 @@ class MapperTest {
         val context = OfficeContext()
         context.fromTransport(req)
 
-        assertEquals(MkplStubs.SUCCESS, context.stubCase)
-        assertEquals(MkplWorkMode.STUB, context.workMode)
-        assertEquals(expected, context.adRequest)
+        assertEquals(OfficeStubs.SUCCESS, context.stubCase)
+        assertEquals(OfficeWorkMode.STUB, context.workMode)
+        assertEquals(expected, context.bookingRequest)
     }
 
     @Test
     fun toTransport() {
-        val context = MkplContext(
-            requestId = MkplRequestId("1234"),
-            command = MkplCommand.CREATE,
-            adResponse = MkplAdStub.get(),
+        val context = OfficeContext(
+            requestId = OfficeRequestId("1234"),
+            command = OfficeCommand.CREATE,
+            bookingResponse = MkplAdStub.get(),
             errors = mutableListOf(
-                MkplError(
+                OfficeError(
                     code = "err",
                     group = "request",
                     field = "title",
                     message = "wrong title",
                 )
             ),
-            state = MkplState.RUNNING,
+            state = OfficeState.RUNNING,
         )
 
-        val req = context.toTransportAd() as AdCreateResponse
+        val req = context.toTransportBooking() as BookingCreateResponse
 
-        assertEquals(req.ad, MkplAdStub.get().toTransportAd())
+        assertEquals(req.booking, MkplAdStub.get().toTransportBooking())
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
         assertEquals("request", req.errors?.firstOrNull()?.group)
