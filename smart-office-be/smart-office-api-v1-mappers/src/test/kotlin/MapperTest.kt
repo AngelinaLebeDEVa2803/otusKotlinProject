@@ -26,7 +26,7 @@ class MapperTest {
                 mode = BookingRequestDebugMode.STUB,
                 stub = BookingRequestDebugStubs.SUCCESS,
             ),
-            booking = OfficeBookingStub.get().toTransportCreateBooking() // отдельный модуль или тут
+            booking = OfficeBookingStub.get().toTransportCreateBooking()
         )
 
         val expected = OfficeBookingStub.prepareResult {
