@@ -65,24 +65,32 @@ private fun OfficeState.toResult(): ResponseResult? = when (this) {
 }
 
 // booking response
-fun List<OfficeBooking>.toTransportAd(): List<BookingResponseObject>? = this
+fun List<OfficeBooking>.toTransportBooking(): List<BookingResponseObject>? = this
     .map { it.toTransportBooking() }
     .toList()
     .takeIf { it.isNotEmpty() }
 
 fun OfficeBooking.toTransportBooking(): BookingResponseObject = BookingResponseObject(
     id = id.toTransportBooking(),
+    userId = userId.toTransportBooking(),
+    floorId = floorId.toTransportBooking(),
+    roomId = roomId.toTransportBooking(),
+    workspaceId = workspaceId.toTransportBooking(),
 
-//    title = title.takeIf { it.isNotBlank() },
-//    description = description.takeIf { it.isNotBlank() },
-//    ownerId = ownerId.takeIf { it != MkplUserId.NONE }?.asString(),
-//    adType = adType.toTransportAd(),
-//    visibility = visibility.toTransportAd(),
+    startTime,
+    endTime,
 
+    status = status.toTransportBooking(),
+    lock = lock.toTransportBooking(),
     permissions = permissionsClient.toTransportBooking(),
 )
 
 internal fun OfficeBookingId.toTransportBooking() = takeIf { it != OfficeBookingId.NONE }?.asString()
+internal fun OfficeUserId.toTransportBooking() = takeIf { it != OfficeUserId.NONE }?.asString()
+internal fun OfficeFloorId.toTransportBooking() = takeIf { it != OfficeFloorId.NONE }?.asString()
+internal fun OfficeRoomId.toTransportBooking() = takeIf { it != OfficeRoomId.NONE }?.asString()
+internal fun OfficeWorkspaceId.toTransportBooking() = takeIf { it != OfficeWorkspaceId.NONE }?.asString()
+internal fun OfficeBookingLock.toTransportBooking() = takeIf { it != OfficeBookingLock.NONE }?.asString()
 
 private fun Set<OfficeBookingPermissions>.toTransportBooking(): Set<BookingPermissions>? = this
     .map { it.toTransportBooking() }
@@ -93,4 +101,11 @@ private fun OfficeBookingPermissions.toTransportBooking() = when (this) {
     OfficeBookingPermissions.READ -> BookingPermissions.READ
     OfficeBookingPermissions.UPDATE -> BookingPermissions.UPDATE
     OfficeBookingPermissions.DELETE -> BookingPermissions.DELETE
+}
+
+private fun OfficeBookingStatus.toTransportBooking() = when (this) {
+    OfficeBookingStatus.ACTIVE -> BookingStatus.ACTIVE
+    OfficeBookingStatus.CANCELLED -> BookingStatus.CANCELLED
+    OfficeBookingStatus.COMPLETED -> BookingStatus.COMPLETED
+    OfficeBookingStatus.NONE -> null
 }
