@@ -53,8 +53,8 @@ class MapperTest {
                 OfficeError(
                     code = "err",
                     group = "request",
-                    field = "floor",
-                    message = "invalid floor",
+                    field = "floorId",
+                    message = "invalid floorId",
                 )
             ),
             state = OfficeState.RUNNING,
@@ -66,7 +66,7 @@ class MapperTest {
         assertEquals(1, req.errors?.size)
         assertEquals("err", req.errors?.firstOrNull()?.code)
         assertEquals("request", req.errors?.firstOrNull()?.group)
-        assertEquals("floor", req.errors?.firstOrNull()?.field)
-        assertEquals("invalid floor", req.errors?.firstOrNull()?.message)
+        assertEquals("floorId", req.errors?.firstOrNull()?.field)
+        assertEquals("invalid floorId", req.errors?.firstOrNull()?.message)
     }
 }
