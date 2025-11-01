@@ -17,7 +17,7 @@ fun OfficeContext.fromTransport(request: IRequest) = when (request) {
     else -> throw UnknownRequestClass(request.javaClass)
 }
 
-// тут не забыть функции для заполнения value классов
+// функции для заполнения value классов
 private fun String?.toBookingId() = this?.let { OfficeBookingId(it) } ?: OfficeBookingId.NONE
 private fun String?.toBookingLock() = this?.let { OfficeBookingLock(it) } ?: OfficeBookingLock.NONE
 
@@ -25,6 +25,8 @@ private fun String?.toBookingUserId() = this?.let { OfficeUserId(it) } ?: Office
 private fun String?.toBookingFloorId() = this?.let { OfficeFloorId(it) } ?: OfficeFloorId.NONE
 private fun String?.toBookingRoomId() = this?.let { OfficeRoomId(it) } ?: OfficeRoomId.NONE
 private fun String?.toBookingWorkspaceId() = this?.let { OfficeWorkspaceId(it) } ?: OfficeWorkspaceId.NONE
+
+private fun String?.toBookingTime(): Instant = try {this?.let { Instant.parse(it)} ?: Instant.NONE} catch (e: Exception) {Instant.NONE}
 
 
 // режим работы прод, тест, стаб
@@ -102,10 +104,10 @@ fun OfficeContext.fromTransport(request: BookingUpdateRequest) {
 
 // all
 private fun BookingAllFilter?.toInternal(): OfficeBookingFilter = OfficeBookingFilter(
-    userId = this.userId.toBookingUserId(),
-    startTime = this.startTime, // сделать в датетайм
-    endTime = this.endTime,  // аналогично
-    status = this.status.fromTransport(),
+    userId = this?.userId.toBookingUserId(),
+    startTime = this?.startTime.toBookingTime(), // сделать в датетайм
+    endTime = this?.endTime.toBookingTime(),  // аналогично
+    status = this?.status.fromTransport(),
 )
 
 fun OfficeContext.fromTransport(request: BookingAllRequest) {
@@ -122,8 +124,8 @@ private fun BookingCreateObject.toInternal(): OfficeBooking = OfficeBooking(
     floorId = this.floorId.toBookingFloorId(),
     roomId = this.roomId.toBookingRoomId(),
     workspaceId = this.workspaceId.toBookingWorkspaceId(),
-    startTime = this.startTime, // сделать в датетайм
-    endTime = this.endTime,  // аналогично
+    startTime = this.startTime.toBookingTime(),
+    endTime = this.endTime.toBookingTime(),
     status = this.status.fromTransport(),
 )
 
@@ -133,12 +135,11 @@ private fun BookingUpdateObject.toInternal(): OfficeBooking = OfficeBooking(
     floorId = this.floorId.toBookingFloorId(),
     roomId = this.roomId.toBookingRoomId(),
     workspaceId = this.workspaceId.toBookingWorkspaceId(),
-    startTime = this.startTime, // сделать в датетайм
-    endTime = this.endTime,  // аналогично
+    startTime = this.startTime.toBookingTime(),
+    endTime = this.endTime.toBookingTime(),
     status = this.status.fromTransport(),
     lock = lock.toBookingLock(),
 )
-
 
 private fun BookingStatus?.fromTransport(): OfficeBookingStatus = when (this) {
     BookingStatus.ACTIVE -> OfficeBookingStatus.ACTIVE
