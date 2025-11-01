@@ -1,6 +1,8 @@
 package ru.otus.otuskotlin.smartoffice.mappers.v1
 
+import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.smartoffice.api.v1.models.*
+import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.common.stubs.*
@@ -17,8 +19,13 @@ fun OfficeContext.fromTransport(request: IRequest) = when (request) {
 
 // тут не забыть функции для заполнения value классов
 private fun String?.toBookingId() = this?.let { OfficeBookingId(it) } ?: OfficeBookingId.NONE
-//private fun String?.toAdWithId() = MkplAd(id = this.toAdId())
 private fun String?.toBookingLock() = this?.let { OfficeBookingLock(it) } ?: OfficeBookingLock.NONE
+
+private fun String?.toBookingUserId() = this?.let { OfficeUserId(it) } ?: OfficeUserId.NONE
+private fun String?.toBookingFloorId() = this?.let { OfficeFloorId(it) } ?: OfficeFloorId.NONE
+private fun String?.toBookingRoomId() = this?.let { OfficeRoomId(it) } ?: OfficeRoomId.NONE
+private fun String?.toBookingWorkspaceId() = this?.let { OfficeWorkspaceId(it) } ?: OfficeWorkspaceId.NONE
+
 
 // режим работы прод, тест, стаб
 private fun BookingDebug?.transportToWorkMode(): OfficeWorkMode = when (this?.mode) {
@@ -85,4 +92,57 @@ fun OfficeContext.fromTransport(request: BookingDeleteRequest) {
     stubCase = request.debug.transportToStubCase()
 }
 
+// update
+fun OfficeContext.fromTransport(request: BookingUpdateRequest) {
+    command = OfficeCommand.UPDATE
+    bookingRequest = request.booking?.toInternal() ?: OfficeBooking()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
 
+// all
+private fun BookingAllFilter?.toInternal(): OfficeBookingFilter = OfficeBookingFilter(
+    userId = this.userId.toBookingUserId(),
+    startTime = this.startTime, // сделать в датетайм
+    endTime = this.endTime,  // аналогично
+    status = this.status.fromTransport(),
+)
+
+fun OfficeContext.fromTransport(request: BookingAllRequest) {
+    command = OfficeCommand.ALL
+    bookingFilterRequest = request.bookingFilter.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+
+//internals full obj for create and update
+private fun BookingCreateObject.toInternal(): OfficeBooking = OfficeBooking(
+    userId = this.userId.toBookingUserId(),
+    floorId = this.floorId.toBookingFloorId(),
+    roomId = this.roomId.toBookingRoomId(),
+    workspaceId = this.workspaceId.toBookingWorkspaceId(),
+    startTime = this.startTime, // сделать в датетайм
+    endTime = this.endTime,  // аналогично
+    status = this.status.fromTransport(),
+)
+
+private fun BookingUpdateObject.toInternal(): OfficeBooking = OfficeBooking(
+    id = this.id.toBookingId(),
+    userId = this.userId.toBookingUserId(),
+    floorId = this.floorId.toBookingFloorId(),
+    roomId = this.roomId.toBookingRoomId(),
+    workspaceId = this.workspaceId.toBookingWorkspaceId(),
+    startTime = this.startTime, // сделать в датетайм
+    endTime = this.endTime,  // аналогично
+    status = this.status.fromTransport(),
+    lock = lock.toBookingLock(),
+)
+
+
+private fun BookingStatus?.fromTransport(): OfficeBookingStatus = when (this) {
+    BookingStatus.ACTIVE -> OfficeBookingStatus.ACTIVE
+    BookingStatus.CANCELLED -> OfficeBookingStatus.CANCELLED
+    BookingStatus.COMPLETED -> OfficeBookingStatus.COMPLETED
+    null -> OfficeBookingStatus.NONE
+}
