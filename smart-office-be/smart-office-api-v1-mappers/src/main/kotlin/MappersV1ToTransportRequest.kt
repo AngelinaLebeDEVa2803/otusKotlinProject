@@ -30,8 +30,8 @@ fun OfficeBooking.toTransportUpdateBooking() = BookingUpdateObject(
     floorId = floorId.toTransportBooking(),
     roomId = roomId.toTransportBooking(),
     workspaceId = workspaceId.toTransportBooking(),
-    startTime = startTime.takeIf { it != Instant.NONE }?.toString(),
-    endTime = endTime.takeIf { it != Instant.NONE }?.toString(),
+    startTime = startTime.toTransportBookingTime(),
+    endTime = endTime.toTransportBookingTime(),
     status = status.toTransportBooking(),
     lock = lock.toTransportBooking(),
 )
@@ -43,7 +43,7 @@ fun OfficeBooking.toTransportDeleteBooking() = BookingDeleteObject(
 
 fun OfficeBooking.toTransportAllBooking() = BookingAllFilter(
     userId = userId.toTransportBooking(),
-    startTime = startTime.takeIf { it != Instant.NONE }?.toString(),
-    endTime = endTime.takeIf { it != Instant.NONE }?.toString(),
+    startTime = startTime.toTransportBookingTime(),
+    endTime = endTime.toTransportBookingTime(),
     status = status.toTransportBooking(),
 )

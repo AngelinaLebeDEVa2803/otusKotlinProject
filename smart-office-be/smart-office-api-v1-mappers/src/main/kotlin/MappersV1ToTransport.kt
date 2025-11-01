@@ -79,8 +79,8 @@ fun OfficeBooking.toTransportBooking(): BookingResponseObject = BookingResponseO
     roomId = roomId.toTransportBooking(),
     workspaceId = workspaceId.toTransportBooking(),
 
-    startTime = startTime.takeIf { it != Instant.NONE }?.toString(),
-    endTime = endTime.takeIf { it != Instant.NONE }?.toString(),
+    startTime = startTime.toTransportBookingTime(),
+    endTime = endTime.toTransportBookingTime(),
 
     status = status.toTransportBooking(),
     lock = lock.toTransportBooking(),
@@ -94,6 +94,8 @@ internal fun OfficeRoomId.toTransportBooking() = takeIf { it != OfficeRoomId.NON
 internal fun OfficeWorkspaceId.toTransportBooking() = takeIf { it != OfficeWorkspaceId.NONE }?.asString()
 internal fun OfficeBookingLock.toTransportBooking() = takeIf { it != OfficeBookingLock.NONE }?.asString()
 
+internal fun Instant?.toTransportBookingTime(): String? =
+    this?.takeIf { it != Instant.NONE }?.toString()
 
 private fun Set<OfficeBookingPermissions>.toTransportBooking(): Set<BookingPermissions>? = this
     .map { it.toTransportBooking() }
