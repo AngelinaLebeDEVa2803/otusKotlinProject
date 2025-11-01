@@ -106,7 +106,7 @@ private fun OfficeBookingPermissions.toTransportBooking() = when (this) {
     OfficeBookingPermissions.DELETE -> BookingPermissions.DELETE
 }
 
-private fun OfficeBookingStatus.toTransportBooking() = when (this) {
+internal fun OfficeBookingStatus.toTransportBooking() = when (this) {
     OfficeBookingStatus.ACTIVE -> BookingStatus.ACTIVE
     OfficeBookingStatus.CANCELLED -> BookingStatus.CANCELLED
     OfficeBookingStatus.COMPLETED -> BookingStatus.COMPLETED
