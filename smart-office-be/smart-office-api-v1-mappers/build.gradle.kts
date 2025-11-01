@@ -11,5 +11,5 @@ dependencies {
     implementation(projects.smartOfficeCommon)
 
     testImplementation(kotlin("test-junit"))
-    //testImplementation(projects.smartOfficeStubs)
+    testImplementation(projects.smartOfficeStubs)
 }
