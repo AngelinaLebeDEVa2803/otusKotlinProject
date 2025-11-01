@@ -14,7 +14,7 @@ import ru.otus.otuskotlin.smartoffice.mappers.v1.fromTransport
 import ru.otus.otuskotlin.smartoffice.mappers.v1.toTransportBooking
 import ru.otus.otuskotlin.smartoffice.mappers.v1.toTransportCreateBooking
 
-//import ru.otus.otuskotlin.smartoffice.stubs.MkplAdStub
+import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.assertEquals
 
 
@@ -26,12 +26,11 @@ class MapperTest {
                 mode = BookingRequestDebugMode.STUB,
                 stub = BookingRequestDebugStubs.SUCCESS,
             ),
-            booking = MkplAdStub.get().toTransportCreateBooking() // отдельный модуль или тут
+            booking = OfficeBookingStub.get().toTransportCreateBooking() // отдельный модуль или тут
         )
 
-        val expected = MkplAdStub.prepareResult {
-            id = MkplAdId.NONE
-            ownerId = MkplUserId.NONE
+        val expected = OfficeBookingStub.prepareResult {
+            id = OfficeBookingId.NONE
             lock = OfficeBookingLock.NONE
             permissionsClient.clear()
         }
