@@ -1,7 +1,9 @@
 package ru.otus.otuskotlin.smartoffice.mappers.v1
 
+import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.smartoffice.api.v1.models.*
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
+import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.exceptions.UnknownOfficeCommand
 import ru.otus.otuskotlin.smartoffice.common.models.*
 
@@ -77,8 +79,8 @@ fun OfficeBooking.toTransportBooking(): BookingResponseObject = BookingResponseO
     roomId = roomId.toTransportBooking(),
     workspaceId = workspaceId.toTransportBooking(),
 
-    startTime,
-    endTime,
+    startTime = startTime.takeIf { it != Instant.NONE }?.toString(),
+    endTime = endTime.takeIf { it != Instant.NONE }?.toString(),
 
     status = status.toTransportBooking(),
     lock = lock.toTransportBooking(),
@@ -91,6 +93,7 @@ internal fun OfficeFloorId.toTransportBooking() = takeIf { it != OfficeFloorId.N
 internal fun OfficeRoomId.toTransportBooking() = takeIf { it != OfficeRoomId.NONE }?.asString()
 internal fun OfficeWorkspaceId.toTransportBooking() = takeIf { it != OfficeWorkspaceId.NONE }?.asString()
 internal fun OfficeBookingLock.toTransportBooking() = takeIf { it != OfficeBookingLock.NONE }?.asString()
+
 
 private fun Set<OfficeBookingPermissions>.toTransportBooking(): Set<BookingPermissions>? = this
     .map { it.toTransportBooking() }
