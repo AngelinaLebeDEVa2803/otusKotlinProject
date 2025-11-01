@@ -5,10 +5,9 @@ import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingCreateObject
 import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingDeleteObject
 import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingReadObject
 import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingUpdateObject
+import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingAllFilter
 import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeBooking
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeBookingId
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeBookingLock
 
 // создание объектов для реквестов из контекста
 fun OfficeBooking.toTransportCreateBooking() = BookingCreateObject(
@@ -40,4 +39,11 @@ fun OfficeBooking.toTransportUpdateBooking() = BookingUpdateObject(
 fun OfficeBooking.toTransportDeleteBooking() = BookingDeleteObject(
     id = id.toTransportBooking(),
     lock = lock.toTransportBooking(),
+)
+
+fun OfficeBooking.toTransportAllBooking() = BookingAllFilter(
+    userId = userId.toTransportBooking(),
+    startTime = startTime.takeIf { it != Instant.NONE }?.toString(),
+    endTime = endTime.takeIf { it != Instant.NONE }?.toString(),
+    status = status.toTransportBooking(),
 )
