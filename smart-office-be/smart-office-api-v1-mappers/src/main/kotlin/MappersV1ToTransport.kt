@@ -63,3 +63,34 @@ private fun OfficeState.toResult(): ResponseResult? = when (this) {
     OfficeState.FINISHING -> ResponseResult.SUCCESS
     OfficeState.NONE -> null
 }
+
+// booking response
+fun List<OfficeBooking>.toTransportAd(): List<BookingResponseObject>? = this
+    .map { it.toTransportBooking() }
+    .toList()
+    .takeIf { it.isNotEmpty() }
+
+fun OfficeBooking.toTransportBooking(): BookingResponseObject = BookingResponseObject(
+    id = id.toTransportBooking(),
+
+//    title = title.takeIf { it.isNotBlank() },
+//    description = description.takeIf { it.isNotBlank() },
+//    ownerId = ownerId.takeIf { it != MkplUserId.NONE }?.asString(),
+//    adType = adType.toTransportAd(),
+//    visibility = visibility.toTransportAd(),
+
+    permissions = permissionsClient.toTransportBooking(),
+)
+
+internal fun OfficeBookingId.toTransportBooking() = takeIf { it != OfficeBookingId.NONE }?.asString()
+
+private fun Set<OfficeBookingPermissions>.toTransportBooking(): Set<BookingPermissions>? = this
+    .map { it.toTransportBooking() }
+    .toSet()
+    .takeIf { it.isNotEmpty() }
+
+private fun OfficeBookingPermissions.toTransportBooking() = when (this) {
+    OfficeBookingPermissions.READ -> BookingPermissions.READ
+    OfficeBookingPermissions.UPDATE -> BookingPermissions.UPDATE
+    OfficeBookingPermissions.DELETE -> BookingPermissions.DELETE
+}
