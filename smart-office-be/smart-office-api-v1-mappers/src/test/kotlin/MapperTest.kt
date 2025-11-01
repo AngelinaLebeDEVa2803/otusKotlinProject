@@ -43,30 +43,30 @@ class MapperTest {
         assertEquals(expected, context.bookingRequest)
     }
 
-//    @Test
-//    fun toTransport() {
-//        val context = OfficeContext(
-//            requestId = OfficeRequestId("1234"),
-//            command = OfficeCommand.CREATE,
-//            bookingResponse = MkplAdStub.get(),
-//            errors = mutableListOf(
-//                OfficeError(
-//                    code = "err",
-//                    group = "request",
-//                    field = "title",
-//                    message = "wrong title",
-//                )
-//            ),
-//            state = OfficeState.RUNNING,
-//        )
-//
-//        val req = context.toTransportBooking() as BookingCreateResponse
-//
-//        assertEquals(req.booking, MkplAdStub.get().toTransportBooking())
-//        assertEquals(1, req.errors?.size)
-//        assertEquals("err", req.errors?.firstOrNull()?.code)
-//        assertEquals("request", req.errors?.firstOrNull()?.group)
-//        assertEquals("title", req.errors?.firstOrNull()?.field)
-//        assertEquals("wrong title", req.errors?.firstOrNull()?.message)
-//    }
+    @Test
+    fun toTransport() {
+        val context = OfficeContext(
+            requestId = OfficeRequestId("1234"),
+            command = OfficeCommand.CREATE,
+            bookingResponse = OfficeBookingStub.get(),
+            errors = mutableListOf(
+                OfficeError(
+                    code = "err",
+                    group = "request",
+                    field = "floor",
+                    message = "invalid floor",
+                )
+            ),
+            state = OfficeState.RUNNING,
+        )
+
+        val req = context.toTransportBooking() as BookingCreateResponse
+
+        assertEquals(req.booking, OfficeBookingStub.get().toTransportBooking())
+        assertEquals(1, req.errors?.size)
+        assertEquals("err", req.errors?.firstOrNull()?.code)
+        assertEquals("request", req.errors?.firstOrNull()?.group)
+        assertEquals("floor", req.errors?.firstOrNull()?.field)
+        assertEquals("invalid floor", req.errors?.firstOrNull()?.message)
+    }
 }
