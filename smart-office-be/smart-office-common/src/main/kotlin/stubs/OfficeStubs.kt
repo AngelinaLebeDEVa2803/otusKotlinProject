@@ -16,5 +16,5 @@ enum class OfficeStubs {
     CANNOT_CREATE,
     CANNOT_UPDATE,
     CANNOT_DELETE,
-    DB_ERROR, // not in spec
+    //DB_ERROR, // not in spec
 }
