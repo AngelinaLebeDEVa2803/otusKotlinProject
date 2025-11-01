@@ -16,6 +16,9 @@ fun OfficeContext.fromTransport(request: IRequest) = when (request) {
 }
 
 // тут не забыть функции для заполнения value классов
+private fun String?.toBookingId() = this?.let { OfficeBookingId(it) } ?: OfficeBookingId.NONE
+//private fun String?.toAdWithId() = MkplAd(id = this.toAdId())
+private fun String?.toBookingLock() = this?.let { OfficeBookingLock(it) } ?: OfficeBookingLock.NONE
 
 // режим работы прод, тест, стаб
 private fun BookingDebug?.transportToWorkMode(): OfficeWorkMode = when (this?.mode) {
@@ -43,9 +46,43 @@ private fun BookingDebug?.transportToStubCase(): OfficeStubs = when (this?.stub)
     null -> OfficeStubs.NONE
 }
 
+// create
 fun OfficeContext.fromTransport(request: BookingCreateRequest) {
     command = OfficeCommand.CREATE
     bookingRequest = request.booking?.toInternal() ?: OfficeBooking()
     workMode = request.debug.transportToWorkMode()
     stubCase = request.debug.transportToStubCase()
 }
+
+// read
+private fun BookingReadObject?.toInternal(): OfficeBooking = if (this != null) {
+    OfficeBooking(id = id.toBookingId())
+} else {
+    OfficeBooking()
+}
+
+fun OfficeContext.fromTransport(request: BookingReadRequest) {
+    command = OfficeCommand.READ
+    bookingRequest = request.booking.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+// delete
+private fun BookingDeleteObject?.toInternal(): OfficeBooking = if (this != null) {
+    OfficeBooking(
+        id = id.toBookingId(),
+        lock = lock.toBookingLock(),
+    )
+} else {
+    OfficeBooking()
+}
+
+fun OfficeContext.fromTransport(request: BookingDeleteRequest) {
+    command = OfficeCommand.DELETE
+    bookingRequest = request.booking.toInternal()
+    workMode = request.debug.transportToWorkMode()
+    stubCase = request.debug.transportToStubCase()
+}
+
+
