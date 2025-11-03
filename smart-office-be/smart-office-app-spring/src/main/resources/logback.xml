@@ -114,9 +114,9 @@
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="${LOG_COMMON_LEVEL}">
-        <appender-ref ref="fluentd"/>
-        <!--        <appender-ref ref="asyncMyLogKafka"/>-->
-        <appender-ref ref="STDOUT"/>
-    </root>
+<!--    <root level="${LOG_COMMON_LEVEL}">-->
+<!--        <appender-ref ref="fluentd"/>-->
+<!--        &lt;!&ndash;        <appender-ref ref="asyncMyLogKafka"/>&ndash;&gt;-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </root>-->
 </configuration>
