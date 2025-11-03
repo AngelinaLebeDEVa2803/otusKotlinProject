@@ -1,0 +1,466 @@
+openapi: 3.0.3
+info:
+  title: "SmartOffice"
+  description: Book your workspace smartly!
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+tags:
+  - name: booking
+    description: Бронирование рабочего места
+paths:
+  /booking/create:
+    post:
+      tags:
+        - booking
+      summary: Create booking
+      operationId: bookingCreate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingCreateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingCreateResponse'   
+
+  /booking/read:
+    post:
+      tags:
+        - booking
+      summary: Read booking by id
+      operationId: bookingRead
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingReadRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingReadResponse'
+
+  /booking/update:
+    post:
+      tags:
+        - booking
+      summary: Update booking
+      operationId: bookingUpdate
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingUpdateRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingUpdateResponse'
+
+  /booking/delete:
+    post:
+      tags:
+        - booking
+      summary: Delete booking
+      operationId: bookingDelete
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingDeleteRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingDeleteResponse'
+
+  /booking/all:
+    post:
+      tags:
+        - booking
+      summary: Show all personal bookings
+      operationId: bookingAll
+      requestBody:
+        description: Request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingAllRequest'
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingAllResponse'
+
+components:
+  schemas:
+
+    # GENERAL ======================
+
+    BookingId:
+      type: string
+      description: Идентификатор бронирования
+
+    UserId:
+      type: string
+      description: Идентификатор пользователя
+
+    StartTime:
+      type: string
+      description: Время начала бронирования
+      format: date-time
+      example: '2023-01-15T09:00:00Z'
+
+    EndTime:
+      type: string
+      description: Время окончания бронирования
+      format: date-time
+      example: '2023-01-15T18:00:00Z' 
+
+    BookingStatus:
+      type: string
+      enum:
+        - active
+        - cancelled
+        - completed
+
+    BookingLock:
+      type: string
+      description: Версия оптимистичной блокировки, для работы с БД
+
+    BaseBooking:
+      type: object
+      description: Объект описывает свойства, одинаковые для create и update
+      properties:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        floorId:
+          type: string
+          description: Идентификатор этажа, на котором находится место
+        roomId:
+          type: string
+          description: Идентификатор помещения, на котором находится место
+        workspaceId:
+          type: string
+          description: Идентификатор места
+        startTime:
+          $ref: '#/components/schemas/StartTime'
+        endTime:
+          $ref: '#/components/schemas/EndTime'
+        status:
+          $ref: '#/components/schemas/BookingStatus'
+
+
+    # REQUESTS SCHEMAS ======================
+
+    IRequest:
+      type: object
+      description: Базовый интерфейс для всех запросов
+      properties:
+        requestType:
+          type: string
+          description: Поле-дискриминатор для вычисления типа запроса
+          example: create
+      discriminator:
+        propertyName: requestType
+        mapping:
+          create: '#/components/schemas/BookingCreateRequest'
+          read:   '#/components/schemas/BookingReadRequest'
+          update: '#/components/schemas/BookingUpdateRequest'
+          delete: '#/components/schemas/BookingDeleteRequest'
+          all: '#/components/schemas/BookingAllRequest'
+
+    # 1. create
+
+    BookingCreateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBooking'
+
+    BookingCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingCreateObject'
+
+    # 2. read
+
+    BookingReadObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+
+    BookingReadRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingReadObject'
+    
+    # 3. update
+
+    BookingUpdateObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBooking'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
+
+    BookingUpdateRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingUpdateObject'
+
+    # 4. delete
+
+    BookingDeleteObject:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
+
+    BookingDeleteRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingDeleteObject'
+
+    # 5. all
+
+    BookingAllFilter:
+      type: object
+      description: Набор фильтров для поиска
+      properties:
+        userId:
+          $ref: '#/components/schemas/UserId'
+        startTime:
+          $ref: '#/components/schemas/StartTime'
+        endTime:
+          $ref: '#/components/schemas/EndTime'
+        status:
+          $ref: '#/components/schemas/BookingStatus'
+
+
+    BookingAllRequest:
+      allOf:
+        - $ref: '#/components/schemas/IRequest'
+        - $ref: '#/components/schemas/BookingRequestDebug'
+        - type: object
+          properties:
+            bookingFilter:
+              $ref: '#/components/schemas/BookingAllFilter'
+
+
+    # RESPONSE SCHEMAS ======================
+
+    ResponseResult:
+      type: string
+      enum:
+        - success
+        - error    
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        group:
+          type: string
+        field:
+          type: string
+        message:
+          type: string
+
+    IResponse:
+      type: object
+      description: Базовый интерфейс для всех ответов
+      properties:
+        responseType:
+          type: string
+          description: Поле-дискриминатор для вычисления типа запроса
+          example: create
+        result:
+          $ref: '#/components/schemas/ResponseResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+      discriminator:
+        propertyName: responseType
+        mapping:
+          create: '#/components/schemas/BookingCreateResponse'
+          read:   '#/components/schemas/BookingReadResponse'
+          update: '#/components/schemas/BookingUpdateResponse'
+          delete: '#/components/schemas/BookingDeleteResponse'
+          all: '#/components/schemas/BookingAllResponse'
+          init: '#/components/schemas/BookingInitResponse'
+
+    BookingPermissions:
+      type: string
+      description: Доступы для клиента для операций над бронью
+      enum:
+        - read
+        - update  # для админа и создателя брони
+        - delete  # для создателя брони
+
+    BookingResponseObject:
+      allOf:
+        - $ref: '#/components/schemas/BaseBooking'
+        - type: object
+          description: Объект, который возвращается в ответе бэкенда
+          properties:
+            id:
+              $ref: '#/components/schemas/BookingId'
+            lock:
+              $ref: '#/components/schemas/BookingLock'
+            permissions:
+              type: array
+              uniqueItems: true
+              items:
+                $ref: '#/components/schemas/BookingPermissions'
+
+    BookingResponseSingle:
+      allOf:
+        - type: object
+          description: Ответ с одним объектом бронирования
+          properties:
+            booking:
+              $ref: '#/components/schemas/BookingResponseObject'
+
+    BookingResponseMulti:
+      allOf:
+        - type: object
+          description: Список найденных броней
+          properties:
+            bookings:
+              type: array
+              items:
+                $ref: '#/components/schemas/BookingResponseObject'
+    
+    # 0. init
+
+    BookingInitResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+
+    # 1. create
+
+    BookingCreateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookingResponseSingle'
+
+    # 2. read
+
+    BookingReadResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookingResponseSingle'
+
+    # 3. update
+
+    BookingUpdateResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookingResponseSingle'
+
+    # 4. delete
+
+    BookingDeleteResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookingResponseSingle'
+
+    # 5. all
+
+    BookingAllResponse:
+      allOf:
+        - $ref: '#/components/schemas/IResponse'
+        - $ref: '#/components/schemas/BookingResponseMulti'
+
+
+    # STUBS ======================
+
+    BookingRequestDebugMode:
+      type: string
+      enum:
+        - prod
+        - test
+        - stub
+
+    BookingRequestDebugStubs:
+      type: string
+      description: Перечисления всех стабов
+      enum:
+        - success
+        - notFound
+        - badId
+        - badUserId
+        - badFloorId
+        - badRoomId
+        - badWorkspaceId
+        - badStartTime
+        - badEndTime
+        - badTimeRange
+        - badStatus
+        - cannotDelete
+        - cannotUpdate
+        - cannotCreate
+
+    BookingDebug:
+      type: object
+      properties:
+        mode:
+          $ref: '#/components/schemas/BookingRequestDebugMode'
+        stub:
+          $ref: '#/components/schemas/BookingRequestDebugStubs'        
+
+    BookingRequestDebug:
+      type: object
+      properties:
+        debug:
+          $ref: '#/components/schemas/BookingDebug'
