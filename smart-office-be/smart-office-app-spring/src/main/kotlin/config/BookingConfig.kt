@@ -25,7 +25,7 @@ class BookingConfig {
     fun appSettings(
         corSettings: OfficeCorSettings,
         processor: MkplAdProcessor,
-    ) = MkplAppSettings(
+    ) = OfficeAppSettings(
         corSettings = corSettings,
         processor = processor,
     )
