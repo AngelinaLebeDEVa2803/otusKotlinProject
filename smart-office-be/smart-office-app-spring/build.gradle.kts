@@ -25,7 +25,7 @@ dependencies {
 //    implementation(project(":ok-marketplace-app-common"))
     implementation(projects.smartOfficeCommon)
 
-    //implementation("ru.otus.otuskotlin.marketplace.libs:ok-marketplace-lib-logging-logback")
+    implementation("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-logging-logback")
 
     // v1 api
 //    implementation(project(":ok-marketplace-api-v1-jackson"))
