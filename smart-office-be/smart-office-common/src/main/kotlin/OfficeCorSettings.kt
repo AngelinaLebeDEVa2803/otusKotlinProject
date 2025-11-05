@@ -1,11 +1,11 @@
 package ru.otus.otuskotlin.smartoffice.common
 
-//import ru.otus.otuskotlin.smartoffice.logging.common.MpLoggerProvider
+import ru.otus.otuskotlin.smartoffice.logging.common.OfficeLoggerProvider
 
-data class MkplCorSettings(
-    val loggerProvider: MpLoggerProvider = MpLoggerProvider(),
+data class OfficeCorSettings(
+    val loggerProvider: OfficeLoggerProvider = OfficeLoggerProvider(),
 ) {
     companion object {
-        val NONE = MkplCorSettings()
+        val NONE = OfficeCorSettings()
     }
 }
