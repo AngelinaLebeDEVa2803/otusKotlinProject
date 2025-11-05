@@ -4,10 +4,9 @@ plugins {
 
 kotlin {
     sourceSets {
-        val coroutinesVersion: String by project
         main {
             dependencies {
-                implementation(kotlin("stdlib-jdk8"))
+                implementation(kotlin("stdlib-common"))
                 implementation(libs.kotlinx.datetime)
             }
         }
@@ -17,6 +16,5 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
-
     }
 }

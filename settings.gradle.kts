@@ -12,3 +12,4 @@ rootProject.name = "otusKotlinProject"
 
 includeBuild("lessons")
 includeBuild("smart-office-be")
+includeBuild("smart-office-libs")
