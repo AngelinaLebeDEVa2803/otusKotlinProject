@@ -49,6 +49,11 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(libs.jackson.kotlin)
     implementation(libs.jackson.datatype)
+    implementation(libs.kotlinx.datetime)
+
+    implementation(projects.smartOfficeCommon)
+
+
     testImplementation(kotlin("test-junit"))
 }
 
