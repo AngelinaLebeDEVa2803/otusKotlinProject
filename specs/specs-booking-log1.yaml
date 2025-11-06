@@ -36,16 +36,16 @@ components:
           type: string
         operation:
           $ref: '#/components/schemas/OfficeLogOperation'
-        requestAd:
-          $ref: '#/components/schemas/AdLog'
+        requestBooking:
+          $ref: '#/components/schemas/BookingLog'
         requestFilter:
-          $ref: '#/components/schemas/AdFilterLog'
-        responseAd:
-          $ref: '#/components/schemas/AdLog'
-        responseAds:
+          $ref: '#/components/schemas/BookingFilterLog'
+        responseBooking:
+          $ref: '#/components/schemas/BookingLog'
+        responseBookings:
           type: array
           items:
-            $ref: '#/components/schemas/AdLog'
+            $ref: '#/components/schemas/BookingLog'
 
     OfficeLogOperation:
       type: string
@@ -71,7 +71,7 @@ components:
         level:
           type: string
 
-    AdLog:
+    BookingLog:
       title: Модель лога для бронирования
       type: object
       properties:
@@ -95,7 +95,7 @@ components:
           items:
             type: string
 
-    AdFilterLog:
+    BookingFilterLog:
       title: Модель лога фильтра
       properties:
         searchString:
