@@ -21,7 +21,7 @@ dependencies {
 //    implementation(libs.kotlinx.serialization.json)
 
     // Внутренние модели
-//    implementation(project(":ok-marketplace-app-common"))
+    implementation(projects.smartOfficeAppCommon)
     implementation(projects.smartOfficeCommon)
 
     // log lib
