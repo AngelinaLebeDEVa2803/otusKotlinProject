@@ -6,6 +6,8 @@ import ru.otus.otuskotlin.smartoffice.mappers.v1.toTransportBooking
 import ru.otus.otuskotlin.smartoffice.api.v1.models.*
 import ru.otus.otuskotlin.smartoffice.biz.OfficeBookingProcessor
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
+import ru.otus.otuskotlin.smartoffice.common.models.OfficeFloorId
+import ru.otus.otuskotlin.smartoffice.common.models.OfficeUserId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -13,11 +15,13 @@ class ControllerV1Test {
 
     private val request = BookingCreateRequest(
         booking = BookingCreateObject(
-            title = "some ad",
-            description = "some description of some ad",
-            adType = DealSide.DEMAND,
-            visibility = AdVisibility.PUBLIC,
-            productId = "some product id",
+            userId = "1234",
+            floorId = "floor_1",
+            roomId = "438339",
+            workspaceId = "007",
+            startTime = "2023-01-15T09:00:00Z",
+            endTime = "2023-01-15T18:00:00Z",
+            status = BookingStatus.ACTIVE,
         ),
         debug = BookingDebug(mode = BookingRequestDebugMode.STUB, stub = BookingRequestDebugStubs.SUCCESS)
     )
