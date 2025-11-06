@@ -6,8 +6,6 @@ import ru.otus.otuskotlin.smartoffice.mappers.v1.toTransportBooking
 import ru.otus.otuskotlin.smartoffice.api.v1.models.*
 import ru.otus.otuskotlin.smartoffice.biz.OfficeBookingProcessor
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeFloorId
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeUserId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
