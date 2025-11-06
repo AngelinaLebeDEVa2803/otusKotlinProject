@@ -21,20 +21,18 @@ dependencies {
 //    implementation(libs.kotlinx.serialization.json)
 
     // Внутренние модели
-//    implementation(project(":ok-marketplace-common"))
 //    implementation(project(":ok-marketplace-app-common"))
     implementation(projects.smartOfficeCommon)
 
+    // log lib
     implementation("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-logging-logback")
 
     // v1 api
-//    implementation(project(":ok-marketplace-api-v1-jackson"))
-//    implementation(project(":ok-marketplace-api-v1-mappers"))
     implementation(projects.smartOfficeApiV1Jackson)
     implementation(projects.smartOfficeApiV1Mappers)
 
     // biz
-    //implementation(project(":ok-marketplace-biz"))
+    implementation(projects.smartOfficeBiz)
 
     // tests
     testImplementation(kotlin("test-junit5"))
