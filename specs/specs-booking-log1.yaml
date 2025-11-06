@@ -77,18 +77,26 @@ components:
       properties:
         id:
           type: string
-        title:
+        userId:
           type: string
-        description:
+        floorId:
           type: string
-        adType:
+        roomId:
           type: string
-        visibility:
+        workspaceId:
           type: string
-        ownerId:
+        startTime:
           type: string
-        productId:
+          format: date-time
+        endTime:
           type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - active
+            - cancelled
+            - completed
         permissions:
           type: array
           uniqueItems: true
@@ -98,10 +106,17 @@ components:
     BookingFilterLog:
       title: Модель лога фильтра
       properties:
-        searchString:
+        userId:
           type: string
-        ownerId:
+        startTime:
           type: string
-        dealSide:
+          format: date-time
+        endTime:
           type: string
-
+          format: date-time
+        status:
+          type: string
+          enum:
+            - active
+            - cancelled
+            - completed
