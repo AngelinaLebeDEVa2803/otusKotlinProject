@@ -9,7 +9,7 @@ import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class ControllerV2Test {
+class ControllerV1Test {
 
     private val request = BookingCreateRequest(
         booking = BookingCreateObject(
@@ -27,37 +27,27 @@ class ControllerV2Test {
         override val processor: OfficeBookingProcessor = OfficeBookingProcessor(corSettings)
     }
 
-    private suspend fun createAdSpring(request: AdCreateRequest): AdCreateResponse =
+    private suspend fun createBookingSpring(request: BookingCreateRequest): BookingCreateResponse =
         appSettings.controllerHelper(
             { fromTransport(request) },
-            { toTransportAd() as AdCreateResponse },
-            ControllerV2Test::class,
-            "controller-v2-test"
+            { toTransportBooking() as BookingCreateResponse },
+            ControllerV1Test::class,
+            "controller-v1-test"
         )
 
-    class TestApplicationCall(private val request: IRequest) {
-        var res: IResponse? = null
-
-        @Suppress("UNCHECKED_CAST")
-        fun <T : IRequest> receive(): T = request as T
-        fun respond(res: IResponse) {
-            this.res = res
-        }
-    }
-
-    private suspend fun TestApplicationCall.createAdKtor(appSettings: IMkplAppSettings) {
-        val resp = appSettings.controllerHelper(
-            { fromTransport(receive<AdCreateRequest>()) },
-            { toTransportAd() },
-            ControllerV2Test::class,
-            "controller-v2-test"
-        )
-        respond(resp)
-    }
+//    class TestApplicationCall(private val request: IRequest) {
+//        var res: IResponse? = null
+//
+//        @Suppress("UNCHECKED_CAST")
+//        fun <T : IRequest> receive(): T = request as T
+//        fun respond(res: IResponse) {
+//            this.res = res
+//        }
+//    }
 
     @Test
     fun springHelperTest() = runTest {
-        val res = createAdSpring(request)
+        val res = createBookingSpring(request)
         assertEquals(ResponseResult.SUCCESS, res.result)
     }
 
