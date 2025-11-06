@@ -25,10 +25,11 @@ rootProject.name = "smart-office-be"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+include("smart-office-api-log1")
 include("smart-office-api-v1-jackson")
-include("smart-office-common")
 include("smart-office-api-v1-mappers")
-include("smart-office-stubs")
-include("smart-office-biz")
-include("smart-office-app-spring")
 include("smart-office-app-common")
+include("smart-office-app-spring")
+include("smart-office-biz")
+include("smart-office-common")
+include("smart-office-stubs")
