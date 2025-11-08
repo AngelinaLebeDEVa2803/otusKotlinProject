@@ -3,6 +3,7 @@ pluginManagement {
     plugins {
         id("build-jvm") apply false
         id("build-kmp") apply false
+        id("build-docker") apply false
     }
     repositories {
         mavenCentral()
@@ -29,6 +30,7 @@ include("smart-office-api-log1")
 include("smart-office-api-v1-jackson")
 include("smart-office-api-v1-mappers")
 include("smart-office-app-common")
+include("smart-office-app-kafka")
 include("smart-office-app-spring")
 include("smart-office-biz")
 include("smart-office-common")
