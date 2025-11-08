@@ -1,11 +1,11 @@
 package ru.otus.otuskotlin.smartoffice.app.spring.base
 
-import ru.otus.otuskotlin.smartoffice.common.ws.IMkplWsSession
-import ru.otus.otuskotlin.smartoffice.common.ws.IMkplWsSessionRepo
+import ru.otus.otuskotlin.smartoffice.common.ws.IOfficeWsSession
+import ru.otus.otuskotlin.smartoffice.common.ws.IOfficeWsSessionRepo
 
-class SpringWsSessionRepo: IMkplWsSessionRepo {
-    private val sessions: MutableSet<IMkplWsSession> = mutableSetOf()
-    override fun add(session: IMkplWsSession) {
+class SpringWsSessionRepo: IOfficeWsSessionRepo {
+    private val sessions: MutableSet<IOfficeWsSession> = mutableSetOf()
+    override fun add(session: IOfficeWsSession) {
         sessions.add(session)
     }
 
@@ -13,7 +13,7 @@ class SpringWsSessionRepo: IMkplWsSessionRepo {
         sessions.clear()
     }
 
-    override fun remove(session: IMkplWsSession) {
+    override fun remove(session: IOfficeWsSession) {
         sessions.remove(session)
     }
 
