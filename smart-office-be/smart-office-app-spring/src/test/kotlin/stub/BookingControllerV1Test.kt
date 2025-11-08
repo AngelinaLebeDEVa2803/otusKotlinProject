@@ -17,7 +17,7 @@ import kotlin.test.Test
 
 // Temporary simple test with stubs
 @WebFluxTest(BookingControllerV1Fine::class, BookingConfig::class)
-internal class AdControllerV1Test {
+internal class BookingControllerV1Test {
     @Autowired
     private lateinit var webClient: WebTestClient
 
@@ -40,21 +40,21 @@ internal class AdControllerV1Test {
     )
 
     @Test
-    fun updateAd() = testStubBooking(
+    fun updateBooking() = testStubBooking(
         "/v1/booking/update",
         BookingUpdateRequest(),
         OfficeContext().toTransportUpdate().copy(responseType = "update")
     )
 
     @Test
-    fun deleteAd() = testStubBooking(
+    fun deleteBooking() = testStubBooking(
         "/v1/booking/delete",
         BookingDeleteRequest(),
         OfficeContext().toTransportDelete().copy(responseType = "delete")
     )
 
     @Test
-    fun searchAd() = testStubBooking(
+    fun allBooking() = testStubBooking(
         "/v1/booking/all",
         BookingAllRequest(),
         OfficeContext().toTransportAll().copy(responseType = "all")

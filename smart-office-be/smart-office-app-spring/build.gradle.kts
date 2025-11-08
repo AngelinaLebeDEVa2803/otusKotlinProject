@@ -38,7 +38,7 @@ dependencies {
     // tests
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
-    testImplementation(libs.mockito.kotlin)
+    //testImplementation(libs.mockito.kotlin)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
