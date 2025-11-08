@@ -11,7 +11,6 @@ import kotlin.test.Test
 
 /**
  * Для запуска этого теста, требуется поднять Кафку на порту 9092.
- * Поднять можно с помощью /deploy/docker-compose-kafka-cp.yml
  */
 @Ignore
 class SimpleKafkaTest {
