@@ -11,7 +11,7 @@ import java.net.URI
 import java.time.Duration
 import java.util.concurrent.atomic.AtomicReference
 
-abstract class AdControllerBaseWsTest<Rq, Rs>(
+abstract class BookingControllerBaseWsTest<Rq, Rs>(
     private val version: String
 ) {
 
