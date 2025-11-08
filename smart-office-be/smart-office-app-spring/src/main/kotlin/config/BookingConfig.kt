@@ -2,10 +2,12 @@ package ru.otus.otuskotlin.smartoffice.app.spring.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import ru.otus.otuskotlin.smartoffice.app.spring.base.OfficeAppSettings
 import ru.otus.otuskotlin.smartoffice.biz.OfficeBookingProcessor
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
 import ru.otus.otuskotlin.smartoffice.logging.common.OfficeLoggerProvider
 import ru.otus.otuskotlin.smartoffice.logging.jvm.officeLoggerLogback
+import ru.otus.otuskotlin.smartoffice.app.spring.base.SpringWsSessionRepo
 
 @Suppress("unused")
 @Configuration
@@ -29,4 +31,7 @@ class BookingConfig {
         corSettings = corSettings,
         processor = processor,
     )
+
+    @Bean
+    fun wsRepo(): SpringWsSessionRepo = SpringWsSessionRepo()
 }

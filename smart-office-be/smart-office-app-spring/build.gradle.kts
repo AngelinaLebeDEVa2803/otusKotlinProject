@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependencies)
     alias(libs.plugins.spring.kotlin)
-    //alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.kotlinx.serialization)
     id("build-jvm")
 }
 
@@ -17,8 +17,8 @@ dependencies {
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.reactor)
     implementation(libs.coroutines.reactive)
-//    implementation(libs.kotlinx.serialization.core)
-//    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
 
     // Внутренние модели
     implementation(projects.smartOfficeAppCommon)

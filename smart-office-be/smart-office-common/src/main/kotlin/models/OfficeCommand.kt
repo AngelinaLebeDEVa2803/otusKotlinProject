@@ -7,4 +7,6 @@ enum class OfficeCommand {
     UPDATE,
     DELETE,
     ALL,
+    INIT,
+    FINISH
 }
