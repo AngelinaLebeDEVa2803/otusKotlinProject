@@ -13,8 +13,19 @@ fun OfficeContext.toTransportBooking(): IResponse = when (val cmd = command) {
     OfficeCommand.UPDATE -> toTransportUpdate()
     OfficeCommand.DELETE -> toTransportDelete()
     OfficeCommand.ALL -> toTransportAll()
+    OfficeCommand.INIT -> toTransportInit()
+    OfficeCommand.FINISH -> object: IResponse {
+        override val responseType: String? = null
+        override val result: ResponseResult? = null
+        override val errors: List<Error>? = null
+    }
     OfficeCommand.NONE -> throw UnknownOfficeCommand(cmd)
 }
+
+fun OfficeContext.toTransportInit() = BookingInitResponse(
+    result = state.toResult(),
+    errors = errors.toTransportErrors(),
+)
 
 fun OfficeContext.toTransportCreate() = BookingCreateResponse(
     result = state.toResult(),
