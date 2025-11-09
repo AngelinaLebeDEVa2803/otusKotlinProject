@@ -3,6 +3,13 @@ package ru.otus.otuskotlin.smartoffice.app.kafka
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
+import ru.otus.otuskotlin.smartoffice.api.v1.apiV1RequestSerialize
+import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingCreateRequest
+import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingDebug
+import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingRequestDebugMode
+import ru.otus.otuskotlin.smartoffice.api.v1.models.BookingRequestDebugStubs
+import ru.otus.otuskotlin.smartoffice.mappers.v1.toTransportCreateBooking
+import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import java.time.Duration
 import java.time.Instant
 import java.util.*
@@ -12,9 +19,9 @@ import kotlin.test.Test
 /**
  * Для запуска этого теста, требуется поднять Кафку на порту 9092.
  */
-@Ignore
+//@Ignore
 class SimpleKafkaTest {
-    private val topicName = "producer-topic"
+    private val topicName = "smartoffice-booking-v1-in"
 
     /**
      * Отправка сообщения в Кафку
@@ -40,7 +47,15 @@ class SimpleKafkaTest {
         KafkaProducer<String, String>(props).use { producer ->
             (0..<10).forEach {
                 val key = "key#$it"
-                val value = "Message number $it"
+                val value = apiV1RequestSerialize(
+                    BookingCreateRequest(
+                        booking = OfficeBookingStub.get().toTransportCreateBooking(),
+                        debug = BookingDebug(
+                            mode = BookingRequestDebugMode.STUB,
+                            stub = BookingRequestDebugStubs.SUCCESS,
+                        ),
+                    ),
+                )
                 producer.send(ProducerRecord(topicName, key, value))
             }
             println("Message sent successfully")
