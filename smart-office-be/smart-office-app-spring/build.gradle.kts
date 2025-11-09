@@ -42,21 +42,21 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-//tasks {
-//    withType<ProcessResources> {
-//        val files = listOf("spec-v1").map {
-//            rootProject.ext[it]
-//        }
-//        from(files) {
-//            into("/static")
-//            filter {
-//                // Устанавливаем версию в сваггере
-//                it.replace("\${VERSION_APP}", project.version.toString())
-//            }
-//
-//        }
-//    }
-//}
+tasks {
+    withType<ProcessResources> {
+        val files = listOf("spec-v1").map {
+            rootProject.ext[it]
+        }
+        from(files) {
+            into("/static")
+            filter {
+                // Устанавливаем версию в сваггере
+                it.replace("\${VERSION_APP}", project.version.toString())
+            }
+
+        }
+    }
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
