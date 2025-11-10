@@ -9,6 +9,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(projects.smartOfficeApiV1Jackson)
     implementation(projects.smartOfficeCommon)
+    implementation(libs.kotlinx.datetime)
 
     testImplementation(kotlin("test-junit"))
     testImplementation(projects.smartOfficeStubs)

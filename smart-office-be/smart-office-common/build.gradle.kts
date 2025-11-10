@@ -8,7 +8,8 @@ kotlin {
         main {
             dependencies {
                 implementation(kotlin("stdlib-jdk8"))
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+                implementation(libs.kotlinx.datetime)
+                api("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-logging-common")
             }
         }
         test {

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    id("build-docker") apply false
 }
 
 group = "ru.otus.otuskotlin.smartoffice"
@@ -20,6 +21,7 @@ subprojects {
 ext {
     val specDir = layout.projectDirectory.dir("../specs")
     set("spec-v1", specDir.file("specs-booking-v1.yaml").toString())
+    set("spec-log1", specDir.file("specs-booking-log1.yaml").toString())
 }
 
 tasks {
