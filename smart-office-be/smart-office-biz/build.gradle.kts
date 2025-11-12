@@ -10,6 +10,8 @@ dependencies {
     implementation(projects.smartOfficeStubs)
     implementation(projects.smartOfficeCommon)
 
+    api("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-cor")
+
     testImplementation(kotlin("test-junit"))
     testImplementation(projects.smartOfficeStubs)
 }
