@@ -19,7 +19,10 @@ fun ICorChainDsl<OfficeContext>.stubAllSuccess(title: String, corSettings: Offic
     handle {
         logger.doWithLogging(id = this.requestId.asString(), LogLevel.DEBUG) {
             state = OfficeState.FINISHING
-            bookingsResponse.addAll(OfficeBookingStub.prepareBookingsList(bookingFilterRequest.searchString, MkplDealSide.DEMAND))
+            bookingsResponse.addAll(OfficeBookingStub.prepareBookingsList(bookingFilterRequest.userId,
+                bookingFilterRequest.startTime,
+                bookingFilterRequest.endTime,
+                bookingFilterRequest.status))
         }
     }
 }
