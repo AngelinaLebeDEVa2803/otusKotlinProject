@@ -36,29 +36,63 @@ class OfficeBookingProcessor(
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
         }
+        operation("Чтение бронирования по id", OfficeCommand.READ) {
+            stubs("Обработка стабов") {
+                stubReadSuccess("Имитация успешной обработки", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id брони")
+                stubDbError("Имитация ошибки работы с БД")
+                stubNotFound("Бронирование не найдено")
+                stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+        }
+        operation("Обновление бронирования", OfficeCommand.UPDATE) {
+            stubs("Обработка стабов") {
+                stubUpdateSuccess("Имитация успешной обработки", corSettings)
+
+                stubValidationBadId("Имитация ошибки валидации id брони")
+                stubValidationBadUserId("Имитация ошибки валидации userId")
+                stubValidationBadFloorId("Имитация ошибки валидации floorId")
+                stubValidationBadRoomId("Имитация ошибки валидации roomId")
+                stubValidationBadWorkspaceId("Имитация ошибки валидации workspaceId")
+
+                stubValidationBadStartTime("Имитация ошибки валидации startTime")
+                stubValidationBadEndTime("Имитация ошибки валидации endTime")
+                stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
+
+                stubValidationBadStatus("Имитация ошибки валидации status")  // отдельно для create?
+
+                stubDbError("Имитация ошибки работы с БД")
+                stubNotFound("Бронирование не найдено")
+                stubCannotUpdate("Невозможно изменить бронь (отменить нельзя, если завершено и т.п.)")
+                stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+        }
+        operation("Удаление бронирования", OfficeCommand.DELETE) {
+            stubs("Обработка стабов") {
+                stubDeleteSuccess("Имитация успешной обработки", corSettings)
+                stubValidationBadId("Имитация ошибки валидации id брони")
+                stubDbError("Имитация ошибки работы с БД")
+                stubNotFound("Бронирование не найдено")
+                stubCannotDelete("Невозможно удалить бронь (например, если начата)")
+                stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+        }
+        operation("Список бронирований пользователя", OfficeCommand.ALL) {
+            stubs("Обработка стабов") {
+                stubAllSuccess("Имитация успешной обработки", corSettings)
+                stubValidationBadUserId("Имитация ошибки валидации userId")
+
+                stubValidationBadStartTime("Имитация ошибки валидации startTime")
+                stubValidationBadEndTime("Имитация ошибки валидации endTime")
+                stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
+
+                stubValidationBadStatus("Имитация ошибки валидации status")
+
+                stubDbError("Имитация ошибки работы с БД")
+                stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+        }
 
 
     }.build()
 }
-
-//NONE,
-//SUCCESS, по всем
-//NOT_FOUND, update delete read
-//BAD_ID, не create
-
-//BAD_USER_ID,
-//BAD_FLOOR_ID,
-//BAD_ROOM_ID,
-//BAD_WORKSPACE_ID,
-
-//BAD_START_TIME,
-//BAD_END_TIME,
-//BAD_TIME_RANGE,
-
-//BAD_STATUS,
-
-//CANNOT_CREATE,
-
-//CANNOT_UPDATE,
-//CANNOT_DELETE,
-//DB_ERROR,
