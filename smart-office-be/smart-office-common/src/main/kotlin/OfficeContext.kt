@@ -10,6 +10,7 @@ data class OfficeContext(
     var state: OfficeState = OfficeState.NONE,
     val errors: MutableList<OfficeError> = mutableListOf(),
 
+    var corSettings: OfficeCorSettings = OfficeCorSettings(),
     var workMode: OfficeWorkMode = OfficeWorkMode.PROD,
     var stubCase: OfficeStubs = OfficeStubs.NONE,
     var wsSession: IOfficeWsSession = IOfficeWsSession.NONE,
