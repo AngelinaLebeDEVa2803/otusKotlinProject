@@ -21,7 +21,7 @@ class OfficeBookingProcessor(
                 stubCreateSuccess("Имитация успешной обработки", corSettings)
 //                stubValidationBadTitle("Имитация ошибки валидации заголовка")
 //                stubValidationBadDescription("Имитация ошибки валидации описания")
-//                stubDbError("Имитация ошибки работы с БД")
+                stubDbError("Имитация ошибки работы с БД")
 //                stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
         }
@@ -29,3 +29,20 @@ class OfficeBookingProcessor(
 
     }.build()
 }
+
+//NONE,
+//SUCCESS, по всем
+//NOT_FOUND, update delete read
+//BAD_ID, create
+//BAD_USER_ID,
+//BAD_FLOOR_ID,
+//BAD_ROOM_ID,
+//BAD_WORKSPACE_ID,
+//BAD_START_TIME,
+//BAD_END_TIME,
+//BAD_TIME_RANGE,
+//BAD_STATUS,
+//CANNOT_CREATE,
+//CANNOT_UPDATE,
+//CANNOT_DELETE,
+//DB_ERROR,
