@@ -4,12 +4,11 @@ import ru.otus.otuskotlin.smartoffice.cor.ICorChainDsl
 import ru.otus.otuskotlin.smartoffice.cor.worker
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
-import ru.otus.otuskotlin.marketplace.common.models.MkplDealSide
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeState
-import ru.otus.otuskotlin.marketplace.common.models.MkplVisibility
+import ru.otus.otuskotlin.smartoffice.common.models.*
+import ru.otus.otuskotlin.smartoffice.common.models.OfficeUserId
 import ru.otus.otuskotlin.smartoffice.common.stubs.OfficeStubs
 import ru.otus.otuskotlin.smartoffice.logging.common.LogLevel
-import ru.otus.otuskotlin.smartoffice.stubs.MkplAdStub
+import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 
 fun ICorChainDsl<OfficeContext>.stubCreateSuccess(title: String, corSettings: OfficeCorSettings) = worker {
     this.title = title
@@ -21,13 +20,20 @@ fun ICorChainDsl<OfficeContext>.stubCreateSuccess(title: String, corSettings: Of
     handle {
         logger.doWithLogging(id = this.requestId.asString(), LogLevel.DEBUG) {
             state = OfficeState.FINISHING
-            val stub = MkplAdStub.prepareResult {
-                adRequest.title.takeIf { it.isNotBlank() }?.also { this.title = it }
-                adRequest.description.takeIf { it.isNotBlank() }?.also { this.description = it }
-                adRequest.adType.takeIf { it != MkplDealSide.NONE }?.also { this.adType = it }
-                adRequest.visibility.takeIf { it != MkplVisibility.NONE }?.also { this.visibility = it }
+            val stub = OfficeBookingStub.prepareResult {
+                bookingRequest.userId.takeIf { it != OfficeUserId.NONE }?.also { this.userId = it }
+                bookingRequest.floorId.takeIf { it != OfficeFloorId.NONE }?.also { this.floorId = it }
+                bookingRequest.roomId.takeIf { it != OfficeRoomId.NONE }?.also { this.roomId = it }
+                bookingRequest.workspaceId.takeIf { it != OfficeWorkspaceId.NONE }?.also { this.workspaceId = it }
+
+
+                bookingRequest.status.takeIf { it != OfficeBookingStatus.NONE }?.also { this.status = it }
             }
-            adResponse = stub
+            bookingResponse = stub
         }
     }
 }
+
+
+//startTime = Instant.parse("2025-09-01T10:00:00Z"),
+//endTime = Instant.parse("2025-09-01T19:00:00Z"),
