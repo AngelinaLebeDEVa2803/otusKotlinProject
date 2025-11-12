@@ -17,7 +17,7 @@ fun ICorChainDsl<OfficeContext>.stubCreateSuccess(title: String, corSettings: Of
         Кейс успеха для создания бронирования
     """.trimIndent()
     on { stubCase == OfficeStubs.SUCCESS && state == OfficeState.RUNNING }
-    val logger = corSettings.loggerProvider.logger("stubOffersSuccess")
+    val logger = corSettings.loggerProvider.logger("stubCreateSuccess")
     handle {
         logger.doWithLogging(id = this.requestId.asString(), LogLevel.DEBUG) {
             state = OfficeState.FINISHING
