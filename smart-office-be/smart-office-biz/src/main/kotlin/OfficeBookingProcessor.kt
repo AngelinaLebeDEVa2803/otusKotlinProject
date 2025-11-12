@@ -22,7 +22,7 @@ class OfficeBookingProcessor(
 //                stubValidationBadTitle("Имитация ошибки валидации заголовка")
 //                stubValidationBadDescription("Имитация ошибки валидации описания")
                 stubDbError("Имитация ошибки работы с БД")
-//                stubNoCase("Ошибка: запрошенный стаб недопустим")
+                stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
         }
 
