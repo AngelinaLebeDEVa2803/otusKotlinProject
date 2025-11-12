@@ -7,6 +7,7 @@ version = rootProject.version
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation(libs.kotlinx.datetime)
     implementation(projects.smartOfficeStubs)
     implementation(projects.smartOfficeCommon)
 

@@ -1,11 +1,12 @@
 package ru.otus.otuskotlin.smartoffice.biz.stubs
 
+import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.smartoffice.cor.ICorChainDsl
 import ru.otus.otuskotlin.smartoffice.cor.worker
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
 import ru.otus.otuskotlin.smartoffice.common.models.*
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeUserId
+import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.stubs.OfficeStubs
 import ru.otus.otuskotlin.smartoffice.logging.common.LogLevel
 import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
@@ -26,6 +27,8 @@ fun ICorChainDsl<OfficeContext>.stubCreateSuccess(title: String, corSettings: Of
                 bookingRequest.roomId.takeIf { it != OfficeRoomId.NONE }?.also { this.roomId = it }
                 bookingRequest.workspaceId.takeIf { it != OfficeWorkspaceId.NONE }?.also { this.workspaceId = it }
 
+                bookingRequest.startTime.takeIf { it != Instant.NONE }?.also { this.startTime = it }
+                bookingRequest.endTime.takeIf { it != Instant.NONE }?.also { this.endTime = it }
 
                 bookingRequest.status.takeIf { it != OfficeBookingStatus.NONE }?.also { this.status = it }
             }
@@ -33,7 +36,3 @@ fun ICorChainDsl<OfficeContext>.stubCreateSuccess(title: String, corSettings: Of
         }
     }
 }
-
-
-//startTime = Instant.parse("2025-09-01T10:00:00Z"),
-//endTime = Instant.parse("2025-09-01T19:00:00Z"),
