@@ -55,7 +55,7 @@ class OfficeBookingProcessor(
                 stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNotFound("Бронирование не найдено")
-                stubCannotUpdate("Невозможно изменить бронь (отменить нельзя, если завершено и т.п.)")
+                stubCannotUpdate("Невозможно изменить бронь")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
         }
