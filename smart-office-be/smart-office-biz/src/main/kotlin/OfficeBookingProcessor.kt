@@ -19,18 +19,14 @@ class OfficeBookingProcessor(
         operation("Создание бронирования", OfficeCommand.CREATE) {
             stubs("Обработка стабов") {
                 stubCreateSuccess("Имитация успешной обработки", corSettings)
-
                 stubValidationBadUserId("Имитация ошибки валидации userId")
                 stubValidationBadFloorId("Имитация ошибки валидации floorId")
                 stubValidationBadRoomId("Имитация ошибки валидации roomId")
                 stubValidationBadWorkspaceId("Имитация ошибки валидации workspaceId")
-
                 stubValidationBadStartTime("Имитация ошибки валидации startTime")
                 stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
-
-                stubValidationBadStatus("Имитация ошибки валидации status")  // отдельно для create?
-
+                stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
                 stubCannotCreate("Невозможно создать бронь (занято место, лимит броней превышен etc)")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
@@ -48,19 +44,15 @@ class OfficeBookingProcessor(
         operation("Обновление бронирования", OfficeCommand.UPDATE) {
             stubs("Обработка стабов") {
                 stubUpdateSuccess("Имитация успешной обработки", corSettings)
-
                 stubValidationBadId("Имитация ошибки валидации id брони")
                 stubValidationBadUserId("Имитация ошибки валидации userId")
                 stubValidationBadFloorId("Имитация ошибки валидации floorId")
                 stubValidationBadRoomId("Имитация ошибки валидации roomId")
                 stubValidationBadWorkspaceId("Имитация ошибки валидации workspaceId")
-
                 stubValidationBadStartTime("Имитация ошибки валидации startTime")
                 stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
-
-                stubValidationBadStatus("Имитация ошибки валидации status")  // отдельно для create?
-
+                stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNotFound("Бронирование не найдено")
                 stubCannotUpdate("Невозможно изменить бронь (отменить нельзя, если завершено и т.п.)")
@@ -81,18 +73,14 @@ class OfficeBookingProcessor(
             stubs("Обработка стабов") {
                 stubAllSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadUserId("Имитация ошибки валидации userId")
-
                 stubValidationBadStartTime("Имитация ошибки валидации startTime")
                 stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
-
                 stubValidationBadStatus("Имитация ошибки валидации status")
-
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
         }
-
 
     }.build()
 }
