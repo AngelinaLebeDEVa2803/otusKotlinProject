@@ -175,15 +175,15 @@ class OfficeBookingProcessor(
                 worker("Копируем поля в bookingValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
 
                 worker("Очистка userId") { bookingFilterValidating.userId = OfficeUserId(bookingFilterValidating.userId.asString().trim()) }
-                validateUserIdNotEmpty("Проверка на непустой userId")
-                validateUserIdFormat("Проверка формата userId")
+                validateUserIdNotEmptyFilter("Проверка на непустой userId")
+                validateUserIdFormatFilter("Проверка формата userId")
 
                 // вот с этими подумать
-                validateStartTimeBooking("Проверка корректности startTime")
-                validateEndTimeBooking("Проверка корректности endTime")
-                validateTimeRangeBooking("Проверка периода бронирования")
+                validateStartTimeFilter("Проверка корректности startTime")
+                validateEndTimeFilter("Проверка корректности endTime")
+                validateTimeRangeFilter("Проверка периода бронирования")
 
-                validateStatusUpdate("Проверка статуса")
+                validateStatusFilter("Проверка статуса")
 
                 finishBookingFilterValidation("Завершение проверок")
             }
