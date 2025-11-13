@@ -171,7 +171,7 @@ class OfficeBookingProcessor(
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
             validation {
-                worker("Копируем поля в bookingValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
+                worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
 
                 worker("Очистка userId") { bookingFilterValidating.userId = OfficeUserId(bookingFilterValidating.userId.asString().trim()) }
                 validateUserIdNotEmptyFilter("Проверка на непустой userId")
