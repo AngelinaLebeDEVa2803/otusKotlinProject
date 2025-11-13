@@ -15,7 +15,7 @@ class BookingAllStubTest {
 
     private val processor = OfficeBookingProcessor()
     val userId = OfficeUserId("8gj4")
-    val startTime = Instant.parse("2025-01-30T09:00:00Z")
+    val startTime = Instant.parse("2022-01-30T09:00:00Z")
     val endTime = Instant.parse("2025-01-30T18:00:00Z")
     val status = OfficeBookingStatus.ACTIVE
 
