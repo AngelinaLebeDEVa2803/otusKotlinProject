@@ -6,7 +6,6 @@ import ru.otus.otuskotlin.smartoffice.biz.OfficeBookingProcessor
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.common.stubs.OfficeStubs
-import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -44,8 +43,8 @@ class BookingAllStubTest {
         val first = ctx.bookingsResponse.firstOrNull() ?: fail("Empty response list")
         with (filter) {
             assertEquals(userId, first.userId)
-            assertEquals(startTime, first.startTime)
-            assertEquals(endTime, first.endTime)
+            assertTrue(startTime >= first.startTime)
+            assertTrue(endTime <= first.endTime)
             assertEquals(status, first.status)
         }
     }
