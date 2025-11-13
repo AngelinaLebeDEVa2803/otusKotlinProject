@@ -58,7 +58,7 @@ class OfficeBookingProcessor(
                 validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
                 validateTimeRangeBooking("Проверка периода будущего бронирования")
 
-                validateStatusCreate("Проверка статуса при создании брони")
+                validateStatus("Проверка статуса при создании брони")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -125,12 +125,11 @@ class OfficeBookingProcessor(
                 validateWorkspaceIdNotEmpty("Проверка на непустой workspaceId")
                 validateWorkspaceIdFormat("Проверка формата workspaceId")
 
-                // вот с этими подумать
                 validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
                 validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
                 validateTimeRangeBooking("Проверка периода будущего бронирования")
 
-                validateStatusUpdate("Проверка статуса при обновлении брони")
+                validateStatus("Проверка статуса при обновлении брони")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -177,12 +176,7 @@ class OfficeBookingProcessor(
                 validateUserIdNotEmptyFilter("Проверка на непустой userId")
                 validateUserIdFormatFilter("Проверка формата userId")
 
-                // вот с этими подумать
-                validateStartTimeFilter("Проверка корректности startTime")
-                validateEndTimeFilter("Проверка корректности endTime")
                 validateTimeRangeFilter("Проверка периода бронирования")
-
-                validateStatusFilter("Проверка статуса")
 
                 finishBookingFilterValidation("Завершение проверок")
             }
