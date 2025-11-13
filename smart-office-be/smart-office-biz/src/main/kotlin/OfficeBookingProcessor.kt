@@ -154,7 +154,6 @@ class OfficeBookingProcessor(
                 validateLockNotEmpty("Проверка на непустой lock")
                 validateLockProperFormat("Проверка формата lock")
 
-
                 finishBookingValidation("Завершение проверок")
             }
         }
