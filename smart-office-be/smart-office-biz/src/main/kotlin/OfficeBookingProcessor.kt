@@ -38,15 +38,19 @@ class OfficeBookingProcessor(
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
 
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId.NONE }
+
                 worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
                 validateUserIdNotEmpty("Проверка на непустой userId")
                 validateUserIdFormat("Проверка формата userId")
+
                 worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
                 validateFloorIdNotEmpty("Проверка на непустой floorId")
                 validateFloorIdFormat("Проверка формата floorId")
+
                 worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
                 validateRoomIdNotEmpty("Проверка на непустой roomId")
                 validateRoomIdFormat("Проверка формата roomId")
+
                 worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
                 validateWorkspaceIdNotEmpty("Проверка на непустой workspaceId")
                 validateWorkspaceIdFormat("Проверка формата workspaceId")
@@ -73,7 +77,7 @@ class OfficeBookingProcessor(
 
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
                 validateIdNotEmpty("Проверка на непустой id")
-                validateIdFormat("Проверка формата id бронирования") // объединить проверку на непустоту
+                validateIdFormat("Проверка формата id бронирования")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -101,17 +105,23 @@ class OfficeBookingProcessor(
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
                 validateIdNotEmpty("Проверка на непустой id")
                 validateIdFormat("Проверка формата id бронирования")
+
                 worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
-                validateLockProperFormat("Проверка формата lock") // совместить с проверкой на непустой
+                validateLockNotEmpty("Проверка на непустой lock")
+                validateLockProperFormat("Проверка формата lock")
+
                 worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
                 validateUserIdNotEmpty("Проверка на непустой userId")
                 validateUserIdFormat("Проверка формата userId")
+
                 worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
                 validateFloorIdNotEmpty("Проверка на непустой floorId")
                 validateFloorIdFormat("Проверка формата floorId")
+
                 worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
                 validateRoomIdNotEmpty("Проверка на непустой roomId")
                 validateRoomIdFormat("Проверка формата roomId")
+
                 worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
                 validateWorkspaceIdNotEmpty("Проверка на непустой workspaceId")
                 validateWorkspaceIdFormat("Проверка формата workspaceId")
@@ -141,9 +151,11 @@ class OfficeBookingProcessor(
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
                 validateIdNotEmpty("Проверка на непустой id")
                 validateIdFormat("Проверка формата id бронирования")
+
                 worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
-                validateLockProperFormat("Проверка формата lock") // совместить с проверкой на непустой
-                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
+                validateLockNotEmpty("Проверка на непустой lock")
+                validateLockProperFormat("Проверка формата lock")
+
 
                 finishBookingValidation("Завершение проверок")
             }
