@@ -2,10 +2,13 @@ package ru.otus.otuskotlin.smartoffice.biz
 
 import ru.otus.otuskotlin.smartoffice.biz.general.*
 import ru.otus.otuskotlin.smartoffice.biz.stubs.*
+import ru.otus.otuskotlin.smartoffice.biz.validation.*
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeCommand
+//import ru.otus.otuskotlin.smartoffice.common.models.OfficeCommand
+import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.cor.rootChain
+import ru.otus.otuskotlin.smartoffice.cor.worker
 
 
 class OfficeBookingProcessor(
@@ -31,6 +34,27 @@ class OfficeBookingProcessor(
                 stubCannotCreate("Невозможно создать бронь (занято место, лимит броней превышен etc)")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
+
+                worker("Очистка id") { bookingValidating.id = OfficeBookingId.NONE }
+                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
+                validateUserIdFormat("Проверка формата userId")
+                worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
+                validateFloorIdFormat("Проверка формата floorId")
+                worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
+                validateRoomIdFormat("Проверка формата roomId")
+                worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
+                validateWorkspaceIdFormat("Проверка формата workspaceId")
+
+                validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
+                validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
+                validateTimeRangeBooking("Проверка периода будущего бронирования")
+
+                validateStatusCreate("Проверка статуса при создании брони")
+
+                finishBookingValidation("Завершение проверок")
+            }
         }
         operation("Чтение бронирования по id", OfficeCommand.READ) {
             stubs("Обработка стабов") {
@@ -39,6 +63,14 @@ class OfficeBookingProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNotFound("Бронирование не найдено")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+            validation {
+                worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
+
+                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
+                validateIdFormat("Проверка формата id бронирования") // объединить проверку на непустоту
+
+                finishBookingValidation("Завершение проверок")
             }
         }
         operation("Обновление бронирования", OfficeCommand.UPDATE) {
@@ -58,6 +90,31 @@ class OfficeBookingProcessor(
                 stubCannotUpdate("Невозможно изменить бронь")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
+            validation {
+                worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
+
+                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
+                validateIdFormat("Проверка формата id бронирования")
+                worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
+                validateLockProperFormat("Проверка формата lock") // совместить с проверкой на непустой
+                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
+                validateUserIdFormat("Проверка формата userId")
+                worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
+                validateFloorIdFormat("Проверка формата floorId")
+                worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
+                validateRoomIdFormat("Проверка формата roomId")
+                worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
+                validateWorkspaceIdFormat("Проверка формата workspaceId")
+
+                // вот с этими подумать
+                validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
+                validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
+                validateTimeRangeBooking("Проверка периода будущего бронирования")
+
+                validateStatusUpdate("Проверка статуса при обновлении брони")
+
+                finishBookingValidation("Завершение проверок")
+            }
         }
         operation("Удаление бронирования", OfficeCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -67,6 +124,17 @@ class OfficeBookingProcessor(
                 stubNotFound("Бронирование не найдено")
                 stubCannotDelete("Невозможно удалить бронь (например, если начата)")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
+            }
+            validation {
+                worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
+
+                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
+                validateIdFormat("Проверка формата id бронирования")
+                worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
+                validateLockProperFormat("Проверка формата lock") // совместить с проверкой на непустой
+                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
+
+                finishBookingValidation("Завершение проверок")
             }
         }
         operation("Список бронирований пользователя", OfficeCommand.ALL) {
@@ -80,7 +148,21 @@ class OfficeBookingProcessor(
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
-        }
+            validation {
+                worker("Копируем поля в bookingValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
 
+                worker("Очистка userId") { bookingFilterValidating.userId = OfficeUserId(bookingFilterValidating.userId.asString().trim()) }
+                validateUserIdFormat("Проверка формата userId")
+
+                // вот с этими подумать
+                validateStartTimeBooking("Проверка корректности startTime")
+                validateEndTimeBooking("Проверка корректности endTime")
+                validateTimeRangeBooking("Проверка периода бронирования")
+
+                validateStatusUpdate("Проверка статуса")
+
+                finishBookingFilterValidation("Завершение проверок")
+            }
+        }
     }.build()
 }
