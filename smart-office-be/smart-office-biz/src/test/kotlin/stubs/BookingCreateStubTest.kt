@@ -9,6 +9,7 @@ import ru.otus.otuskotlin.smartoffice.common.stubs.OfficeStubs
 import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 class BookingCreateStubTest {
 
@@ -44,6 +45,7 @@ class BookingCreateStubTest {
         )
         processor.exec(ctx)
         assertEquals(OfficeBookingStub.get().id, ctx.bookingResponse.id)
+        assertNotEquals(bookingId, ctx.bookingResponse.id)
         assertEquals(userId, ctx.bookingResponse.userId)
         assertEquals(floorId, ctx.bookingResponse.floorId)
         assertEquals(roomId, ctx.bookingResponse.roomId)
