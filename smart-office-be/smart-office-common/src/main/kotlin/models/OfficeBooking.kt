@@ -18,6 +18,10 @@ data class OfficeBooking (
     var lock: OfficeBookingLock = OfficeBookingLock.NONE,
     val permissionsClient: MutableSet<OfficeBookingPermissions> = mutableSetOf()
 ) {
+    fun deepCopy(): OfficeBooking = copy(
+        permissionsClient = permissionsClient.toMutableSet(),
+    )
+
     fun isEmpty() = this == NONE
 
     companion object {

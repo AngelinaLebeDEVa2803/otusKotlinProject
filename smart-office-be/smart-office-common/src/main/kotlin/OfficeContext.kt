@@ -17,8 +17,15 @@ data class OfficeContext(
 
     var requestId: OfficeRequestId = OfficeRequestId.NONE,
     var ctxTimeStart: Instant = Instant.NONE,
+
     var bookingRequest: OfficeBooking = OfficeBooking(),
     var bookingFilterRequest: OfficeBookingFilter = OfficeBookingFilter(),
+
+    var bookingValidating: OfficeBooking = OfficeBooking(),
+    var bookingFilterValidating: OfficeBookingFilter = OfficeBookingFilter(),
+
+    var bookingValidated: OfficeBooking = OfficeBooking(),
+    var bookingFilterValidated: OfficeBookingFilter = OfficeBookingFilter(),
 
     var bookingResponse: OfficeBooking = OfficeBooking(),
     var bookingsResponse: MutableList<OfficeBooking> = mutableListOf(),
