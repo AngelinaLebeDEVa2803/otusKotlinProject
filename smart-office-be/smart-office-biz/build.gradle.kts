@@ -15,5 +15,6 @@ dependencies {
 
     testImplementation(kotlin("test-junit"))
     testImplementation(projects.smartOfficeStubs)
+    api(libs.coroutines.test)
 }
 
