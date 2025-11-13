@@ -5,7 +5,6 @@ import ru.otus.otuskotlin.smartoffice.biz.stubs.*
 import ru.otus.otuskotlin.smartoffice.biz.validation.*
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
-//import ru.otus.otuskotlin.smartoffice.common.models.OfficeCommand
 import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.cor.rootChain
 import ru.otus.otuskotlin.smartoffice.cor.worker

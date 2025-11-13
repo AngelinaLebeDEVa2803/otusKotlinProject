@@ -19,3 +19,17 @@ fun ICorChainDsl<OfficeContext>.validateUserIdNotEmpty(title: String) = worker {
         )
     }
 }
+
+fun ICorChainDsl<OfficeContext>.validateUserIdNotEmptyFilter(title: String) = worker {
+    this.title = title
+    on { bookingFilterValidating.userId.asString().isEmpty() }
+    handle {
+        fail(
+            errorValidation(
+                field = "userId",
+                violationCode = "empty",
+                description = "field must not be empty"
+            )
+        )
+    }
+}
