@@ -84,11 +84,7 @@ class OfficeBookingProcessor(
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
                 validateId("Проверка id бронирования")
-
-                worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
-                validateLockNotEmpty("Проверка на непустой lock")
-                validateLockProperFormat("Проверка формата lock")
-
+                validateLock("Проверка lock")
                 validateUserId("Проверка userId")
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
@@ -115,11 +111,7 @@ class OfficeBookingProcessor(
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
                 validateId("Проверка id бронирования")
-
-                worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
-                validateLockNotEmpty("Проверка на непустой lock")
-                validateLockProperFormat("Проверка формата lock")
-
+                validateLock("Проверка lock")
                 finishBookingValidation("Завершение проверок")
             }
         }
