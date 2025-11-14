@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 
-fun validationTestIdCorrect(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
+fun validationTestLockCorrect(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
     val ctx = OfficeContext(
         command = command,
         state = OfficeState.NONE,
@@ -24,7 +24,7 @@ fun validationTestIdCorrect(command: OfficeCommand, processor: OfficeBookingProc
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
-            lock = OfficeBookingLock("123"),
+            lock = OfficeBookingLock("123")
         ),
     )
     processor.exec(ctx)
@@ -32,21 +32,21 @@ fun validationTestIdCorrect(command: OfficeCommand, processor: OfficeBookingProc
     assertNotEquals(OfficeState.FAILING, ctx.state)
 }
 
-fun validationTestIdTrim(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
+fun validationTestLockTrim(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
     val ctx = OfficeContext(
         command = command,
         state = OfficeState.NONE,
         workMode = OfficeWorkMode.TEST,
         bookingRequest = OfficeBooking(
-            id = OfficeBookingId(" \n\t     9637f27d-5b70-498d-8b4d-9b1c94dc9c6e         \n\t "),
-            userId = OfficeUserId("123"),
+            id = OfficeBookingId("9637f27d-5b70-498d-8b4d-9b1c94dc9c6e"),
+            userId = OfficeUserId("34567"),
             floorId = OfficeFloorId("floor_6"),
             roomId = OfficeRoomId("room_404"),
             workspaceId = OfficeWorkspaceId("009"),
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
-            lock = OfficeBookingLock("123"),
+            lock = OfficeBookingLock(" \n\t     123        \n\t ")
         ),
     )
     processor.exec(ctx)
@@ -54,13 +54,13 @@ fun validationTestIdTrim(command: OfficeCommand, processor: OfficeBookingProcess
     assertNotEquals(OfficeState.FAILING, ctx.state)
 }
 
-fun validationTestIdEmpty(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
+fun validationTestLockEmpty(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
     val ctx = OfficeContext(
         command = command,
         state = OfficeState.NONE,
         workMode = OfficeWorkMode.TEST,
         bookingRequest = OfficeBooking(
-            id = OfficeBookingId(""),
+            id = OfficeBookingId("9637f27d-5b70-498d-8b4d-9b1c94dc9c6e"),
             userId = OfficeUserId("123"),
             floorId = OfficeFloorId("floor_6"),
             roomId = OfficeRoomId("room_404"),
@@ -68,39 +68,39 @@ fun validationTestIdEmpty(command: OfficeCommand, processor: OfficeBookingProces
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
-            lock = OfficeBookingLock("123"),
+            lock = OfficeBookingLock("")
         ),
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OfficeState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("id", error?.field)
-    assertContains(error?.message ?: "", "id")
+    assertEquals("lock", error?.field)
+    assertContains(error?.message ?: "", "lock")
 }
 
-fun validationTestIdFormat(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
+fun validationTestLockFormat(command: OfficeCommand, processor: OfficeBookingProcessor) = runTest {
     val ctx = OfficeContext(
         command = command,
         state = OfficeState.NONE,
         workMode = OfficeWorkMode.TEST,
         bookingRequest = OfficeBooking(
-            id = OfficeBookingId("23456"),
-            userId = OfficeUserId("123"),
+            id = OfficeBookingId("9637f27d-5b70-498d-8b4d-9b1c94dc9c6e"),
+            userId = OfficeUserId("4567"),
             floorId = OfficeFloorId("floor_6"),
             roomId = OfficeRoomId("room_404"),
             workspaceId = OfficeWorkspaceId("009"),
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
-            lock = OfficeBookingLock("123"),
+            lock = OfficeBookingLock("!@#\\\$%^&*(),.{}")
         ),
     )
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(OfficeState.FAILING, ctx.state)
     val error = ctx.errors.firstOrNull()
-    assertEquals("id", error?.field)
-    assertContains(error?.message ?: "", "id")
+    assertEquals("lock", error?.field)
+    assertContains(error?.message ?: "", "lock")
 }
 
