@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.smartoffice.biz.stub
+package ru.otus.otuskotlin.smartoffice.biz.stubs
 
 import kotlinx.datetime.Instant
 import kotlinx.coroutines.test.runTest
