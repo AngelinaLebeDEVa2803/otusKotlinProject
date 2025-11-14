@@ -88,11 +88,10 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
-
+                validateStatusNotEmpty("Проверка статуса")
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
-
-                validateStatusTime("Проверка статуса при обновлении брони")
+                validateStatusTime("Проверка статуса и временных полей при обновлении брони")
 
                 finishBookingValidation("Завершение проверок")
             }
