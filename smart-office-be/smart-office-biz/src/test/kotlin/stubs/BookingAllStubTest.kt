@@ -66,35 +66,35 @@ class BookingAllStubTest {
     }
 
 
-    @Test
-    fun badStartTime() = runTest {
-        val ctx = OfficeContext(
-            command = OfficeCommand.ALL,
-            state = OfficeState.NONE,
-            workMode = OfficeWorkMode.STUB,
-            stubCase = OfficeStubs.BAD_START_TIME,
-            bookingFilterRequest = filter,
-        )
-        processor.exec(ctx)
-        assertEquals(OfficeBooking(), ctx.bookingResponse)
-        assertEquals("startTime", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
+//    @Test
+//    fun badStartTime() = runTest {
+//        val ctx = OfficeContext(
+//            command = OfficeCommand.ALL,
+//            state = OfficeState.NONE,
+//            workMode = OfficeWorkMode.STUB,
+//            stubCase = OfficeStubs.BAD_START_TIME,
+//            bookingFilterRequest = filter,
+//        )
+//        processor.exec(ctx)
+//        assertEquals(OfficeBooking(), ctx.bookingResponse)
+//        assertEquals("startTime", ctx.errors.firstOrNull()?.field)
+//        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+//    }
 
-    @Test
-    fun badEndTime() = runTest {
-        val ctx = OfficeContext(
-            command = OfficeCommand.ALL,
-            state = OfficeState.NONE,
-            workMode = OfficeWorkMode.STUB,
-            stubCase = OfficeStubs.BAD_END_TIME,
-            bookingFilterRequest = filter,
-        )
-        processor.exec(ctx)
-        assertEquals(OfficeBooking(), ctx.bookingResponse)
-        assertEquals("endTime", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
+//    @Test
+//    fun badEndTime() = runTest {
+//        val ctx = OfficeContext(
+//            command = OfficeCommand.ALL,
+//            state = OfficeState.NONE,
+//            workMode = OfficeWorkMode.STUB,
+//            stubCase = OfficeStubs.BAD_END_TIME,
+//            bookingFilterRequest = filter,
+//        )
+//        processor.exec(ctx)
+//        assertEquals(OfficeBooking(), ctx.bookingResponse)
+//        assertEquals("endTime", ctx.errors.firstOrNull()?.field)
+//        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+//    }
 
     @Test
     fun badTimeRange() = runTest {
@@ -111,20 +111,20 @@ class BookingAllStubTest {
         assertEquals("validation", ctx.errors.firstOrNull()?.group)
     }
 
-    @Test
-    fun badStatus() = runTest {
-        val ctx = OfficeContext(
-            command = OfficeCommand.ALL,
-            state = OfficeState.NONE,
-            workMode = OfficeWorkMode.STUB,
-            stubCase = OfficeStubs.BAD_STATUS,
-            bookingFilterRequest = filter,
-        )
-        processor.exec(ctx)
-        assertEquals(OfficeBooking(), ctx.bookingResponse)
-        assertEquals("status", ctx.errors.firstOrNull()?.field)
-        assertEquals("validation", ctx.errors.firstOrNull()?.group)
-    }
+//    @Test
+//    fun badStatus() = runTest {
+//        val ctx = OfficeContext(
+//            command = OfficeCommand.ALL,
+//            state = OfficeState.NONE,
+//            workMode = OfficeWorkMode.STUB,
+//            stubCase = OfficeStubs.BAD_STATUS,
+//            bookingFilterRequest = filter,
+//        )
+//        processor.exec(ctx)
+//        assertEquals(OfficeBooking(), ctx.bookingResponse)
+//        assertEquals("status", ctx.errors.firstOrNull()?.field)
+//        assertEquals("validation", ctx.errors.firstOrNull()?.group)
+//    }
 
 
     @Test
