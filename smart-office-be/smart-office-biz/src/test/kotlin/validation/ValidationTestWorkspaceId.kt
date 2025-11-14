@@ -24,6 +24,7 @@ fun validationTestWorkspaceIdCorrect(command: OfficeCommand, processor: OfficeBo
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -45,6 +46,7 @@ fun validationTestWorkspaceIdTrim(command: OfficeCommand, processor: OfficeBooki
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -66,6 +68,7 @@ fun validationTestWorkspaceIdEmpty(command: OfficeCommand, processor: OfficeBook
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -90,6 +93,7 @@ fun validationTestWorkspaceIdFormat(command: OfficeCommand, processor: OfficeBoo
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)

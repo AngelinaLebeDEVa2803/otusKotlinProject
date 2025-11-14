@@ -24,6 +24,7 @@ fun validationTestFloorIdCorrect(command: OfficeCommand, processor: OfficeBookin
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -45,6 +46,7 @@ fun validationTestFloorIdTrim(command: OfficeCommand, processor: OfficeBookingPr
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -66,6 +68,7 @@ fun validationTestFloorIdEmpty(command: OfficeCommand, processor: OfficeBookingP
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
@@ -90,6 +93,7 @@ fun validationTestFloorIdFormat(command: OfficeCommand, processor: OfficeBooking
             startTime = Instant.parse("2026-03-30T09:00:00Z"),
             endTime = Instant.parse("2026-03-30T18:00:00Z"),
             status = OfficeBookingStatus.ACTIVE,
+            lock = OfficeBookingLock("123"),
         ),
     )
     processor.exec(ctx)
