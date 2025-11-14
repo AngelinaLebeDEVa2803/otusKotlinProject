@@ -35,9 +35,7 @@ class OfficeBookingProcessor(
             }
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
-
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId.NONE }
-
                 validateUserId("Проверка userId")
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
@@ -62,11 +60,7 @@ class OfficeBookingProcessor(
             }
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
-
-                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
-                validateIdNotEmpty("Проверка на непустой id")
-                validateIdFormat("Проверка формата id бронирования")
-
+                validateId("Проверка id бронирования")
                 finishBookingValidation("Завершение проверок")
             }
         }
@@ -89,10 +83,7 @@ class OfficeBookingProcessor(
             }
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
-
-                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
-                validateIdNotEmpty("Проверка на непустой id")
-                validateIdFormat("Проверка формата id бронирования")
+                validateId("Проверка id бронирования")
 
                 worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
                 validateLockNotEmpty("Проверка на непустой lock")
@@ -123,10 +114,7 @@ class OfficeBookingProcessor(
             }
             validation {
                 worker("Копируем поля в bookingValidating") { bookingValidating = bookingRequest.deepCopy() }
-
-                worker("Очистка id") { bookingValidating.id = OfficeBookingId(bookingValidating.id.asString().trim()) }
-                validateIdNotEmpty("Проверка на непустой id")
-                validateIdFormat("Проверка формата id бронирования")
+                validateId("Проверка id бронирования")
 
                 worker("Очистка lock") { bookingValidating.lock = OfficeBookingLock(bookingValidating.lock.asString().trim()) }
                 validateLockNotEmpty("Проверка на непустой lock")
@@ -148,7 +136,6 @@ class OfficeBookingProcessor(
             }
             validation {
                 worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
-
                 validateUserIdFilter("Проверка userId")
 
                 validateTimeRangeFilter("Проверка периода бронирования")
