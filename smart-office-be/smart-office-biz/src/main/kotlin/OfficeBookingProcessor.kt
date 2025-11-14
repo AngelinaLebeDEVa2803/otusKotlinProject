@@ -40,12 +40,13 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
+                validateStatusCreate("Проверка статуса при создании брони")
+                validateTimeRange("Проверка, что дата начала меньше даты окончания")
+                validateTimeRangeBooking("Проверка продолжительности бронирования")
 
                 validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
                 validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
-                validateTimeRangeBooking("Проверка периода будущего бронирования")
 
-                validateStatus("Проверка статуса при создании брони")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -89,12 +90,13 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
+                validateTimeRange("Проверка, что дата начала меньше даты окончания")
+                validateTimeRangeBooking("Проверка продолжительности бронирования")
 
                 validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
                 validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
-                validateTimeRangeBooking("Проверка периода будущего бронирования")
 
-                validateStatus("Проверка статуса при обновлении брони")
+                validateStatusTimeUpdate("Проверка статуса при обновлении брони")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -119,8 +121,8 @@ class OfficeBookingProcessor(
             stubs("Обработка стабов") {
                 stubAllSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadUserId("Имитация ошибки валидации userId")
-                stubValidationBadStartTime("Имитация ошибки валидации startTime")
-                stubValidationBadEndTime("Имитация ошибки валидации endTime")
+//                stubValidationBadStartTime("Имитация ошибки валидации startTime")
+//                stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
                 stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
@@ -129,9 +131,7 @@ class OfficeBookingProcessor(
             validation {
                 worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
                 validateUserIdFilter("Проверка userId")
-
                 validateTimeRangeFilter("Проверка периода бронирования")
-
                 finishBookingFilterValidation("Завершение проверок")
             }
         }

@@ -10,13 +10,28 @@ import ru.otus.otuskotlin.smartoffice.cor.worker
 fun ICorChainDsl<OfficeContext>.validateTimeRangeBooking(title: String) = worker {
     this.title = title
 
-    on { bookingValidating.startTime > bookingValidating.endTime || bookingValidating.endTime - bookingValidating.startTime > 12.hours }
+    on { bookingValidating.endTime - bookingValidating.startTime > 12.hours } // ещё минималку задать
     handle {
         fail(
             errorValidation(
                 field = "startTime_endTime",
                 violationCode = "badValue",
-                description = "incorrect time range"
+                description = "Incorrect time range. Shift cannot be more than 12 hours"
+            )
+        )
+    }
+}
+
+fun ICorChainDsl<OfficeContext>.validateTimeRange(title: String) = worker {
+    this.title = title
+
+    on { bookingFilterValidating.startTime > bookingFilterValidating.endTime }
+    handle {
+        fail(
+            errorValidation(
+                field = "startTime_endTime",
+                violationCode = "badValue",
+                description = "Incorrect time range: startTime cannot be greater than endTime"
             )
         )
     }
@@ -31,7 +46,7 @@ fun ICorChainDsl<OfficeContext>.validateTimeRangeFilter(title: String) = worker 
             errorValidation(
                 field = "startTime_endTime",
                 violationCode = "badValue",
-                description = "incorrect time range"
+                description = "Incorrect time range: startTime cannot be greater than endTime"
             )
         )
     }

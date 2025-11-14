@@ -7,7 +7,7 @@ import ru.otus.otuskotlin.smartoffice.common.models.OfficeBookingStatus
 import ru.otus.otuskotlin.smartoffice.cor.ICorChainDsl
 import ru.otus.otuskotlin.smartoffice.cor.worker
 
-fun ICorChainDsl<OfficeContext>.validateStatus(title: String) = worker {
+fun ICorChainDsl<OfficeContext>.validateStatusCreate(title: String) = worker {
     this.title = title
 
     on { bookingValidating.status != OfficeBookingStatus.ACTIVE }
