@@ -38,9 +38,10 @@ class OfficeBookingProcessor(
 
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId.NONE }
 
-                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
-                validateUserIdNotEmpty("Проверка на непустой userId")
-                validateUserIdFormat("Проверка формата userId")
+//                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
+//                validateUserIdNotEmpty("Проверка на непустой userId")
+//                validateUserIdFormat("Проверка формата userId")
+                validateUserId("Проверка userId")
 
                 worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
                 validateFloorIdNotEmpty("Проверка на непустой floorId")
