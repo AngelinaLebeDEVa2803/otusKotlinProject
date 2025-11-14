@@ -45,7 +45,7 @@ fun ICorChainDsl<OfficeContext>.validateRoomId(title: String) = chain {
                 errorValidation(
                     field = "roomId",
                     violationCode = "badFormat",
-                    description = "value $encodedId must contain only letters and numbers"
+                    description = "value $encodedId must be in correct format"
                 )
             )
         }
