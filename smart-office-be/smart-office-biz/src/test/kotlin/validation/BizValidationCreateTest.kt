@@ -16,6 +16,11 @@ class BizValidationCreateTest: BaseBizValidationTest() {
     @Test fun emptyFloorId() = validationTestFloorIdEmpty(command, processor)
     @Test fun formatFloorId() = validationTestFloorIdFormat(command, processor)
 
+    @Test fun correctRoomId() = validationTestRoomIdCorrect(command, processor)
+    @Test fun trimRoomId() = validationTestRoomIdTrim(command, processor)
+    @Test fun emptyRoomId() = validationTestRoomIdEmpty(command, processor)
+    @Test fun formatRoomId() = validationTestRoomIdFormat(command, processor)
+
 
 
 //    @Test fun correctTitle() = validationTitleCorrect(command, processor)
