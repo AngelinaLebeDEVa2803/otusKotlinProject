@@ -40,10 +40,7 @@ class OfficeBookingProcessor(
 
                 validateUserId("Проверка userId")
                 validateFloorId("Проверка floorId")
-
-                worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
-                validateRoomIdNotEmpty("Проверка на непустой roomId")
-                validateRoomIdFormat("Проверка формата roomId")
+                validateRoomId("Проверка roomId")
 
                 worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
                 validateWorkspaceIdNotEmpty("Проверка на непустой workspaceId")
@@ -106,10 +103,7 @@ class OfficeBookingProcessor(
 
                 validateUserId("Проверка userId")
                 validateFloorId("Проверка floorId")
-
-                worker("Очистка roomId") { bookingValidating.roomId = OfficeRoomId(bookingValidating.roomId.asString().trim()) }
-                validateRoomIdNotEmpty("Проверка на непустой roomId")
-                validateRoomIdFormat("Проверка формата roomId")
+                validateRoomId("Проверка roomId")
 
                 worker("Очистка workspaceId") { bookingValidating.workspaceId = OfficeWorkspaceId(bookingValidating.workspaceId.asString().trim()) }
                 validateWorkspaceIdNotEmpty("Проверка на непустой workspaceId")
