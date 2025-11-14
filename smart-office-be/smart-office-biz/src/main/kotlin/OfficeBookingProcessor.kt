@@ -121,16 +121,16 @@ class OfficeBookingProcessor(
             stubs("Обработка стабов") {
                 stubAllSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadUserId("Имитация ошибки валидации userId")
+                stubValidationBadStartTime("Имитация ошибки валидации startTime")
+                stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
-//                stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }
             validation {
                 worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
                 validateUserIdFilter("Проверка userId")
-                // добавить что либо оба наны либо нормальные
-                validateTimeRangeFilter("Проверка периода бронирования")
+                validateTimeFieldsFilter("Проверка временных полей для метода all")
                 finishBookingFilterValidation("Завершение проверок")
             }
         }
