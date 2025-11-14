@@ -38,9 +38,6 @@ class OfficeBookingProcessor(
 
                 worker("Очистка id") { bookingValidating.id = OfficeBookingId.NONE }
 
-//                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
-//                validateUserIdNotEmpty("Проверка на непустой userId")
-//                validateUserIdFormat("Проверка формата userId")
                 validateUserId("Проверка userId")
 
                 worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
@@ -110,9 +107,7 @@ class OfficeBookingProcessor(
                 validateLockNotEmpty("Проверка на непустой lock")
                 validateLockProperFormat("Проверка формата lock")
 
-                worker("Очистка userId") { bookingValidating.userId = OfficeUserId(bookingValidating.userId.asString().trim()) }
-                validateUserIdNotEmpty("Проверка на непустой userId")
-                validateUserIdFormat("Проверка формата userId")
+                validateUserId("Проверка userId")
 
                 worker("Очистка floorId") { bookingValidating.floorId = OfficeFloorId(bookingValidating.floorId.asString().trim()) }
                 validateFloorIdNotEmpty("Проверка на непустой floorId")
@@ -172,9 +167,7 @@ class OfficeBookingProcessor(
             validation {
                 worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
 
-                worker("Очистка userId") { bookingFilterValidating.userId = OfficeUserId(bookingFilterValidating.userId.asString().trim()) }
-                validateUserIdNotEmptyFilter("Проверка на непустой userId")
-                validateUserIdFormatFilter("Проверка формата userId")
+                validateUserIdFilter("Проверка userId")
 
                 validateTimeRangeFilter("Проверка периода бронирования")
 

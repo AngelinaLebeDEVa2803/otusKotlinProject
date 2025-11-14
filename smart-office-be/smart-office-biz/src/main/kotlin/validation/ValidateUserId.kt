@@ -51,3 +51,45 @@ fun ICorChainDsl<OfficeContext>.validateUserId(title: String) = chain {
         }
     }
 }
+
+fun ICorChainDsl<OfficeContext>.validateUserIdFilter(title: String) = chain {
+    this.title = title
+    this.description = """
+        Валидация идентификатора пользователя userId. Должен быть не пустым и соответствовать регулярке
+    """.trimIndent()
+    on { state == OfficeState.RUNNING }
+    worker("Обрезка пустых символов") { bookingFilterValidating.userId = OfficeUserId(bookingFilterValidating.userId.asString().trim()) }
+    worker {
+        this.title = "Проверка на непустой userId"
+        this.description = this.title
+        on { state == OfficeState.RUNNING && bookingFilterValidating.userId.asString().isEmpty() }
+        handle {
+            fail(
+                errorValidation(
+                    field = "userId",
+                    violationCode = "empty",
+                    description = "field must not be empty"
+                )
+            )
+        }
+    }
+    worker {
+        this.title = "Проверка формата userId"
+        this.description = this.title
+
+        val regExp = Regex("^[0-9a-zA-Z#:-]+$")
+        on { state == OfficeState.RUNNING && bookingFilterValidating.userId != OfficeUserId.NONE && !bookingFilterValidating.userId.asString().matches(regExp) }
+        handle {
+            val encodedId = bookingFilterValidating.userId.asString()
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+            fail(
+                errorValidation(
+                    field = "userId",
+                    violationCode = "badFormat",
+                    description = "value $encodedId must contain only letters and numbers"
+                )
+            )
+        }
+    }
+}
