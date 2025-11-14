@@ -4,7 +4,6 @@ import kotlin.time.Duration.Companion.hours
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.helpers.errorValidation
 import ru.otus.otuskotlin.smartoffice.common.helpers.fail
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeBookingId
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeState
 import ru.otus.otuskotlin.smartoffice.cor.ICorChainDsl
 import ru.otus.otuskotlin.smartoffice.cor.chain

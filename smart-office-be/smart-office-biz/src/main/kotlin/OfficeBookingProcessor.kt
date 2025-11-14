@@ -41,6 +41,8 @@ class OfficeBookingProcessor(
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
 
+                validateStartTimeNotNone("Проверка, что startTime задан")
+                validateEndTimeNotNone("Проверка, что endTime задан")
                 validateStatusCreate("Проверка, что статус ACTIVE")
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
@@ -89,6 +91,8 @@ class OfficeBookingProcessor(
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
 
+                validateStartTimeNotNone("Проверка, что startTime задан")
+                validateEndTimeNotNone("Проверка, что endTime задан")
                 validateStatusNotEmpty("Проверка статуса")
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
