@@ -88,6 +88,7 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
+
                 validateStatusNotEmpty("Проверка статуса")
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
@@ -117,7 +118,7 @@ class OfficeBookingProcessor(
                 stubAllSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadUserId("Имитация ошибки валидации userId")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
-                stubValidationBadStatus("Имитация ошибки валидации status")
+//                stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
                 stubNoCase("Ошибка: запрошенный стаб недопустим")
             }

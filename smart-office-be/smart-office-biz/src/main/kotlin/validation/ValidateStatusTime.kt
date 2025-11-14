@@ -39,34 +39,6 @@ fun ICorChainDsl<OfficeContext>.validateStatusTime(title: String) = chain {
             )
         }
     }
-//    worker { // избыточно
-//        this.title = "Проверка endTime при статусах ACTIVE, CANCELLED"
-//        this.description = this.title
-//        on { state == OfficeState.RUNNING && statusFuture.contains(bookingValidating.status) && bookingValidating.endTime < minAllowedEndTime }
-//        handle {
-//            fail(
-//                errorValidation(
-//                    field = "endTime",
-//                    violationCode = "badValue",
-//                    description = "endTime must be in at least 2 hours"
-//                )
-//            )
-//        }
-//    }
-//    worker {
-//        this.title = "Проверка startTime при статусе COMPLETED"
-//        this.description = this.title
-//        on { state == OfficeState.RUNNING && bookingValidating.status == OfficeBookingStatus.COMPLETED && bookingValidating.startTime > now }
-//        handle {
-//            fail(
-//                errorValidation(
-//                    field = "startTime",
-//                    violationCode = "badValue",
-//                    description = "startTime must be in past"
-//                )
-//            )
-//        }
-//    }
     worker {
         this.title = "Проверка endTime при статусе COMPLETED"
         this.description = this.title
