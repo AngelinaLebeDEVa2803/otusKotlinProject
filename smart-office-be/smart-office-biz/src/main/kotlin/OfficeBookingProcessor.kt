@@ -129,6 +129,7 @@ class OfficeBookingProcessor(
             validation {
                 worker("Копируем поля в bookingFilterValidating") { bookingFilterValidating = bookingFilterRequest.deepCopy() }
                 validateUserIdFilter("Проверка userId")
+                // добавить что либо оба наны либо нормальные
                 validateTimeRangeFilter("Проверка периода бронирования")
                 finishBookingFilterValidation("Завершение проверок")
             }
