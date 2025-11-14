@@ -117,8 +117,6 @@ class OfficeBookingProcessor(
             stubs("Обработка стабов") {
                 stubAllSuccess("Имитация успешной обработки", corSettings)
                 stubValidationBadUserId("Имитация ошибки валидации userId")
-//                stubValidationBadStartTime("Имитация ошибки валидации startTime")
-//                stubValidationBadEndTime("Имитация ошибки валидации endTime")
                 stubValidationBadTimeRange("Имитация ошибки валидации периода бронирования")
                 stubValidationBadStatus("Имитация ошибки валидации status")
                 stubDbError("Имитация ошибки работы с БД")
