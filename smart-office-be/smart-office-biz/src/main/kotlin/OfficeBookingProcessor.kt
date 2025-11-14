@@ -40,13 +40,11 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
-                validateStatusCreate("Проверка статуса при создании брони")
+
+                validateStatusCreate("Проверка, что статус ACTIVE")
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
-
-                validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
-                validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
-
+                validateStatusTime("Проверка корректности startTime/endTime для будущего бронирования")
 
                 finishBookingValidation("Завершение проверок")
             }
@@ -90,13 +88,11 @@ class OfficeBookingProcessor(
                 validateFloorId("Проверка floorId")
                 validateRoomId("Проверка roomId")
                 validateWorkspaceId("Проверка workspaceId")
+
                 validateTimeRange("Проверка, что дата начала меньше даты окончания")
                 validateTimeRangeBooking("Проверка продолжительности бронирования")
 
-                validateStartTimeBooking("Проверка корректности startTime для будущего бронирования")
-                validateEndTimeBooking("Проверка корректности endTime для будущего бронирования")
-
-                validateStatusTimeUpdate("Проверка статуса при обновлении брони")
+                validateStatusTime("Проверка статуса при обновлении брони")
 
                 finishBookingValidation("Завершение проверок")
             }
