@@ -52,6 +52,7 @@ private fun BookingDebug?.transportToStubCase(): OfficeStubs = when (this?.stub)
     BookingRequestDebugStubs.CANNOT_CREATE -> OfficeStubs.CANNOT_CREATE
     BookingRequestDebugStubs.CANNOT_UPDATE -> OfficeStubs.CANNOT_UPDATE
     BookingRequestDebugStubs.CANNOT_DELETE -> OfficeStubs.CANNOT_DELETE
+    BookingRequestDebugStubs.DB_ERROR -> OfficeStubs.DB_ERROR
     null -> OfficeStubs.NONE
 }
 
