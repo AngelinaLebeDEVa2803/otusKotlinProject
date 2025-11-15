@@ -36,6 +36,10 @@ class BizValidationUpdateTest: BaseBizValidationTest() {
     @Test fun emptyWorkspaceId() = validationTestWorkspaceIdEmpty(command, processor)
     @Test fun formatWorkspaceId() = validationTestWorkspaceIdFormat(command, processor)
 
-    // далее проверки на статус и даты
+    @Test fun undefinedStartTime() = validationTestUndefinedStartTime(command, processor)
+    @Test fun undefinedEndTime() = validationTestUndefinedEndTime(command, processor)
+    @Test fun incorrectTimeRange() = validationTestIncorrectTimeRange(command, processor)
+    @Test fun longBooking() = validationTestLongBooking(command, processor)
+    @Test fun shortBooking() = validationTestShortBooking(command, processor)
 
 }

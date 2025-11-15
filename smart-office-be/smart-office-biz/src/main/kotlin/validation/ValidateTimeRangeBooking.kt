@@ -82,7 +82,7 @@ fun ICorChainDsl<OfficeContext>.validateTimeRangeBooking(title: String) = chain 
 fun ICorChainDsl<OfficeContext>.validateTimeRange(title: String) = worker {
     this.title = title
 
-    on { bookingValidating.startTime > bookingValidating.endTime }
+    on { state == OfficeState.RUNNING &&  bookingValidating.startTime > bookingValidating.endTime }
     handle {
         fail(
             errorValidation(

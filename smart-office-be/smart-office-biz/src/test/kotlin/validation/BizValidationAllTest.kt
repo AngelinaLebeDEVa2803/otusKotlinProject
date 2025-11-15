@@ -50,7 +50,7 @@ class BizValidationSearchTest: BaseBizValidationTest() {
     }
 
     @Test
-    fun incorrectStartTimeFilter() = runTest {
+    fun undefinedStartTimeFilter() = runTest {
         val ctx = OfficeContext(
             command = command,
             state = OfficeState.NONE,
@@ -69,7 +69,7 @@ class BizValidationSearchTest: BaseBizValidationTest() {
     }
 
     @Test
-    fun incorrectEndTimeFilter() = runTest {
+    fun undefinedEndTimeFilter() = runTest {
         val ctx = OfficeContext(
             command = command,
             state = OfficeState.NONE,

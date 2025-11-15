@@ -1,7 +1,13 @@
 package ru.otus.otuskotlin.smartoffice.biz.validation
 
-import ru.otus.otuskotlin.smartoffice.common.models.OfficeCommand
+import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Instant
+import ru.otus.otuskotlin.smartoffice.common.NONE
+import ru.otus.otuskotlin.smartoffice.common.OfficeContext
+import ru.otus.otuskotlin.smartoffice.common.models.*
 import kotlin.test.Test
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
 
 class BizValidationCreateTest: BaseBizValidationTest() {
     override val command: OfficeCommand = OfficeCommand.CREATE
@@ -26,6 +32,13 @@ class BizValidationCreateTest: BaseBizValidationTest() {
     @Test fun emptyWorkspaceId() = validationTestWorkspaceIdEmpty(command, processor)
     @Test fun formatWorkspaceId() = validationTestWorkspaceIdFormat(command, processor)
 
-    // далее проверки на статус и даты
+    @Test fun undefinedStartTime() = validationTestUndefinedStartTime(command, processor)
+    @Test fun undefinedEndTime() = validationTestUndefinedEndTime(command, processor)
+    @Test fun incorrectTimeRange() = validationTestIncorrectTimeRange(command, processor)
+    @Test fun longBooking() = validationTestLongBooking(command, processor)
+    @Test fun shortBooking() = validationTestShortBooking(command, processor)
+
+
+
 
 }
