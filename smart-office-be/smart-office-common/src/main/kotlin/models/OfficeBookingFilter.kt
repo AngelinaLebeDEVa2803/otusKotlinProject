@@ -9,5 +9,13 @@ data class OfficeBookingFilter (
     var startTime: Instant = Instant.NONE,
     var endTime: Instant = Instant.NONE,
     var status: OfficeBookingStatus = OfficeBookingStatus.NONE
-    )
+    ) {
+    fun deepCopy(): OfficeBookingFilter = copy()
+
+    fun isEmpty() = this == NONE
+
+    companion object {
+        private val NONE = OfficeBookingFilter()
+    }
+}
 

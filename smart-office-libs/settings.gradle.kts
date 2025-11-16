@@ -24,5 +24,6 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }
 
+include(":smart-office-lib-cor")
 include(":smart-office-lib-logging-common")
 include(":smart-office-lib-logging-logback")

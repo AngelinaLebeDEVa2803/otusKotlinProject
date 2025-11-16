@@ -450,6 +450,7 @@ components:
         - cannotDelete
         - cannotUpdate
         - cannotCreate
+        - dbError
 
     BookingDebug:
       type: object

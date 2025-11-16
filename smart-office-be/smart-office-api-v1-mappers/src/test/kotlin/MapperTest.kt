@@ -24,7 +24,7 @@ class MapperTest {
         val req = BookingCreateRequest(
             debug = BookingDebug(
                 mode = BookingRequestDebugMode.STUB,
-                stub = BookingRequestDebugStubs.SUCCESS,
+                stub = BookingRequestDebugStubs.DB_ERROR,
             ),
             booking = OfficeBookingStub.get().toTransportCreateBooking()
         )
@@ -38,7 +38,7 @@ class MapperTest {
         val context = OfficeContext()
         context.fromTransport(req)
 
-        assertEquals(OfficeStubs.SUCCESS, context.stubCase)
+        assertEquals(OfficeStubs.DB_ERROR, context.stubCase)
         assertEquals(OfficeWorkMode.STUB, context.workMode)
         assertEquals(expected, context.bookingRequest)
     }

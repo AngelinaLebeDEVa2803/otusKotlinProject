@@ -1,6 +1,9 @@
 package ru.otus.otuskotlin.smartoffice.common.helpers
 
+import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeError
+import ru.otus.otuskotlin.smartoffice.common.models.OfficeState
+import ru.otus.otuskotlin.smartoffice.logging.common.LogLevel
 
 fun Throwable.asOfficeError(
     code: String = "unknown",
@@ -12,4 +15,28 @@ fun Throwable.asOfficeError(
     field = "",
     message = message,
     exception = this,
+)
+
+inline fun OfficeContext.addError(vararg error: OfficeError) = errors.addAll(error)
+
+inline fun OfficeContext.fail(error: OfficeError) {
+    addError(error)
+    state = OfficeState.FAILING
+}
+
+inline fun errorValidation(
+    field: String,
+    /**
+     * Код, характеризующий ошибку. Не должен включать имя поля или указание на валидацию.
+     * Например: empty, badSymbols, tooLong, etc
+     */
+    violationCode: String,
+    description: String,
+    level: LogLevel = LogLevel.ERROR,
+) = OfficeError(
+    code = "validation-$field-$violationCode",
+    field = field,
+    group = "validation",
+    message = "Validation error for field $field: $description",
+    level = level,
 )
