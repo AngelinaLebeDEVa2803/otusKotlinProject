@@ -1,30 +1,30 @@
 package ru.otus.otuskotlin.smartoffice.common.repo
 
 interface IRepoBooking {
-    suspend fun createAd(rq: DbAdRequest): IDbAdResponse
-    suspend fun readAd(rq: DbAdIdRequest): IDbAdResponse
-    suspend fun updateAd(rq: DbAdRequest): IDbAdResponse
-    suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse
-    suspend fun searchAd(rq: DbAdFilterRequest): IDbAdsResponse
+    suspend fun createBooking(rq: DbBookingRequest): IDbBookingResponse
+    suspend fun readBooking(rq: DbBookingIdRequest): IDbBookingResponse
+    suspend fun updateBooking(rq: DbBookingRequest): IDbBookingResponse
+    suspend fun deleteBooking(rq: DbBookingIdRequest): IDbBookingResponse
+    suspend fun allBooking(rq: DbBookingFilterRequest): IDbBookingsResponse
     companion object {
         val NONE = object : IRepoBooking {
-            override suspend fun createAd(rq: DbAdRequest): IDbAdResponse {
+            override suspend fun createBooking(rq: DbBookingRequest): IDbBookingResponse {
                 throw NotImplementedError("Must not be used")
             }
 
-            override suspend fun readAd(rq: DbAdIdRequest): IDbAdResponse {
+            override suspend fun readBooking(rq: DbBookingIdRequest): IDbBookingResponse {
                 throw NotImplementedError("Must not be used")
             }
 
-            override suspend fun updateAd(rq: DbAdRequest): IDbAdResponse {
+            override suspend fun updateBooking(rq: DbBookingRequest): IDbBookingResponse {
                 throw NotImplementedError("Must not be used")
             }
 
-            override suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse {
+            override suspend fun deleteBooking(rq: DbBookingIdRequest): IDbBookingResponse {
                 throw NotImplementedError("Must not be used")
             }
 
-            override suspend fun searchAd(rq: DbAdFilterRequest): IDbAdsResponse {
+            override suspend fun allBooking(rq: DbBookingFilterRequest): IDbBookingsResponse {
                 throw NotImplementedError("Must not be used")
             }
         }
