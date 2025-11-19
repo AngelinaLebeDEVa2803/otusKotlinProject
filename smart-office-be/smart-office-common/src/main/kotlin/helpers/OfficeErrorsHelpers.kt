@@ -17,12 +17,19 @@ fun Throwable.asOfficeError(
     exception = this,
 )
 
-inline fun OfficeContext.addError(vararg error: OfficeError) = errors.addAll(error)
+inline fun OfficeContext.addError(error: OfficeError) = errors.add(error)
+inline fun OfficeContext.addErrors(error: Collection<OfficeError>) = errors.addAll(error)
 
 inline fun OfficeContext.fail(error: OfficeError) {
     addError(error)
     state = OfficeState.FAILING
 }
+
+inline fun OfficeContext.fail(errors: Collection<OfficeError>) {
+    addErrors(errors)
+    state = OfficeState.FAILING
+}
+
 
 inline fun errorValidation(
     field: String,
@@ -39,4 +46,16 @@ inline fun errorValidation(
     group = "validation",
     message = "Validation error for field $field: $description",
     level = level,
+)
+
+inline fun errorSystem(
+    violationCode: String,
+    level: LogLevel = LogLevel.ERROR,
+    e: Throwable,
+) = OfficeError(
+    code = "system-$violationCode",
+    group = "system",
+    message = "System error occurred. Our stuff has been informed, please retry later",
+    level = level,
+    exception = e,
 )
