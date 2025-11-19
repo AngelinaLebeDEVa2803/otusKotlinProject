@@ -37,82 +37,82 @@ class BookingRepoInMemory(
         }
         DbBookingResponseOk(booking)
     }
-//t
-    override suspend fun readAd(rq: DbAdIdRequest): IDbAdResponse = tryAdMethod {
-        val key = rq.id.takeIf { it != MkplAdId.NONE }?.asString() ?: return@tryAdMethod errorEmptyId
+
+    override suspend fun readBooking(rq: DbBookingIdRequest): IDbBookingResponse = tryBookingMethod {
+        val key = rq.id.takeIf { it != OfficeBookingId.NONE }?.asString() ?: return@tryBookingMethod errorEmptyId
         mutex.withLock {
             cache.get(key)
                 ?.let {
-                    DbAdResponseOk(it.toInternal())
+                    DbBookingResponseOk(it.toInternal())
                 } ?: errorNotFound(rq.id)
         }
     }
 
-    override suspend fun updateAd(rq: DbAdRequest): IDbAdResponse = tryAdMethod {
-        val rqAd = rq.ad
-        val id = rqAd.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
+    override suspend fun updateBooking(rq: DbBookingRequest): IDbBookingResponse = tryBookingMethod {
+        val rqBooking = rq.booking
+        val id = rqBooking.id.takeIf { it != OfficeBookingId.NONE } ?: return@tryBookingMethod errorEmptyId
         val key = id.asString()
-        val oldLock = rqAd.lock.takeIf { it != MkplAdLock.NONE } ?: return@tryAdMethod errorEmptyLock(id)
+        val oldLock = rqBooking.lock.takeIf { it != OfficeBookingLock.NONE } ?: return@tryBookingMethod errorEmptyLock(id)
 
         mutex.withLock {
-            val oldAd = cache.get(key)?.toInternal()
+            val oldBooking = cache.get(key)?.toInternal()
             when {
-                oldAd == null -> errorNotFound(id)
-                oldAd.lock == MkplAdLock.NONE -> errorDb(RepoEmptyLockException(id))
-                oldAd.lock != oldLock -> errorRepoConcurrency(oldAd, oldLock)
+                oldBooking == null -> errorNotFound(id)
+                oldBooking.lock == OfficeBookingLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldBooking.lock != oldLock -> errorRepoConcurrency(oldBooking, oldLock)
                 else -> {
-                    val newAd = rqAd.copy(lock = MkplAdLock(randomUuid()))
-                    val entity = AdEntity(newAd)
+                    val newBooking = oldBooking.copy(lock = OfficeBookingLock(randomUuid()))
+                    val entity = BookingEntity(newBooking)
                     cache.put(key, entity)
-                    DbAdResponseOk(newAd)
+                    DbBookingResponseOk(newBooking)
                 }
             }
         }
     }
 
 
-    override suspend fun deleteAd(rq: DbAdIdRequest): IDbAdResponse = tryAdMethod {
-        val id = rq.id.takeIf { it != MkplAdId.NONE } ?: return@tryAdMethod errorEmptyId
+    override suspend fun deleteBooking(rq: DbBookingIdRequest): IDbBookingResponse = tryBookingMethod {
+        val id = rq.id.takeIf { it != OfficeBookingId.NONE } ?: return@tryBookingMethod errorEmptyId
         val key = id.asString()
-        val oldLock = rq.lock.takeIf { it != MkplAdLock.NONE } ?: return@tryAdMethod errorEmptyLock(id)
+        val oldLock = rq.lock.takeIf { it != OfficeBookingLock.NONE } ?: return@tryBookingMethod errorEmptyLock(id)
 
         mutex.withLock {
-            val oldAd = cache.get(key)?.toInternal()
+            val oldBooking = cache.get(key)?.toInternal()
             when {
-                oldAd == null -> errorNotFound(id)
-                oldAd.lock == MkplAdLock.NONE -> errorDb(RepoEmptyLockException(id))
-                oldAd.lock != oldLock -> errorRepoConcurrency(oldAd, oldLock)
+                oldBooking == null -> errorNotFound(id)
+                oldBooking.lock == OfficeBookingLock.NONE -> errorDb(RepoEmptyLockException(id))
+                oldBooking.lock != oldLock -> errorRepoConcurrency(oldBooking, oldLock)
                 else -> {
                     cache.invalidate(key)
-                    DbAdResponseOk(oldAd)
+                    DbBookingResponseOk(oldBooking)
                 }
             }
         }
     }
 
     /**
-     * Поиск объявлений по фильтру
+     * Отображение бронирований по фильтру.
      * Если в фильтре не установлен какой-либо из параметров - по нему фильтрация не идет
      */
-    override suspend fun searchAd(rq: DbAdFilterRequest): IDbAdsResponse = tryAdsMethod {
-        val result: List<MkplAd> = cache.asMap().asSequence()
+    override suspend fun allBooking(rq: DbBookingFilterRequest): IDbBookingsResponse = tryBookingsMethod {
+        val result: List<OfficeBooking> = cache.asMap().asSequence()
             .filter { entry ->
-                rq.ownerId.takeIf { it != MkplUserId.NONE }?.let {
-                    it.asString() == entry.value.ownerId
+                rq.userId.takeIf { it != OfficeUserId.NONE }?.let {
+                    it.asString() == entry.value.userId
                 } ?: true
             }
             .filter { entry ->
-                rq.dealSide.takeIf { it != MkplDealSide.NONE }?.let {
-                    it.name == entry.value.adType
+                rq.status.takeIf { it != OfficeBookingStatus.NONE }?.let {
+                    it.name == entry.value.status
                 } ?: true
             }
-            .filter { entry ->
-                rq.titleFilter.takeIf { it.isNotBlank() }?.let {
-                    entry.value.title?.contains(it) ?: false
-                } ?: true
-            }
+//            .filter { entry ->
+//                rq.titleFilter.takeIf { it.isNotBlank() }?.let {
+//                    entry.value.title?.contains(it) ?: false
+//                } ?: true
+//            }
             .map { it.value.toInternal() }
             .toList()
-        DbAdsResponseOk(result)
+        DbBookingsResponseOk(result)
     }
 }
