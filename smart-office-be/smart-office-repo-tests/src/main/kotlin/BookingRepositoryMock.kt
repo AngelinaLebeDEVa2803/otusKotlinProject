@@ -4,11 +4,11 @@ import ru.otus.otuskotlin.smartoffice.common.models.OfficeBooking
 import ru.otus.otuskotlin.smartoffice.common.repo.*
 
 class BookingRepositoryMock(
-    private val invokeCreateBooking: (DbBookingRequest) -> IDbBookingResponse = { DEFAULT_AD_SUCCESS_EMPTY_MOCK },
-    private val invokeReadBooking: (DbBookingIdRequest) -> IDbBookingResponse = { DEFAULT_AD_SUCCESS_EMPTY_MOCK },
-    private val invokeUpdateBooking: (DbBookingRequest) -> IDbBookingResponse = { DEFAULT_AD_SUCCESS_EMPTY_MOCK },
-    private val invokeDeleteBooking: (DbBookingIdRequest) -> IDbBookingResponse = { DEFAULT_AD_SUCCESS_EMPTY_MOCK },
-    private val invokeAllBooking: (DbBookingFilterRequest) -> IDbBookingsResponse = { DEFAULT_ADS_SUCCESS_EMPTY_MOCK },
+    private val invokeCreateBooking: (DbBookingRequest) -> IDbBookingResponse = { DEFAULT_BOOKING_SUCCESS_EMPTY_MOCK },
+    private val invokeReadBooking: (DbBookingIdRequest) -> IDbBookingResponse = { DEFAULT_BOOKING_SUCCESS_EMPTY_MOCK },
+    private val invokeUpdateBooking: (DbBookingRequest) -> IDbBookingResponse = { DEFAULT_BOOKING_SUCCESS_EMPTY_MOCK },
+    private val invokeDeleteBooking: (DbBookingIdRequest) -> IDbBookingResponse = { DEFAULT_BOOKING_SUCCESS_EMPTY_MOCK },
+    private val invokeAllBooking: (DbBookingFilterRequest) -> IDbBookingsResponse = { DEFAULT_BOOKINGS_SUCCESS_EMPTY_MOCK },
 ): IRepoBooking {
     override suspend fun createBooking(rq: DbBookingRequest): IDbBookingResponse {
         return invokeCreateBooking(rq)
@@ -31,7 +31,7 @@ class BookingRepositoryMock(
     }
 
     companion object {
-        val DEFAULT_AD_SUCCESS_EMPTY_MOCK = DbBookingResponseOk(OfficeBooking())
-        val DEFAULT_ADS_SUCCESS_EMPTY_MOCK = DbBookingsResponseOk(emptyList())
+        val DEFAULT_BOOKING_SUCCESS_EMPTY_MOCK = DbBookingResponseOk(OfficeBooking())
+        val DEFAULT_BOOKINGS_SUCCESS_EMPTY_MOCK = DbBookingsResponseOk(emptyList())
     }
 }
