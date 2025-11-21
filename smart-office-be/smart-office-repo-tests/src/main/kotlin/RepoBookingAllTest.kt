@@ -25,7 +25,7 @@ abstract class RepoBookingAllTest {
 
     @Test
     fun allStatus() = runRepoTest {
-        val result = repo.allBooking(DbBookingFilterRequest(status = OfficeBookingStatus.ACTIVE))
+        val result = repo.allBooking(DbBookingFilterRequest(status = OfficeBookingStatus.CANCELLED))
         assertIs<DbBookingsResponseOk>(result)
         val expected = listOf(initializedObjects[2], initializedObjects[4]).sortedBy { it.id.asString() }
         assertEquals(expected, result.data.sortedBy { it.id.asString() })
@@ -33,11 +33,13 @@ abstract class RepoBookingAllTest {
 
     companion object: BaseInitBookings("all") {
 
-        val allUserId = OfficeUserId("999")
+        val allUserId = OfficeUserId("user4test")
         override val initObjects: List<OfficeBooking> = listOf(
             createInitTestModel("booking1"),
             createInitTestModel("booking2", userId = allUserId),
-            createInitTestModel("booking5", status = OfficeBookingStatus.ACTIVE),
+            createInitTestModel("booking3", status = OfficeBookingStatus.CANCELLED),
+            createInitTestModel("booking4", userId = allUserId),
+            createInitTestModel("booking5", status = OfficeBookingStatus.CANCELLED),
         )
     }
 }
