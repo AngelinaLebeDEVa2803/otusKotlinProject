@@ -9,19 +9,19 @@ class BookingRepoInMemoryCreateTest : RepoBookingCreateTest() {
     )
 }
 
-//class BookingRepoInMemoryDeleteTest : RepoBookingDeleteTest() {
-//    override val repo = BookingRepoInitialized(
-//        BookingRepoInMemory(),
-//        initObjects = initObjects,
-//    )
-//}
+class BookingRepoInMemoryDeleteTest : RepoBookingDeleteTest() {
+    override val repo = BookingRepoInitialized(
+        BookingRepoInMemory(),
+        initObjects = initObjects,
+    )
+}
 
-//class BookingRepoInMemoryReadTest : RepoBookingReadTest() {
-//    override val repo = BookingRepoInitialized(
-//        BookingRepoInMemory(),
-//        initObjects = initObjects,
-//    )
-//}
+class BookingRepoInMemoryReadTest : RepoBookingReadTest() {
+    override val repo = BookingRepoInitialized(
+        BookingRepoInMemory(),
+        initObjects = initObjects,
+    )
+}
 
 //class BookingRepoInMemoryAllTest : RepoBookingAllTest() {
 //    override val repo = BookingRepoInitialized(
