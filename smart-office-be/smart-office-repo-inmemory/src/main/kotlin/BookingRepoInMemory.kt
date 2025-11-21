@@ -1,10 +1,12 @@
 package ru.otus.otuskotlin.smartoffice.repo.inmemory
 
+import kotlinx.datetime.Instant
 import com.benasher44.uuid.uuid4
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import ru.otus.otuskotlin.smartoffice.common.models.*
+import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.repo.*
 import ru.otus.otuskotlin.smartoffice.common.repo.exceptions.RepoEmptyLockException
 import ru.otus.otuskotlin.smartoffice.repo.common.IRepoBookingInitializable
@@ -106,11 +108,16 @@ class BookingRepoInMemory(
                     it.name == entry.value.status
                 } ?: true
             }
-//            .filter { entry ->
-//                rq.titleFilter.takeIf { it.isNotBlank() }?.let {
-//                    entry.value.title?.contains(it) ?: false
-//                } ?: true
-//            }
+            .filter { entry ->
+                rq.startTime.takeIf { it != Instant.NONE }?.let {
+                    it <= entry.value.startTime
+                } ?: true
+            }
+            .filter { entry ->
+                rq.endTime.takeIf { it != Instant.NONE }?.let {
+                    it >= entry.value.endTime
+                } ?: true
+            }
             .map { it.value.toInternal() }
             .toList()
         DbBookingsResponseOk(result)

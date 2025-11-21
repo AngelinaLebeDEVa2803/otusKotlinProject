@@ -10,8 +10,8 @@ data class BookingEntity(
     val floorId: String? = null,
     val roomId: String? = null,
     val workspaceId: String? = null,
-    val startTime: Instant? = null,
-    val endTime: Instant? = null,
+    val startTime: Instant = Instant.NONE,
+    val endTime: Instant = Instant.NONE,
     val status: String? = null,
     val lock: String? = null,
 ) {
@@ -25,7 +25,6 @@ data class BookingEntity(
         endTime = model.endTime,
         status = model.status.takeIf { it != OfficeBookingStatus.NONE }?.name,
         lock = model.lock.asString().takeIf { it.isNotBlank() }
-        // Не нужно сохранять permissions, потому что он ВЫЧИСЛЯЕМЫЙ, а не хранимый
     )
 
     fun toInternal() = OfficeBooking(
@@ -34,8 +33,8 @@ data class BookingEntity(
         floorId = floorId?.let { OfficeFloorId(it) }?: OfficeFloorId.NONE,
         roomId = roomId?.let { OfficeRoomId(it) }?: OfficeRoomId.NONE,
         workspaceId = workspaceId?.let { OfficeWorkspaceId(it) }?: OfficeWorkspaceId.NONE,
-        startTime = startTime?: Instant.NONE,
-        endTime = endTime?: Instant.NONE,
+        startTime = startTime,
+        endTime = endTime,
         status = status?.let { OfficeBookingStatus.valueOf(it) }?: OfficeBookingStatus.NONE,
         lock = lock?.let { OfficeBookingLock(it) } ?: OfficeBookingLock.NONE,
     )
