@@ -9,7 +9,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(projects.smartOfficeCommon)
     implementation(projects.smartOfficeStubs)
-    //implementation(projects.smartOfficeRepoTests)
+    //implementation(projects.smartOfficeRepoCommon)
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.coroutines.core)

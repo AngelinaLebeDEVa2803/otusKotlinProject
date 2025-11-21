@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.smartoffice.backend.repo.tests
+package ru.otus.otuskotlin.smartoffice.repo.tests
 
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeBooking
 import ru.otus.otuskotlin.smartoffice.common.repo.*

@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.smartoffice.backend.repository.inmemory
+package ru.otus.otuskotlin.smartoffice.repo.stubs
 
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.smartoffice.common.models.*

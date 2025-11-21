@@ -10,7 +10,9 @@ dependencies {
     implementation(projects.smartOfficeCommon)
     implementation(projects.smartOfficeStubs)
     implementation(projects.smartOfficeRepoStubs)
+    implementation(projects.smartOfficeRepoCommon)
     implementation(libs.kotlinx.datetime)
+    implementation(kotlin("test-junit"))
 
     implementation(libs.coroutines.core)
 
