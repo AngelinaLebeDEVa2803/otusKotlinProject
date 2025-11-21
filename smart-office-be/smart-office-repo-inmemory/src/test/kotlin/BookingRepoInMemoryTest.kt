@@ -23,16 +23,16 @@ class BookingRepoInMemoryReadTest : RepoBookingReadTest() {
     )
 }
 
-//class BookingRepoInMemoryAllTest : RepoBookingAllTest() {
-//    override val repo = BookingRepoInitialized(
-//        BookingRepoInMemory(),
-//        initObjects = initObjects,
-//    )
-//}
-//
-//class BookingRepoInMemoryUpdateTest : RepoBookingUpdateTest() {
-//    override val repo = BookingRepoInitialized(
-//        BookingRepoInMemory(randomUuid = { lockNew.asString() }),
-//        initObjects = initObjects,
-//    )
-//}
+class BookingRepoInMemoryAllTest : RepoBookingAllTest() {
+    override val repo = BookingRepoInitialized(
+        BookingRepoInMemory(),
+        initObjects = initObjects,
+    )
+}
+
+class BookingRepoInMemoryUpdateTest : RepoBookingUpdateTest() {
+    override val repo = BookingRepoInitialized(
+        BookingRepoInMemory(randomUuid = { lockNew.asString() }),
+        initObjects = initObjects,
+    )
+}
