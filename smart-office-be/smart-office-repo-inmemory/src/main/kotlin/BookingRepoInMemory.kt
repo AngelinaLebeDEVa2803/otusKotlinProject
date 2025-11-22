@@ -63,7 +63,7 @@ class BookingRepoInMemory(
                 oldBooking.lock == OfficeBookingLock.NONE -> errorDb(RepoEmptyLockException(id))
                 oldBooking.lock != oldLock -> errorRepoConcurrency(oldBooking, oldLock)
                 else -> {
-                    val newBooking = oldBooking.copy(lock = OfficeBookingLock(randomUuid()))
+                    val newBooking = rqBooking.copy(lock = OfficeBookingLock(randomUuid()))
                     val entity = BookingEntity(newBooking)
                     cache.put(key, entity)
                     DbBookingResponseOk(newBooking)
