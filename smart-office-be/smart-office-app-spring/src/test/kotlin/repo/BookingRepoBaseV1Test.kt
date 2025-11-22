@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.smartoffice.app.spring.repo
 
+import kotlinx.datetime.Instant
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.http.MediaType
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -31,106 +32,92 @@ internal abstract class BookingRepoBaseV1Test {
             .toTransportCreate()
             .copy(responseType = "create")
     )
-//
-//    @Test
-//    open fun readAd() = testRepoAd(
-//        "read",
-//        AdReadRequest(
-//            ad = OfficeBookingStub.get().toTransportRead(),
-//            debug = debug,
-//        ),
-//        prepareCtx(OfficeBookingStub.get())
-//            .toTransportRead()
-//            .copy(responseType = "read")
-//    )
-//
-//    @Test
-//    open fun updateAd() = testRepoAd(
-//        "update",
-//        AdUpdateRequest(
-//            ad = OfficeBookingStub.prepareResult { title = "add" }.toTransportUpdate(),
-//            debug = debug,
-//        ),
-//        prepareCtx(OfficeBookingStub.prepareResult { title = "add" })
-//            .toTransportUpdate().copy(responseType = "update")
-//    )
-//
-//    @Test
-//    open fun deleteAd() = testRepoAd(
-//        "delete",
-//        AdDeleteRequest(
-//            ad = OfficeBookingStub.get().toTransportDelete(),
-//            debug = debug,
-//        ),
-//        prepareCtx(OfficeBookingStub.get())
-//            .toTransportDelete()
-//            .copy(responseType = "delete")
-//    )
-//
-//    @Test
-//    open fun searchAd() = testRepoAd(
-//        "search",
-//        AdSearchRequest(
-//            adFilter = AdSearchFilter(adType = DealSide.SUPPLY),
-//            debug = debug,
-//        ),
-//        OfficeContext(
-//            state = MkplState.RUNNING,
-//            adsResponse = OfficeBookingStub.prepareSearchList("xx", MkplDealSide.SUPPLY)
-//                .onEach { it.permissionsClient.clear() }
-//                .sortedBy { it.id.asString() }
-//                .toMutableList()
-//        )
-//            .toTransportSearch().copy(responseType = "search")
-//    )
-//
-//    @Test
-//    open fun offersAd() = testRepoAd(
-//        "offers",
-//        AdOffersRequest(
-//            ad = OfficeBookingStub.get().toTransportRead(),
-//            debug = debug,
-//        ),
-//        OfficeContext(
-//            state = MkplState.RUNNING,
-//            adResponse = OfficeBookingStub.get(),
-//            adsResponse = OfficeBookingStub.prepareSearchList("xx", MkplDealSide.SUPPLY)
-//                .onEach { it.permissionsClient.clear() }
-//                .sortedBy { it.id.asString() }
-//                .toMutableList()
-//        )
-//            .toTransportOffers().copy(responseType = "offers")
-//    )
-//
-//    private fun prepareCtx(ad: MkplAd) = OfficeContext(
-//        state = MkplState.RUNNING,
-//        adResponse = ad.apply {
-//            // Пока не реализована эта функциональность
-//            permissionsClient.clear()
-//        },
-//    )
-//
-//    private inline fun <reified Req : Any, reified Res : IResponse> testRepoAd(
-//        url: String,
-//        requestObj: Req,
-//        expectObj: Res,
-//    ) {
-//        webClient
-//            .post()
-//            .uri("/v1/ad/$url")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .body(BodyInserters.fromValue(requestObj))
-//            .exchange()
-//            .expectStatus().isOk
-//            .expectBody(Res::class.java)
-//            .value {
-//                println("RESPONSE: $it")
-//                val sortedResp: IResponse = when (it) {
-//                    is AdSearchResponse -> it.copy(ads = it.ads?.sortedBy { it.id })
-//                    is AdOffersResponse -> it.copy(ads = it.ads?.sortedBy { it.id })
-//                    else -> it
-//                }
-//                assertThat(sortedResp).isEqualTo(expectObj)
-//            }
-//    }
+
+    @Test
+    open fun readBooking() = testRepoBooking(
+        "read",
+        BookingReadRequest(
+            booking = OfficeBookingStub.get().toTransportRead(),
+            debug = debug,
+        ),
+        prepareCtx(OfficeBookingStub.get())
+            .toTransportRead()
+            .copy(responseType = "read")
+    )
+
+    @Test
+    open fun updateBooking() = testRepoBooking(
+        "update",
+        BookingUpdateRequest(
+            booking = OfficeBookingStub.prepareResult { userId = OfficeUserId("user_add") }.toTransportUpdate(),
+            debug = debug,
+        ),
+        prepareCtx(OfficeBookingStub.prepareResult { userId = OfficeUserId("user_add") })
+            .toTransportUpdate().copy(responseType = "update")
+    )
+
+    @Test
+    open fun deleteBooking() = testRepoBooking(
+        "delete",
+        BookingDeleteRequest(
+            booking = OfficeBookingStub.get().toTransportDelete(),
+            debug = debug,
+        ),
+        prepareCtx(OfficeBookingStub.get())
+            .toTransportDelete()
+            .copy(responseType = "delete")
+    )
+
+    @Test
+    open fun allBooking() = testRepoBooking(
+        "all",
+        BookingAllRequest(
+            bookingFilter = BookingAllFilter(status = BookingStatus.CANCELLED),
+            debug = debug,
+        ),
+        OfficeContext(
+            state = OfficeState.RUNNING,
+            bookingsResponse = OfficeBookingStub.prepareBookingsList(userId =  OfficeUserId("test_all_spring"),
+                startTime = Instant.parse("2026-07-01T09:00:00"),
+                endTime = Instant.parse("2026-07-01T19:00:00"),
+                status =  OfficeBookingStatus.CANCELLED)
+                .onEach { it.permissionsClient.clear() }
+                .sortedBy { it.id.asString() }
+                .toMutableList()
+        )
+            .toTransportAll().copy(responseType = "all")
+    )
+
+
+
+    private fun prepareCtx(booking: OfficeBooking) = OfficeContext(
+        state = OfficeState.RUNNING,
+        bookingResponse = booking.apply {
+            // Пока не реализована эта функциональность
+            permissionsClient.clear()
+        },
+    )
+
+    private inline fun <reified Req : Any, reified Res : IResponse> testRepoBooking(
+        url: String,
+        requestObj: Req,
+        expectObj: Res,
+    ) {
+        webClient
+            .post()
+            .uri("/v1/booking/$url")
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(BodyInserters.fromValue(requestObj))
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(Res::class.java)
+            .value {
+                println("RESPONSE: $it")
+                val sortedResp: IResponse = when (it) {
+                    is BookingAllResponse -> it.copy(bookings = it.bookings?.sortedBy { it.id })
+                    else -> it
+                }
+                assertThat(sortedResp).isEqualTo(expectObj)
+            }
+    }
 }
