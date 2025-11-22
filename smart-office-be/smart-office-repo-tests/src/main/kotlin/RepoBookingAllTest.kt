@@ -56,6 +56,8 @@ abstract class RepoBookingAllTest {
                 endTime = Instant.parse("2025-03-01T19:00:00Z")),
             createInitTestModel("booking7", startTime = Instant.parse("2025-10-01T09:00:00Z"),
                 endTime = Instant.parse("2025-10-01T19:00:00Z")),
+            createInitTestModel("booking8", startTime = Instant.parse("2025-01-01T08:00:00Z"),
+                endTime = Instant.parse("2025-10-01T19:00:00Z")),
         )
     }
 }
