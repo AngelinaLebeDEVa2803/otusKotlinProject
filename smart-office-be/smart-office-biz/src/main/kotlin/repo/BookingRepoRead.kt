@@ -12,7 +12,7 @@ import ru.otus.otuskotlin.smartoffice.cor.worker
 
 fun ICorChainDsl<OfficeContext>.repoRead(title: String) = worker {
     this.title = title
-    description = "Чтение объявления из БД"
+    description = "Чтение бронирования из БД"
     on { state == OfficeState.RUNNING }
     handle {
         val request = DbBookingIdRequest(bookingValidated)

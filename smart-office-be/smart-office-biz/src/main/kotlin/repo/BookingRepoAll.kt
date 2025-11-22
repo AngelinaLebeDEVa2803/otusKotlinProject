@@ -11,7 +11,7 @@ import ru.otus.otuskotlin.smartoffice.cor.worker
 
 fun ICorChainDsl<OfficeContext>.repoAll(title: String) = worker {
     this.title = title
-    description = "Поиск объявлений в БД по фильтру"
+    description = "Поиск бронирований в БД по фильтру"
     on { state == OfficeState.RUNNING }
     handle {
         val request = DbBookingFilterRequest(
