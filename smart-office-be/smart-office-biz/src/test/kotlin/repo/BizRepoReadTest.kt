@@ -2,7 +2,7 @@ package ru.otus.otuskotlin.smartoffice.biz.repo
 
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-//import repo.repoNotFoundTest
+import repo.repoNotFoundTest
 import ru.otus.otuskotlin.smartoffice.repo.tests.BookingRepositoryMock
 import ru.otus.otuskotlin.smartoffice.biz.OfficeBookingProcessor
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
@@ -64,7 +64,7 @@ class BizRepoReadTest {
         assertEquals(endT, ctx.bookingResponse.endTime)
         assertEquals(OfficeBookingStatus.ACTIVE, ctx.bookingResponse.status)
     }
-//
-//    @Test
-//    fun repoReadNotFoundTest() = repoNotFoundTest(command)
+
+    @Test
+    fun repoReadNotFoundTest() = repoNotFoundTest(command)
 }
