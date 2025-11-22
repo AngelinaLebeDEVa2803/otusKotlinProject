@@ -15,6 +15,13 @@ import kotlin.test.assertNotEquals
 class BizRepoCreateTest {
 
     private val userId = OfficeUserId("321")
+    private val floorId = OfficeFloorId("floor_666")
+    private val roomId = OfficeRoomId("room_9")
+    private val workspaceId = OfficeWorkspaceId("040")
+
+    private val startT = Instant.parse("2028-02-19T09:00:00Z")
+    private val endT = Instant.parse("2028-02-19T19:00:00Z")
+
     private val command = OfficeCommand.CREATE
     private val uuid = "10000000-0000-0000-0000-000000000001"
     private val repo = BookingRepositoryMock(
@@ -22,12 +29,12 @@ class BizRepoCreateTest {
             DbBookingResponseOk(
                 data = OfficeBooking(
                     id = OfficeBookingId(uuid),
-                    userId = userId,
-                    floorId = OfficeFloorId("floor_666"),
-                    roomId = OfficeRoomId("room_9"),
-                    workspaceId = OfficeWorkspaceId("040"),
-                    startTime = Instant.parse("2028-02-19T09:00:00Z"),
-                    endTime = Instant.parse("2028-02-19T19:00:00Z"),
+                    userId = it.booking.userId,
+                    floorId = it.booking.floorId,
+                    roomId = it.booking.roomId,
+                    workspaceId = it.booking.workspaceId,
+                    startTime = it.booking.startTime,
+                    endTime = it.booking.endTime,
                     status = it.booking.status,
                 )
             )
@@ -46,11 +53,11 @@ class BizRepoCreateTest {
             workMode = OfficeWorkMode.TEST,
             bookingRequest = OfficeBooking(
                 userId = userId,
-                floorId = OfficeFloorId("floor_666"),
-                roomId = OfficeRoomId("room_9"),
-                workspaceId = OfficeWorkspaceId("040"),
-                startTime = Instant.parse("2028-02-19T09:00:00Z"),
-                endTime = Instant.parse("2028-02-19T19:00:00Z"),
+                floorId = floorId,
+                roomId = roomId,
+                workspaceId = workspaceId,
+                startTime = startT,
+                endTime = endT,
                 status = OfficeBookingStatus.ACTIVE,
             ),
         )
@@ -58,11 +65,11 @@ class BizRepoCreateTest {
         assertEquals(OfficeState.FINISHING, ctx.state)
         assertNotEquals(OfficeBookingId.NONE, ctx.bookingResponse.id)
         assertEquals(userId, ctx.bookingResponse.userId)
-//        assertEquals(floorId, ctx.bookingResponse.floorId)
-//        assertEquals(roomId, ctx.bookingResponse.roomId)
-//        assertEquals(workspaceId, ctx.bookingResponse.workspaceId)
-//        assertEquals(startTime, ctx.bookingResponse.startTime)
-//        assertEquals(endTime, ctx.bookingResponse.endTime)
+        assertEquals(floorId, ctx.bookingResponse.floorId)
+        assertEquals(roomId, ctx.bookingResponse.roomId)
+        assertEquals(workspaceId, ctx.bookingResponse.workspaceId)
+        assertEquals(startT, ctx.bookingResponse.startTime)
+        assertEquals(endT, ctx.bookingResponse.endTime)
         assertEquals(OfficeBookingStatus.ACTIVE, ctx.bookingResponse.status)
     }
 }
