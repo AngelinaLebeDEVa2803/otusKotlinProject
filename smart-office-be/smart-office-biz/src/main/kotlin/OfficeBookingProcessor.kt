@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.smartoffice.biz
 
 import ru.otus.otuskotlin.smartoffice.biz.general.*
 import ru.otus.otuskotlin.smartoffice.biz.stubs.*
+import ru.otus.otuskotlin.smartoffice.biz.repo.*
 import ru.otus.otuskotlin.smartoffice.biz.validation.*
 import ru.otus.otuskotlin.smartoffice.common.OfficeContext
 import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
