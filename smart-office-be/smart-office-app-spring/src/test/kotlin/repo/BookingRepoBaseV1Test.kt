@@ -95,7 +95,6 @@ internal abstract class BookingRepoBaseV1Test {
     private fun prepareCtx(booking: OfficeBooking) = OfficeContext(
         state = OfficeState.RUNNING,
         bookingResponse = booking.apply {
-            // Пока не реализована эта функциональность
             permissionsClient.clear()
         },
     )
