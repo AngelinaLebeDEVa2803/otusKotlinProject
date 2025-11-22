@@ -8,6 +8,11 @@ import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
 import ru.otus.otuskotlin.smartoffice.logging.common.OfficeLoggerProvider
 import ru.otus.otuskotlin.smartoffice.logging.jvm.officeLoggerLogback
 import ru.otus.otuskotlin.smartoffice.app.spring.base.SpringWsSessionRepo
+import ru.otus.otuskotlin.smartoffice.repo.inmemory.BookingRepoInMemory
+import ru.otus.otuskotlin.smartoffice.repo.stubs.BookingRepoStub
+import ru.otus.otuskotlin.smartoffice.common.repo.IRepoBooking
+
+
 
 @Suppress("unused")
 @Configuration
@@ -19,8 +24,20 @@ class BookingConfig {
     fun loggerProvider(): OfficeLoggerProvider = OfficeLoggerProvider { officeLoggerLogback(it) }
 
     @Bean
+    fun testRepo(): IRepoBooking = BookingRepoInMemory()
+
+    @Bean
+    fun prodRepo(): IRepoBooking = BookingRepoInMemory()
+
+    @Bean
+    fun stubRepo(): IRepoBooking = BookingRepoStub()
+
+    @Bean
     fun corSettings(): OfficeCorSettings = OfficeCorSettings(
         loggerProvider = loggerProvider(),
+        repoTest = testRepo(),
+        repoProd = prodRepo(),
+        repoStub = stubRepo(),
     )
 
     @Bean

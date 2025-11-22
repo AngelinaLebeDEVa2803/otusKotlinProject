@@ -35,11 +35,18 @@ dependencies {
     // biz
     implementation(projects.smartOfficeBiz)
 
+    // DB
+    implementation(projects.smartOfficeRepoStubs)
+    implementation(projects.smartOfficeRepoInmemory)
+    testImplementation(projects.smartOfficeRepoCommon)
+    testImplementation(projects.smartOfficeStubs)
+
     // tests
     testImplementation(kotlin("test-junit5"))
     testImplementation(libs.spring.test)
     //testImplementation(libs.mockito.kotlin)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(libs.spring.mockk)
 }
 
 tasks {
