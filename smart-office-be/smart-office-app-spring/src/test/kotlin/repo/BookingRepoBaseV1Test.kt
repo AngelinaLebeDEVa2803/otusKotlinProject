@@ -78,8 +78,8 @@ internal abstract class BookingRepoBaseV1Test {
         OfficeContext(
             state = OfficeState.RUNNING,
             bookingsResponse = OfficeBookingStub.prepareBookingsList(userId =  OfficeUserId("test_all_spring"),
-                startTime = Instant.parse("2026-07-01T09:00:00"),
-                endTime = Instant.parse("2026-07-01T19:00:00"),
+                startTime = Instant.parse("2026-07-01T09:00:00Z"),
+                endTime = Instant.parse("2026-07-01T19:00:00Z"),
                 status =  OfficeBookingStatus.CANCELLED)
                 .onEach { it.permissionsClient.clear() }
                 .sortedBy { it.id.asString() }

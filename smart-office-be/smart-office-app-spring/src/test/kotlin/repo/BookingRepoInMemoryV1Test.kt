@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.smartoffice.app.spring.repo
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.coEvery
 import io.mockk.slot
+import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -20,47 +21,48 @@ import ru.otus.otuskotlin.smartoffice.repo.inmemory.BookingRepoInMemory
 import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.Test
 
-//// Temporary simple test with stubs
-//@WebFluxTest(BookingControllerV1Fine::class, BookingConfig::class)
-//internal class BookingRepoInMemoryV1Test : BookingRepoBaseV1Test() {
-//    @Autowired
-//    override lateinit var webClient: WebTestClient
-//
-//    @MockkBean
-//    @Qualifier("testRepo")
-//    lateinit var testTestRepo: IRepoBooking
-//
-//    @BeforeEach
-//    fun tearUp() {
-//        val slotAd = slot<DbBookingRequest>()
-//        val slotId = slot<DbBookingIdRequest>()
-//        val slotFl = slot<DbBookingFilterRequest>()
-//        val repo = BookingRepoInitialized(
-//            repo = BookingRepoInMemory(randomUuid = { uuidNew }),
-//            initObjects = OfficeBookingStub.prepareSearchList("xx", MkplDealSide.SUPPLY) + OfficeBookingStub.get()
-//        )
-//        coEvery { testTestRepo.createAd(capture(slotAd)) } coAnswers { repo.createAd(slotAd.captured) }
-//        coEvery { testTestRepo.readAd(capture(slotId)) } coAnswers { repo.readAd(slotId.captured) }
-//        coEvery { testTestRepo.updateAd(capture(slotAd)) } coAnswers { repo.updateAd(slotAd.captured) }
-//        coEvery { testTestRepo.deleteAd(capture(slotId)) } coAnswers { repo.deleteAd(slotId.captured) }
-//        coEvery { testTestRepo.searchAd(capture(slotFl)) } coAnswers { repo.searchAd(slotFl.captured) }
-//    }
-//
-//    @Test
-//    override fun createAd() = super.createAd()
-//
-//    @Test
-//    override fun readAd() = super.readAd()
-//
-//    @Test
-//    override fun updateAd() = super.updateAd()
-//
-//    @Test
-//    override fun deleteAd() = super.deleteAd()
-//
-//    @Test
-//    override fun searchAd() = super.searchAd()
-//
-//    @Test
-//    override fun offersAd() = super.offersAd()
-//}
+// Temporary simple test with stubs
+@WebFluxTest(BookingControllerV1Fine::class, BookingConfig::class)
+internal class BookingRepoInMemoryV1Test : BookingRepoBaseV1Test() {
+    @Autowired
+    override lateinit var webClient: WebTestClient
+
+    @MockkBean
+    @Qualifier("testRepo")
+    lateinit var testTestRepo: IRepoBooking
+
+    @BeforeEach
+    fun tearUp() {
+        val slotBooking = slot<DbBookingRequest>()
+        val slotId = slot<DbBookingIdRequest>()
+        val slotFl = slot<DbBookingFilterRequest>()
+        val repo = BookingRepoInitialized(
+            repo = BookingRepoInMemory(randomUuid = { uuidNew }),
+            initObjects = OfficeBookingStub.prepareBookingsList(userId =  OfficeUserId("test_all_spring"),
+                startTime = Instant.parse("2026-07-01T09:00:00Z"),
+                endTime = Instant.parse("2026-07-01T19:00:00Z"),
+                status =  OfficeBookingStatus.CANCELLED) + OfficeBookingStub.get()
+        )
+        coEvery { testTestRepo.createBooking(capture(slotBooking)) } coAnswers { repo.createBooking(slotBooking.captured) }
+        coEvery { testTestRepo.readBooking(capture(slotId)) } coAnswers { repo.readBooking(slotId.captured) }
+        coEvery { testTestRepo.updateBooking(capture(slotBooking)) } coAnswers { repo.updateBooking(slotBooking.captured) }
+        coEvery { testTestRepo.deleteBooking(capture(slotId)) } coAnswers { repo.deleteBooking(slotId.captured) }
+        coEvery { testTestRepo.allBooking(capture(slotFl)) } coAnswers { repo.allBooking(slotFl.captured) }
+    }
+
+    @Test
+    override fun createBooking() = super.createBooking()
+
+    @Test
+    override fun readBooking() = super.readBooking()
+
+    @Test
+    override fun updateBooking() = super.updateBooking()
+
+    @Test
+    override fun deleteBooking() = super.deleteBooking()
+
+    @Test
+    override fun allBooking() = super.allBooking()
+
+}
