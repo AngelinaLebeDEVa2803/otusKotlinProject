@@ -10,27 +10,27 @@ import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.mappers.v1.*
 import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.Test
-//
-//internal abstract class AdRepoBaseV1Test {
-//    protected abstract var webClient: WebTestClient
-//    private val debug = AdDebug(mode = AdRequestDebugMode.TEST)
-//    protected val uuidNew = "10000000-0000-0000-0000-000000000001"
-//
-//    @Test
-//    open fun createAd() = testRepoAd(
-//        "create",
-//        AdCreateRequest(
-//            ad = OfficeBookingStub.get().toTransportCreate(),
-//            debug = debug,
-//        ),
-//        prepareCtx(OfficeBookingStub.prepareResult {
-//            id = MkplAdId(uuidNew)
-//            ownerId = MkplUserId.NONE
-//            lock = MkplAdLock.NONE
-//        })
-//            .toTransportCreate()
-//            .copy(responseType = "create")
-//    )
+
+internal abstract class BookingRepoBaseV1Test {
+    protected abstract var webClient: WebTestClient
+    private val debug = BookingDebug(mode = BookingRequestDebugMode.TEST)
+    protected val uuidNew = "10000000-0000-0000-0000-000000000001"
+
+    @Test
+    open fun createBooking() = testRepoBooking(
+        "create",
+        BookingCreateRequest(
+            booking = OfficeBookingStub.get().toTransportCreate(),
+            debug = debug,
+        ),
+        prepareCtx(OfficeBookingStub.prepareResult {
+            id = OfficeBookingId(uuidNew)
+            userId = OfficeUserId.NONE
+            lock = OfficeBookingLock.NONE
+        })
+            .toTransportCreate()
+            .copy(responseType = "create")
+    )
 //
 //    @Test
 //    open fun readAd() = testRepoAd(
@@ -133,4 +133,4 @@ import kotlin.test.Test
 //                assertThat(sortedResp).isEqualTo(expectObj)
 //            }
 //    }
-//}
+}
