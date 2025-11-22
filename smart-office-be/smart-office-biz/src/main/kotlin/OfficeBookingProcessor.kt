@@ -8,6 +8,7 @@ import ru.otus.otuskotlin.smartoffice.common.OfficeCorSettings
 import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.cor.rootChain
 import ru.otus.otuskotlin.smartoffice.cor.worker
+import ru.otus.otuskotlin.smartoffice.cor.chain
 
 
 class OfficeBookingProcessor(
@@ -17,6 +18,7 @@ class OfficeBookingProcessor(
 
     private val businessChain = rootChain<OfficeContext> {
         initStatus("Инициализация статуса")
+        initRepo("Инициализация репозитория")
 
         operation("Создание бронирования", OfficeCommand.CREATE) {
             stubs("Обработка стабов") {
@@ -50,6 +52,12 @@ class OfficeBookingProcessor(
 
                 finishBookingValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика сохранения"
+                repoPrepareCreate("Подготовка объекта для сохранения")
+                repoCreate("Создание объявления в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Чтение бронирования по id", OfficeCommand.READ) {
             stubs("Обработка стабов") {
@@ -64,6 +72,16 @@ class OfficeBookingProcessor(
                 validateId("Проверка id бронирования")
                 finishBookingValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика чтения"
+                repoRead("Чтение объявления из БД")
+                worker {
+                    title = "Подготовка ответа для Read"
+                    on { state == MkplState.RUNNING }
+                    handle { adRepoDone = adRepoRead }
+                }
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Обновление бронирования", OfficeCommand.UPDATE) {
             stubs("Обработка стабов") {
@@ -100,6 +118,14 @@ class OfficeBookingProcessor(
 
                 finishBookingValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика сохранения"
+                repoRead("Чтение объявления из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление объявления в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Удаление бронирования", OfficeCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -116,6 +142,14 @@ class OfficeBookingProcessor(
                 validateLock("Проверка lock")
                 finishBookingValidation("Завершение проверок")
             }
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение объявления из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление объявления из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Список бронирований пользователя", OfficeCommand.ALL) {
             stubs("Обработка стабов") {
@@ -133,6 +167,8 @@ class OfficeBookingProcessor(
                 validateTimeFieldsFilter("Проверка временных полей для метода all")
                 finishBookingFilterValidation("Завершение проверок")
             }
+            repoSearch("Поиск объявления в БД по фильтру")
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }
