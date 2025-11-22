@@ -11,7 +11,6 @@ import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.common.repo.DbBookingResponseOk
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 
 class BizRepoUpdateTest {
 
@@ -23,7 +22,7 @@ class BizRepoUpdateTest {
 
     private val startT = Instant.parse("2028-02-19T09:00:00Z")
     private val endT = Instant.parse("2028-02-19T19:00:00Z")
-    private val command = OfficeCommand.DELETE
+    private val command = OfficeCommand.UPDATE
     private val initBooking = OfficeBooking(
         id = bookingId,
         userId = userId,
@@ -52,7 +51,7 @@ class BizRepoUpdateTest {
                     startTime = startT,
                     endTime = endT,
                     status = OfficeBookingStatus.CANCELLED,
-                    lock = OfficeBookingLock("123"),
+                    lock = OfficeBookingLock("567"),
                 )
             )
         }
