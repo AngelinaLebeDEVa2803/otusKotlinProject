@@ -119,14 +119,14 @@ class OfficeBookingProcessor(
 
                 finishBookingValidation("Завершение проверок")
             }
-//            chain {
-//                title = "Логика сохранения"
-//                repoRead("Чтение объявления из БД")
-//                checkLock("Проверяем консистентность по оптимистичной блокировке")
-//                repoPrepareUpdate("Подготовка объекта для обновления")
-//                repoUpdate("Обновление объявления в БД")
-//            }
-//            prepareResult("Подготовка ответа")
+            chain {
+                title = "Логика обновления"
+                repoRead("Чтение брони из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareUpdate("Подготовка объекта для обновления")
+                repoUpdate("Обновление брони в БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Удаление бронирования", OfficeCommand.DELETE) {
             stubs("Обработка стабов") {
@@ -143,14 +143,14 @@ class OfficeBookingProcessor(
                 validateLock("Проверка lock")
                 finishBookingValidation("Завершение проверок")
             }
-//            chain {
-//                title = "Логика удаления"
-//                repoRead("Чтение объявления из БД")
-//                checkLock("Проверяем консистентность по оптимистичной блокировке")
-//                repoPrepareDelete("Подготовка объекта для удаления")
-//                repoDelete("Удаление объявления из БД")
-//            }
-//            prepareResult("Подготовка ответа")
+            chain {
+                title = "Логика удаления"
+                repoRead("Чтение брони из БД")
+                checkLock("Проверяем консистентность по оптимистичной блокировке")
+                repoPrepareDelete("Подготовка объекта для удаления")
+                repoDelete("Удаление брони из БД")
+            }
+            prepareResult("Подготовка ответа")
         }
         operation("Список бронирований пользователя", OfficeCommand.ALL) {
             stubs("Обработка стабов") {
@@ -168,8 +168,8 @@ class OfficeBookingProcessor(
                 validateTimeFieldsFilter("Проверка временных полей для метода all")
                 finishBookingFilterValidation("Завершение проверок")
             }
-//            repoSearch("Поиск объявления в БД по фильтру")
-//            prepareResult("Подготовка ответа")
+            repoAll("Поиск брони в БД по фильтру")
+            prepareResult("Подготовка ответа")
         }
     }.build()
 }
