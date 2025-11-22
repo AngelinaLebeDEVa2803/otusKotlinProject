@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.smartoffice.common
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.smartoffice.common.stubs.*
 import ru.otus.otuskotlin.smartoffice.common.models.*
+import ru.otus.otuskotlin.smartoffice.common.repo.IRepoBooking
 import ru.otus.otuskotlin.smartoffice.common.ws.IOfficeWsSession
 
 data class OfficeContext(
@@ -26,6 +27,12 @@ data class OfficeContext(
 
     var bookingValidated: OfficeBooking = OfficeBooking(),
     var bookingFilterValidated: OfficeBookingFilter = OfficeBookingFilter(),
+
+    var bookingRepo: IRepoBooking = IRepoBooking.NONE,
+    var bookingRepoRead: OfficeBooking = OfficeBooking(), // То, что прочитали из репозитория
+    var bookingRepoPrepare: OfficeBooking = OfficeBooking(), // То, что готовим для сохранения в БД
+    var bookingRepoDone: OfficeBooking = OfficeBooking(),  // Результат, полученный из БД
+    var bookingsRepoDone: MutableList<OfficeBooking> = mutableListOf(),
 
     var bookingResponse: OfficeBooking = OfficeBooking(),
     var bookingsResponse: MutableList<OfficeBooking> = mutableListOf(),

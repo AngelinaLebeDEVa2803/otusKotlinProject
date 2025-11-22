@@ -7,16 +7,18 @@ version = rootProject.version
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation(libs.kotlinx.datetime)
-    implementation(projects.smartOfficeStubs)
     implementation(projects.smartOfficeCommon)
-    implementation(projects.smartOfficeRepoTests)
-    implementation(projects.smartOfficeRepoInmemory)
+    implementation(projects.smartOfficeRepoCommon)
+    implementation(libs.kotlinx.datetime)
 
-    api("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-cor")
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.core)
+    implementation(libs.db.cache4k)
+    implementation(libs.uuid)
+
 
     testImplementation(kotlin("test-junit"))
     testImplementation(projects.smartOfficeStubs)
+    testImplementation(projects.smartOfficeRepoTests)
     api(libs.coroutines.test)
 }
-
