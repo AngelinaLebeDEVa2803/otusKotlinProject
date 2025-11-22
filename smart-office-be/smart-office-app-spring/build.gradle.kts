@@ -42,7 +42,7 @@ dependencies {
     testImplementation(projects.smartOfficeStubs)
 
     // tests
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("test-junit"))
     testImplementation(libs.spring.test)
     //testImplementation(libs.mockito.kotlin)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
