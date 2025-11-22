@@ -26,7 +26,6 @@ internal abstract class BookingRepoBaseV1Test {
         ),
         prepareCtx(OfficeBookingStub.prepareResult {
             id = OfficeBookingId(uuidNew)
-            userId = OfficeUserId.NONE
             lock = OfficeBookingLock.NONE
         })
             .toTransportCreate()
@@ -72,7 +71,7 @@ internal abstract class BookingRepoBaseV1Test {
     open fun allBooking() = testRepoBooking(
         "all",
         BookingAllRequest(
-            bookingFilter = BookingAllFilter(status = BookingStatus.CANCELLED),
+            bookingFilter = BookingAllFilter(userId = "test_all_spring", status = BookingStatus.CANCELLED),
             debug = debug,
         ),
         OfficeContext(
