@@ -26,7 +26,7 @@ internal abstract class BookingRepoBaseV1Test {
         ),
         prepareCtx(OfficeBookingStub.prepareResult {
             id = OfficeBookingId(uuidNew)
-            lock = OfficeBookingLock.NONE
+            lock = OfficeBookingLock(uuidNew)
         })
             .toTransportCreate()
             .copy(responseType = "create")
@@ -48,10 +48,13 @@ internal abstract class BookingRepoBaseV1Test {
     open fun updateBooking() = testRepoBooking(
         "update",
         BookingUpdateRequest(
-            booking = OfficeBookingStub.prepareResult { userId = OfficeUserId("user_add") }.toTransportUpdate(),
+            booking = OfficeBookingStub.prepareResult {
+                userId = OfficeUserId("user1")}.toTransportUpdate(),
             debug = debug,
         ),
-        prepareCtx(OfficeBookingStub.prepareResult { userId = OfficeUserId("user_add") })
+        prepareCtx(OfficeBookingStub.prepareResult {
+            userId = OfficeUserId("user1")
+            lock = OfficeBookingLock(uuidNew) })
             .toTransportUpdate().copy(responseType = "update")
     )
 
