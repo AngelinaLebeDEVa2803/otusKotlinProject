@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.smartoffice.repo.tests
 
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeBooking
 import ru.otus.otuskotlin.smartoffice.common.models.OfficeBookingId
+import ru.otus.otuskotlin.smartoffice.common.models.OfficeError
 import ru.otus.otuskotlin.smartoffice.common.repo.DbBookingIdRequest
 import ru.otus.otuskotlin.smartoffice.common.repo.DbBookingResponseErr
 import ru.otus.otuskotlin.smartoffice.common.repo.DbBookingResponseOk
@@ -28,11 +29,11 @@ abstract class RepoBookingReadTest {
         val result = repo.readBooking(DbBookingIdRequest(notFoundId))
 
         assertIs<DbBookingResponseErr>(result)
-        val error = result.errors.find { it.code == "repo-not-found" }
+        val error: OfficeError? = result.errors.find { it.code == "repo-not-found" }
         assertEquals("id", error?.field)
     }
 
-    companion object : BaseInitBookings("delete") {
+    companion object : BaseInitBookings("read") {
         override val initObjects: List<OfficeBooking> = listOf(
             createInitTestModel("read")
         )
