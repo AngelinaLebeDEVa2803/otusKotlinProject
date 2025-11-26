@@ -38,6 +38,7 @@ dependencies {
     // DB
     implementation(projects.smartOfficeRepoStubs)
     implementation(projects.smartOfficeRepoInmemory)
+    implementation(projects.smartOfficeRepoPgjvm)
     testImplementation(projects.smartOfficeRepoCommon)
     testImplementation(projects.smartOfficeStubs)
 
@@ -67,4 +68,18 @@ tasks {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    environment("OFFICEBOOKINGS_DB", "test_db")
+}
+
+tasks.bootBuildImage {
+    builder = "paketobuildpacks/builder-jammy-base:latest"
+    environment.set(mapOf("BP_HEALTH_CHECKER_ENABLED" to "true"))
+    buildpacks.set(
+        listOf(
+            "docker.io/paketobuildpacks/adoptium",
+            "urn:cnb:builder:paketo-buildpacks/java",
+            "docker.io/paketobuildpacks/health-checker:latest"
+        )
+    )
+
 }
