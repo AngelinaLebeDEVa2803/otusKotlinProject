@@ -1,5 +1,8 @@
 package ru.otus.otuskotlin.smartoffice.app.spring.config
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import ru.otus.otuskotlin.smartoffice.app.spring.base.OfficeAppSettings
@@ -9,14 +12,19 @@ import ru.otus.otuskotlin.smartoffice.logging.common.OfficeLoggerProvider
 import ru.otus.otuskotlin.smartoffice.logging.jvm.officeLoggerLogback
 import ru.otus.otuskotlin.smartoffice.app.spring.base.SpringWsSessionRepo
 import ru.otus.otuskotlin.smartoffice.repo.inmemory.BookingRepoInMemory
+import ru.otus.otuskotlin.smartoffice.repo.pgjvm.RepoBookingSql
 import ru.otus.otuskotlin.smartoffice.repo.stubs.BookingRepoStub
 import ru.otus.otuskotlin.smartoffice.common.repo.IRepoBooking
 
 
 
 @Suppress("unused")
+@EnableConfigurationProperties(BookingConfigPostgres::class)
 @Configuration
-class BookingConfig {
+class BookingConfig(val postgresConfig: BookingConfigPostgres) {
+
+    val logger: Logger = LoggerFactory.getLogger(BookingConfig::class.java)
+
     @Bean
     fun processor(corSettings: OfficeCorSettings) = OfficeBookingProcessor(corSettings = corSettings)
 
@@ -27,7 +35,9 @@ class BookingConfig {
     fun testRepo(): IRepoBooking = BookingRepoInMemory()
 
     @Bean
-    fun prodRepo(): IRepoBooking = BookingRepoInMemory()
+    fun prodRepo(): IRepoBooking = RepoBookingSql(postgresConfig.psql).apply {
+        logger.info("Connecting to DB with ${this}")
+    }
 
     @Bean
     fun stubRepo(): IRepoBooking = BookingRepoStub()
