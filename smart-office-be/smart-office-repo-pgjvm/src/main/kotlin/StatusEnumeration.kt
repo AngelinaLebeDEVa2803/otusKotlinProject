@@ -9,7 +9,7 @@ fun Table.statusEnumeration(
     columnName: String
 ) = customEnumeration(
     name = columnName,
-    sql = SqlFields.STATUS,
+    sql = SqlFields.STATUS_TYPE,
     fromDb = { value ->
         when (value.toString()) {
             SqlFields.STATUS_ACTIVE -> OfficeBookingStatus.ACTIVE
@@ -30,7 +30,7 @@ fun Table.statusEnumeration(
 
 sealed class PgBookingStatusValue(enVal: String): PGobject() {
     init {
-        type = SqlFields.STATUS
+        type = SqlFields.STATUS_TYPE
         value = enVal
     }
 }
