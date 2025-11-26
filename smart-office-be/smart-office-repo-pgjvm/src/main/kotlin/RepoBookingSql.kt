@@ -1,12 +1,15 @@
 package ru.otus.otuskotlin.smartoffice.repo.pgjvm
 
 
+import kotlinx.datetime.Instant
 import com.benasher44.uuid.uuid4
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.*
+import kotlinx.datetime.toJavaInstant
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.otus.otuskotlin.smartoffice.common.NONE
 import ru.otus.otuskotlin.smartoffice.common.helpers.asOfficeError
 import ru.otus.otuskotlin.smartoffice.common.models.*
 import ru.otus.otuskotlin.smartoffice.common.repo.*
@@ -114,12 +117,12 @@ class RepoBookingSql(
                     if (rq.status != OfficeBookingStatus.NONE) {
                         add(bookingTable.status eq rq.status)
                     }
-//                    if (rq.titleFilter.isNotBlank()) {
-//                        add(
-//                            (adTable.title like "%${rq.titleFilter}%")
-//                                    or (adTable.description like "%${rq.titleFilter}%")
-//                        )
-//                    }
+                    if (rq.startTime != Instant.NONE) {
+                        add(bookingTable.startTime greaterEq rq.startTime.toJavaInstant())
+                    }
+                    if (rq.endTime != Instant.NONE) {
+                        add(bookingTable.endTime lessEq rq.endTime.toJavaInstant())
+                    }
                 }.reduce { a, b -> a and b }
             }
             DbBookingsResponseOk(data = res.map { bookingTable.from(it) })
