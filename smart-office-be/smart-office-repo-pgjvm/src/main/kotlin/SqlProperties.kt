@@ -4,7 +4,7 @@ data class SqlProperties(
     val host: String = "localhost",
     val port: Int = 5432,
     val user: String = "postgres",
-    val password: String = "smart123!",
+    val password: String = "smart123",
     val database: String = "smartoffice_bookings",
     val schema: String = "public",
     val table: String = "bookings",

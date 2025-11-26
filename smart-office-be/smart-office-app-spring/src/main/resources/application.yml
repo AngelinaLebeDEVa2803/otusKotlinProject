@@ -30,8 +30,8 @@ smartoffice:
 
 psql:
   schema: public
-  database: "${OFFICEBOOKINGS_DB:smartoffice-bookings}"
+  database: "${OFFICEBOOKINGS_DB:smartoffice_bookings}"
   host: "${OFFICEBOOKINGS_HOST:localhost}"
-  port: "${OFFICEBOOKINGS_PORT:5433}"
+  port: "${OFFICEBOOKINGS_PORT:5432}"
   user: "${OFFICEBOOKINGS_USER:postgres}"
-  password: "${OFFICEBOOKINGS_PASS:smart123!}"
+  password: "${OFFICEBOOKINGS_PASS:smart123}"
