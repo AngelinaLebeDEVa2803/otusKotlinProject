@@ -5,6 +5,7 @@ import io.mockk.coEvery
 import io.mockk.slot
 import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeEach
+import org.springframework.context.annotation.Import
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
@@ -22,7 +23,11 @@ import ru.otus.otuskotlin.smartoffice.stubs.OfficeBookingStub
 import kotlin.test.Test
 
 // Temporary simple test with stubs
-@WebFluxTest(BookingControllerV1Fine::class, BookingConfig::class)
+@WebFluxTest(
+    BookingControllerV1Fine::class, BookingConfig::class,
+    properties = ["spring.main.allow-bean-definition-overriding=true"]
+)
+@Import(RepoInMemoryConfig::class)
 internal class BookingRepoInMemoryV1Test : BookingRepoBaseV1Test() {
     @Autowired
     override lateinit var webClient: WebTestClient

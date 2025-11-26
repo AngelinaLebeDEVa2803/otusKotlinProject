@@ -10,12 +10,13 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(projects.smartOfficeStubs)
     implementation(projects.smartOfficeCommon)
-    implementation(projects.smartOfficeRepoTests)
-    implementation(projects.smartOfficeRepoInmemory)
+
 
     api("ru.otus.otuskotlin.smartoffice.libs:smart-office-lib-cor")
 
     testImplementation(kotlin("test-junit"))
+    testImplementation(projects.smartOfficeRepoTests)
+    testImplementation(projects.smartOfficeRepoInmemory)
     testImplementation(projects.smartOfficeStubs)
     api(libs.coroutines.test)
 }
