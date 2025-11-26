@@ -26,8 +26,8 @@ class BookingTable(tableName: String) : Table(tableName) {
         floorId = OfficeFloorId(res[floorId]),
         roomId = OfficeRoomId(res[roomId]),
         workspaceId = OfficeWorkspaceId(res[workspaceId]),
-        startTime = res[startTime]?.let {Instant.parse(it)} ?: Instant.NONE,
-        endTime = res[endTime]?.let {Instant.parse(it)} ?: Instant.NONE,
+        startTime = res[startTime].let {Instant.parse(it)},
+        endTime = res[endTime].let {Instant.parse(it)},
         status = res[status],
         lock = OfficeBookingLock(res[lock]),
     )
