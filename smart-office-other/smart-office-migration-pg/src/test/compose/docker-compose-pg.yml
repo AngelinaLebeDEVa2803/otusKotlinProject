@@ -15,9 +15,9 @@ services:
       retries: 5
 
   liquibase:
-    image: "ok-marketplace-migration-pg:0.1.0"
+    image: "smart-office-migration-pg:0.1.0"
     environment:
-      LIQUIBASE_URL:
+      LIQUIBASE_URL: jdbc:postgresql://psql:5432/smartoffice_bookings
       LIQUIBASE_COMMAND_URL: jdbc:postgresql://psql:5432/smartoffice_bookings
       LIQUIBASE_COMMAND_USERNAME: postgres
       LIQUIBASE_COMMAND_PASSWORD: "smart123"
