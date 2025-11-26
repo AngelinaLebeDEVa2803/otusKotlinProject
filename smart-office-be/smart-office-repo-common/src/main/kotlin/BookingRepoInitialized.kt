@@ -6,7 +6,7 @@ import ru.otus.otuskotlin.smartoffice.common.models.OfficeBooking
  * Делегат для всех репозиториев, позволяющий инициализировать базу данных предзагруженными данными
  */
 class BookingRepoInitialized(
-    private val repo: IRepoBookingInitializable,
+    val repo: IRepoBookingInitializable,
     initObjects: Collection<OfficeBooking> = emptyList(),
 ) : IRepoBookingInitializable by repo {
     @Suppress("unused")

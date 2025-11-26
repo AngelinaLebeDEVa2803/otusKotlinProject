@@ -64,6 +64,7 @@ liquibase-snakeyml = "org.yaml:snakeyaml:1.33"
 
 # Testing
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version = "5.2.1" }
+testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-postgres = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 # Logging
