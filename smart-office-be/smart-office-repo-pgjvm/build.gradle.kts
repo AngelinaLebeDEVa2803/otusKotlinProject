@@ -12,6 +12,7 @@ dependencies {
 
     implementation(libs.coroutines.core)
     implementation(libs.uuid)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.db.postgres)
     implementation(libs.bundles.exposed)
