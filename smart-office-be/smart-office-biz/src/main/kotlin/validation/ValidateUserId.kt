@@ -35,7 +35,7 @@ fun ICorChainDsl<OfficeContext>.validateUserId(title: String) = chain {
         this.title = "Проверка формата userId"
         this.description = this.title
 
-        val regExp = Regex("^[0-9a-zA-Z#:-]+$")
+        val regExp = Regex("^[0-9a-zA-Z#:-_]+$")
         on { state == OfficeState.RUNNING && bookingValidating.userId != OfficeUserId.NONE && !bookingValidating.userId.asString().matches(regExp) }
         handle {
             val encodedId = bookingValidating.userId.asString()
@@ -77,7 +77,7 @@ fun ICorChainDsl<OfficeContext>.validateUserIdFilter(title: String) = chain {
         this.title = "Проверка формата userId"
         this.description = this.title
 
-        val regExp = Regex("^[0-9a-zA-Z#:-]+$")
+        val regExp = Regex("^[0-9a-zA-Z#:-_]+$")
         on { state == OfficeState.RUNNING && bookingFilterValidating.userId != OfficeUserId.NONE && !bookingFilterValidating.userId.asString().matches(regExp) }
         handle {
             val encodedId = bookingFilterValidating.userId.asString()

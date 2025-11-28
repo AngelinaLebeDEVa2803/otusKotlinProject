@@ -8,7 +8,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,env
+        include: info,env,health
 
 spring:
   jackson:
@@ -22,3 +22,16 @@ springdoc:
     urls:
       - name: v1
         url: specs-booking-v1.yaml
+
+smartoffice:
+  repository:
+    test: "inmemory"
+    prod: "$DB_TYPE_PROD:inmemory"
+
+psql:
+  schema: public
+  database: "${OFFICEBOOKINGS_DB:smartoffice_bookings}"
+  host: "${OFFICEBOOKINGS_HOST:localhost}"
+  port: "${OFFICEBOOKINGS_PORT:5432}"
+  user: "${OFFICEBOOKINGS_USER:postgres}"
+  password: "${OFFICEBOOKINGS_PASS:smart123}"
