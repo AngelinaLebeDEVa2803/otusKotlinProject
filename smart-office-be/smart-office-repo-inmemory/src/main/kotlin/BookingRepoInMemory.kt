@@ -14,7 +14,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
 class BookingRepoInMemory(
-    ttl: Duration = 2.minutes,
+    ttl: Duration = 20.minutes,
     val randomUuid: () -> String = { uuid4().toString() },
 ) : BookingRepoBase(), IRepoBooking, IRepoBookingInitializable {
 
